@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 public class LexicalAnalyzer {
     private int lineNumber;
-    private byte[] chars;
+    private final byte[] chars;
     private int currentIndex;
 
     public LexicalAnalyzer(String pathName) throws Exception{
@@ -29,7 +29,9 @@ public class LexicalAnalyzer {
             currChar = (char)chars[currentIndex];
             currentIndex++;
             if(IsLetter(currChar)){
-                while (currentIndex+1<chars.length && !IsUnknown(currChar) ){
+                word+=currChar;
+                currChar = (char)chars[currentIndex];
+                while (currentIndex<chars.length && IsAlphanum(currChar) ){
                     word+=currChar;
                     currentIndex++;
                     currChar = (char)chars[currentIndex];
@@ -136,6 +138,15 @@ public class LexicalAnalyzer {
             else if(currChar == '.'){
                 return new Token(TokenType.DOT, ".", lineNumber);
             }
+            else if(currChar == ':'){
+                if(currentIndex < chars.length){
+                    if(chars[currentIndex] == ':'){
+                        currentIndex++;
+                        return new Token(TokenType.SCOPEOP, "::", lineNumber);
+                    }
+                }
+                return new Token(TokenType.COLON, ":", lineNumber);
+            }
             else if (IsUnknown(currChar)){
                 if(currChar == 13){
                     this.lineNumber++;
@@ -152,6 +163,10 @@ public class LexicalAnalyzer {
     }
     private static boolean IsDigit(char currChar){
         return currChar >= 48 && currChar <= 57;
+    }
+
+    private static boolean IsAlphanum(char currChar){
+        return IsLetter(currChar) || IsDigit(currChar) || currChar == '_';
     }
 
     private static boolean IsUnknown(char currChar){
@@ -175,6 +190,53 @@ public class LexicalAnalyzer {
     }
 
     private Token CheckIfReservedWord(String word) {
-        return new Token(TokenType.ID, word, lineNumber);
+        switch (word){
+            case "or":
+                return new Token(TokenType.OR, word, lineNumber);
+            case "and":
+                return new Token(TokenType.AND, word, lineNumber);
+            case "not":
+                return new Token(TokenType.NOT, word, lineNumber);
+            case "integer":
+                return new Token(TokenType.INTEGER, word, lineNumber);
+            case "float":
+                return new Token(TokenType.FLOAT, word, lineNumber);
+            case "void":
+                return new Token(TokenType.VOID, word, lineNumber);
+            case "class":
+                return new Token(TokenType.CLASS, word, lineNumber);
+            case "self":
+                return new Token(TokenType.SELF, word, lineNumber);
+            case "isa":
+                return new Token(TokenType.ISA, word, lineNumber);
+            case "while":
+                return new Token(TokenType.WHILE, word, lineNumber);
+            case "if":
+                return new Token(TokenType.IF, word, lineNumber);
+            case "then":
+                return new Token(TokenType.THEN, word, lineNumber);
+            case "else":
+                return new Token(TokenType.ELSE, word, lineNumber);
+            case "read":
+                return new Token(TokenType.READ, word, lineNumber);
+            case "write":
+                return new Token(TokenType.WRITE, word, lineNumber);
+            case "return":
+                return new Token(TokenType.RETURN, word, lineNumber);
+            case "localvar":
+                return new Token(TokenType.LOCALVAR, word, lineNumber);
+            case "constructor":
+                return new Token(TokenType.CONSTRUCTOR, word, lineNumber);
+            case "attribute":
+                return new Token(TokenType.ATTRIBUTE, word, lineNumber);
+            case "function":
+                return new Token(TokenType.FUNCTiON, word, lineNumber);
+            case "public":
+                return new Token(TokenType.PUBLIC, word, lineNumber);
+            case "private":
+                return new Token(TokenType.PRIVATE, word, lineNumber);
+            default:
+                return new Token(TokenType.ID, word, lineNumber);
+        }
     }
 }
