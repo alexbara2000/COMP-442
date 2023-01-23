@@ -19,7 +19,7 @@ public class LexicalAnalyzer {
         this.currentIndex = 0;
     }
 
-    public String getNextToken(){
+    public Token getNextToken(){
         char currChar;
         String word = "";
 
@@ -40,19 +40,19 @@ public class LexicalAnalyzer {
 
             }
             else if(currChar == '+'){
-                return "[plus, +, "+lineNumber+"]";
+                return new Token(TokenType.PLUS, "+", lineNumber);
             }
             else if(currChar == '-'){
-                return "[minus, -, "+lineNumber+"]";
+                return new Token(TokenType.MINUS, "i", lineNumber);
             }
             else if(currChar == '*'){
-                return "[mult, *, "+lineNumber+"]";
+                return new Token(TokenType.MULT, "*", lineNumber);
             }
             else if(currChar == '/'){
                 if(currentIndex < chars.length){
                     if(chars[currentIndex] == '*'){
                         currentIndex++;
-                        return "[blockcmt, /*, "+lineNumber+"]";
+                        return new Token(TokenType.BLOCKCMT, "/*", lineNumber);
                     }
                     else if(chars[currentIndex] == '/'){
                         currentIndex++;
@@ -64,91 +64,87 @@ public class LexicalAnalyzer {
 
                                 if(currChar == 13){
                                     this.lineNumber++;
-                                    System.out.println();
                                     break;
                                 }
                             }
                             comment = comment+currChar;
                         }
-                        return "[inlinecmt, "+comment+", "+lineNumber+"]";
+                        return new Token(TokenType.INLINECMT, comment, lineNumber);
                     }
                 }
-                return "[div, /, "+lineNumber+"]";
+                return new Token(TokenType.DIV, "/", lineNumber);
             }
             else if(currChar == '='){
                 if(currentIndex < chars.length){
                     if(chars[currentIndex] == '='){
                         currentIndex++;
-                        return "[eq, ==, "+lineNumber+"]";
+                        return new Token(TokenType.EQ, "==", lineNumber);
                     }
                     else if(chars[currentIndex] == '>'){
                         currentIndex++;
-                        return "[returntype, =>, "+lineNumber+"]";
+                        return new Token(TokenType.RETURNTYPE, "=>", lineNumber);
                     }
                 }
-                return "[assign, =, "+lineNumber+"]";
+                return new Token(TokenType.ASSIGN, "=", lineNumber);
             }
             else if(currChar == '<'){
                 if(currentIndex < chars.length){
                     if(chars[currentIndex] == '='){
                         currentIndex++;
-                        return "[leq, <=, "+lineNumber+"]";
+                        return new Token(TokenType.LEQ, "<=", lineNumber);
                     }
                     if(chars[currentIndex] == '>'){
                         currentIndex++;
-                        return "[noteq, <>, "+lineNumber+"]";
+                        return new Token(TokenType.NOTEQ, "<>", lineNumber);
                     }
                 }
-                return "[lt, <, "+lineNumber+"]";
+                return new Token(TokenType.LT, "<", lineNumber);
             }
             else if(currChar == '>'){
                 if(currentIndex < chars.length){
                     if(chars[currentIndex] == '='){
                         currentIndex++;
-                        return "[geq, >=, "+lineNumber+"]";
+                        return new Token(TokenType.GEQ, ">=", lineNumber);
                     }
                 }
-                return "[gt, >, "+lineNumber+"]";
+                return new Token(TokenType.GT, ">", lineNumber);
             }
             else if(currChar == '('){
-                return "[openpar, (, "+lineNumber+"]";
+                return new Token(TokenType.OPENPAR, "(", lineNumber);
             }
             else if(currChar == ')'){
-                return "[closepar, ), "+lineNumber+"]";
+                return new Token(TokenType.CLOSEPAR, ")", lineNumber);
             }
             else if(currChar == '{'){
-                return "[opencubr, {, "+lineNumber+"]";
+                return new Token(TokenType.OPENCUBR, "{", lineNumber);
             }
             else if(currChar == '}'){
-                return "[closecubr, }, "+lineNumber+"]";
+                return new Token(TokenType.CLOSECUBR, "}", lineNumber);
             }
             else if(currChar == '['){
-                return "[opensqbr, [, "+lineNumber+"]";
+                return new Token(TokenType.OPENSQBR, "[", lineNumber);
             }
             else if(currChar == ']'){
-                return "[closesqbr, ], "+lineNumber+"]";
+                return new Token(TokenType.CLOSESQBR, "]", lineNumber);
             }
             else if(currChar == ';'){
-                return "[semi, ;, "+lineNumber+"]";
+                return new Token(TokenType.SEMI, ";", lineNumber);
             }
             else if(currChar == ','){
-                return "[comma, ,, "+lineNumber+"]";
+                return new Token(TokenType.COMMA, ",", lineNumber);
             }
             else if(currChar == '.'){
-                return "[dot, ., "+lineNumber+"]";
+                return new Token(TokenType.DOT, ".", lineNumber);
             }
             else if (IsUnknown(currChar)){
                 if(currChar == 13){
                     this.lineNumber++;
-                    System.out.println();
                 }
-                //System.out.println("There has been a space/tab/enter");
-                return word;
             }
 
             word= word+currChar;
         }
-        return "END";
+        return null;
     }
 
     private static boolean IsLetter(char currChar){
@@ -170,7 +166,6 @@ public class LexicalAnalyzer {
             if (IsUnknown(currChar)){
                 if(currChar == 13){
                     this.lineNumber++;
-                    System.out.println();
                 }
                 currentIndex++;
             }
@@ -179,8 +174,7 @@ public class LexicalAnalyzer {
         }
     }
 
-    private String CheckIfReservedWord(String word) {
-
-        return "[id, "+word+", "+lineNumber+"]";
+    private Token CheckIfReservedWord(String word) {
+        return new Token(TokenType.ID, word, lineNumber);
     }
 }
