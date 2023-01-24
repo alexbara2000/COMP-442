@@ -1,8 +1,6 @@
-import java.io.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Arrays;
+
 public class LexicalAnalyzer {
     private int lineNumber;
     private final byte[] chars;
@@ -30,15 +28,37 @@ public class LexicalAnalyzer {
             currentIndex++;
             if(IsLetter(currChar)){
                 word+=currChar;
-                currChar = (char)chars[currentIndex];
-                while (currentIndex<chars.length && IsAlphanum(currChar) ){
-                    word+=currChar;
-                    currentIndex++;
+                while(currentIndex<chars.length){
                     currChar = (char)chars[currentIndex];
+                    if(IsAlphanum(currChar)){
+                        word+=currChar;
+                        currentIndex++;
+                    }
+                    else{
+                        break;
+                    }
                 }
                 return CheckIfReservedWord(word);
             }
             else if(IsDigit(currChar)){
+                word+=currChar;
+                // TODO check for double 0 at start
+                word = GetIntegerIfAvailable(word);
+                if(currentIndex<chars.length && chars[currentIndex] == '.'){
+                    currChar = (char)chars[currentIndex];
+                    currentIndex++;
+                    word += currChar;
+                    String afterDot = "";
+                    word += GetIntegerIfAvailable(afterDot);
+                    // TODO check to see if it works
+                    if (word.length() >1 && word.toCharArray()[word.length()-1] == '0'){
+                        return new Token(TokenType.INTEGER, "***********", lineNumber);
+                    }
+                    return new Token(TokenType.FLOATNUM, word, lineNumber);
+                }
+                else{
+                    return new Token(TokenType.INTEGER, word, lineNumber);
+                }
 
             }
             else if(currChar == '+'){
@@ -162,7 +182,13 @@ public class LexicalAnalyzer {
         return (currChar >= 65 && currChar <= 90) || (currChar >= 97 && currChar <= 122);
     }
     private static boolean IsDigit(char currChar){
-        return currChar >= 48 && currChar <= 57;
+        return currChar >= '0' && currChar <= '9';
+
+    }
+
+    private static boolean IsNonNegativeDigit(char currChar){
+        return currChar >= '1' && currChar <= '9';
+
     }
 
     private static boolean IsAlphanum(char currChar){
@@ -171,6 +197,25 @@ public class LexicalAnalyzer {
 
     private static boolean IsUnknown(char currChar){
         return currChar <= 32 || currChar == 127;
+    }
+
+    private String GetIntegerIfAvailable(String word){
+        char currChar;
+
+        if(word.equals("0")){
+            return word;
+        }
+        while(currentIndex<chars.length){
+            currChar = (char)chars[currentIndex];
+            if(IsDigit(currChar)){
+                word+=currChar;
+                currentIndex++;
+            }
+            else{
+                return word;
+            }
+        }
+        return word;
     }
 
     private void GetRidOfBlankSpace(){
