@@ -74,9 +74,36 @@ public class LexicalAnalyzer {
             else if(currChar == '/'){
                 if(currentIndex < chars.length){
                     if(chars[currentIndex] == '*'){
+                        String comment = "/*";
                         currentIndex++;
                         // TODO add logic for embedded block comments
-                        return new Token(TokenType.BLOCKCMT, "/*", lineNumber);
+                        int numberOfOpenPar = 1;
+                        while(currentIndex < chars.length && numberOfOpenPar > 0){
+                            currChar = (char) chars[currentIndex];
+                            if(currChar == '*' && currentIndex+1 < chars.length && chars[currentIndex+1] == '/'){
+                                comment = comment + "*/";
+                                numberOfOpenPar --;
+                                currentIndex+=2;
+                            }
+                            else if(currChar == '/' && currentIndex+1 < chars.length && chars[currentIndex+1] == '*'){
+                                comment = comment + "/*";
+                                numberOfOpenPar ++;
+                                currentIndex+=2;
+                            }
+                            else{
+                                currentIndex++;
+                                if(currChar == '\r'){
+                                    comment = comment + "\\" +"n";
+                                    lineNumber++;
+                                }
+                                else if(currChar == '\n'){
+                                    // TODO Refactor this once \r an \n make more sense
+                                }
+                                else
+                                    comment = comment + currChar;
+                            }
+                        }
+                        return new Token(TokenType.BLOCKCMT, comment, lineNumber);
                     }
                     else if(chars[currentIndex] == '/'){
                         currentIndex++;
