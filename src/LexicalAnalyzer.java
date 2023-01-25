@@ -19,7 +19,7 @@ public class LexicalAnalyzer {
 
     public Token getNextToken(){
         char currChar;
-        String word = "";
+        StringBuilder word = new StringBuilder();
 
         GetRidOfBlankSpace();
 
@@ -27,38 +27,39 @@ public class LexicalAnalyzer {
             currChar = (char)chars[currentIndex];
             currentIndex++;
             if(IsLetter(currChar)){
-                word+=currChar;
+                word.append(currChar);
                 while(currentIndex<chars.length){
                     currChar = (char)chars[currentIndex];
                     if(IsAlphanum(currChar)){
-                        word+=currChar;
+                        word.append(currChar);
                         currentIndex++;
                     }
                     else{
                         break;
                     }
                 }
-                return CheckIfReservedWord(word);
+                return CheckIfReservedWord(word.toString());
             }
             else if(IsDigit(currChar)){
-                word+=currChar;
-                // TODO check for double 0 at start
-                word = GetIntegerIfAvailable(word);
-                if(currentIndex<chars.length && chars[currentIndex] == '.'){
-                    currChar = (char)chars[currentIndex];
-                    currentIndex++;
-                    word += currChar;
-                    String afterDot = "";
-                    word += GetIntegerIfAvailable(afterDot);
-                    // TODO check to see if it works
-                    if (word.length() >1 && word.toCharArray()[word.length()-1] == '0'){
-                        return new Token(TokenType.INTEGER, "***********", lineNumber);
+                word.append(currChar);
+                while(currentIndex<chars.length){
+                    currChar = (char) chars[currentIndex];
+                    if(IsPartOfNumberAlphabet(currChar)){
+                        currentIndex++;
+                        word.append(currChar);
                     }
-                    return new Token(TokenType.FLOATNUM, word, lineNumber);
+                    else {
+                        break;
+                    }
                 }
-                else{
-                    return new Token(TokenType.INTEGER, word, lineNumber);
+                if(validateInteger(word.toString())){
+                    return new Token(TokenType.INTEGER, word.toString(), lineNumber);
                 }
+                if(validateFloat(word.toString())){
+                    return new Token(TokenType.FLOATNUM, word.toString(), lineNumber);
+                }
+                return new Token(TokenType.INVALID, word.toString(), lineNumber);
+
 
             }
             else if(currChar == '+'){
@@ -74,6 +75,7 @@ public class LexicalAnalyzer {
                 if(currentIndex < chars.length){
                     if(chars[currentIndex] == '*'){
                         currentIndex++;
+                        // TODO add logic for embedded block comments
                         return new Token(TokenType.BLOCKCMT, "/*", lineNumber);
                     }
                     else if(chars[currentIndex] == '/'){
@@ -173,9 +175,60 @@ public class LexicalAnalyzer {
                 }
             }
 
-            word= word+currChar;
+            word.append(currChar);
         }
         return null;
+    }
+
+    private boolean validateFloat(String word) {
+        if(!word.contains("."))
+            return false;
+        String[] arrayOfNums = word.split("\\.");
+        if (arrayOfNums.length != 2)
+            return false;
+        if(!validateInteger(arrayOfNums[0])){
+            return false;
+        }
+        String[] arrayOfNumsAfterPeriod = arrayOfNums[1].split("e");
+        if (arrayOfNumsAfterPeriod.length == 1 && validateFraction(arrayOfNums[1])){
+            return true;
+        }
+        if (arrayOfNumsAfterPeriod.length != 2) {
+            return false;
+        }
+
+        String toValidate = arrayOfNumsAfterPeriod[1];
+        if (toValidate.equals("+") || toValidate.equals("-") || toValidate.equals("e")){
+            return false;
+        }
+        if (toValidate.length() > 1 && (toValidate.startsWith("+") || toValidate.startsWith("-"))){
+            toValidate = toValidate.substring(1);
+        }
+        return validateFraction(arrayOfNumsAfterPeriod[0]) && validateInteger(toValidate);
+    }
+
+    private boolean validateFraction(String word){
+        if (word.length() < 1)
+            return false;
+        if (word.length() == 1 && word.toCharArray()[0] >= '0' && word.toCharArray()[0] <= '9')
+            return true;
+        //returns true if it does not contain illegal chars and does not end in a 0
+        return !word.contains(".") && !word.contains("e") && !word.contains("+") && !word.contains("-") && !(word.toCharArray()[word.length() - 1] == '0');
+    }
+
+    private boolean validateInteger(String word) {
+        if (word.length() == 0)
+            return false;
+        if(word.length() ==1)
+            return true;
+        if(word.startsWith("00"))
+            return false;
+        //returns true if it does not contain illegal characters
+        return !word.contains(".") && !word.contains("e") && !word.contains("+") && !word.contains("-");
+    }
+
+    private boolean IsPartOfNumberAlphabet(char currChar) {
+        return (currChar >= '0' && currChar <= '9') || currChar == 'e' || currChar == '+' || currChar == '-' || currChar == '.';
     }
 
     private static boolean IsLetter(char currChar){
@@ -235,53 +288,11 @@ public class LexicalAnalyzer {
     }
 
     private Token CheckIfReservedWord(String word) {
-        switch (word){
-            case "or":
-                return new Token(TokenType.OR, word, lineNumber);
-            case "and":
-                return new Token(TokenType.AND, word, lineNumber);
-            case "not":
-                return new Token(TokenType.NOT, word, lineNumber);
-            case "integer":
-                return new Token(TokenType.INTEGER, word, lineNumber);
-            case "float":
-                return new Token(TokenType.FLOAT, word, lineNumber);
-            case "void":
-                return new Token(TokenType.VOID, word, lineNumber);
-            case "class":
-                return new Token(TokenType.CLASS, word, lineNumber);
-            case "self":
-                return new Token(TokenType.SELF, word, lineNumber);
-            case "isa":
-                return new Token(TokenType.ISA, word, lineNumber);
-            case "while":
-                return new Token(TokenType.WHILE, word, lineNumber);
-            case "if":
-                return new Token(TokenType.IF, word, lineNumber);
-            case "then":
-                return new Token(TokenType.THEN, word, lineNumber);
-            case "else":
-                return new Token(TokenType.ELSE, word, lineNumber);
-            case "read":
-                return new Token(TokenType.READ, word, lineNumber);
-            case "write":
-                return new Token(TokenType.WRITE, word, lineNumber);
-            case "return":
-                return new Token(TokenType.RETURN, word, lineNumber);
-            case "localvar":
-                return new Token(TokenType.LOCALVAR, word, lineNumber);
-            case "constructor":
-                return new Token(TokenType.CONSTRUCTOR, word, lineNumber);
-            case "attribute":
-                return new Token(TokenType.ATTRIBUTE, word, lineNumber);
-            case "function":
-                return new Token(TokenType.FUNCTiON, word, lineNumber);
-            case "public":
-                return new Token(TokenType.PUBLIC, word, lineNumber);
-            case "private":
-                return new Token(TokenType.PRIVATE, word, lineNumber);
-            default:
-                return new Token(TokenType.ID, word, lineNumber);
+        try {
+            return new Token(TokenType.valueOf(word.toUpperCase()), word, lineNumber);
+        }
+        catch (Exception e){
+            return new Token(TokenType.ID, word, lineNumber);
         }
     }
 }
