@@ -49,7 +49,7 @@ public enum TokenType {
     ID,
     INLINECMT,
     BLOCKCMT,
-    INVALID,
+    INVALIDCOMMENT,
     INVALIDCHAR,
     INVALIDNUM,
     INVALIDID,

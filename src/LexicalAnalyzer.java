@@ -23,14 +23,14 @@ public class LexicalAnalyzer {
 
         GetRidOfBlankSpace();
 
-        while (currentIndex<chars.length){
+        if (currentIndex<chars.length){
             currChar = (char)chars[currentIndex];
             currentIndex++;
-            if(IsLetter(currChar)){
+            if(IsAlphaNum(currChar)){
                 word.append(currChar);
                 while(currentIndex<chars.length){
                     currChar = (char)chars[currentIndex];
-                    if(IsAlphanum(currChar)){
+                    if(IsAlphaNum(currChar)){
                         word.append(currChar);
                         currentIndex++;
                     }
@@ -38,7 +38,7 @@ public class LexicalAnalyzer {
                         break;
                     }
                 }
-                return CheckIfReservedWord(word.toString());
+                return CheckIfReservedWordAndValidate(word.toString());
             }
             else if(IsDigit(currChar)){
                 word.append(currChar);
@@ -72,45 +72,45 @@ public class LexicalAnalyzer {
                 return new Token(TokenType.MULT, "*", lineNumber);
             }
             else if(currChar == '/'){
-                int cuurentLineNumber = lineNumber;
+                int currentLineNumber = lineNumber;
                 if(currentIndex < chars.length){
                     if(chars[currentIndex] == '*'){
-                        String comment = "/*";
+                        StringBuilder comment = new StringBuilder("/*");
                         currentIndex++;
                         int numberOfOpenPar = 1;
                         while(currentIndex < chars.length && numberOfOpenPar > 0){
                             currChar = (char) chars[currentIndex];
                             if(currChar == '*' && currentIndex+1 < chars.length && chars[currentIndex+1] == '/'){
-                                comment = comment + "*/";
+                                comment.append("*/");
                                 numberOfOpenPar --;
                                 currentIndex+=2;
                             }
                             else if(currChar == '/' && currentIndex+1 < chars.length && chars[currentIndex+1] == '*'){
-                                comment = comment + "/*";
+                                comment.append("/*");
                                 numberOfOpenPar ++;
                                 currentIndex+=2;
                             }
                             else{
                                 currentIndex++;
                                 if(currChar == '\r'){
-                                    comment = comment + "\\" +"n";
+                                    comment.append("\\").append("n");
                                     lineNumber++;
                                 }
                                 else if(currChar == '\n'){
                                     // TODO Refactor this once \r an \n make more sense
                                 }
                                 else
-                                    comment = comment + currChar;
+                                    comment.append(currChar);
                             }
                         }
                         if (numberOfOpenPar == 0){
-                            return new Token(TokenType.BLOCKCMT, comment, cuurentLineNumber);
+                            return new Token(TokenType.BLOCKCMT, comment.toString(), currentLineNumber);
                         }
-                        return new Token(TokenType.INVALID, comment, cuurentLineNumber);
+                        return new Token(TokenType.INVALIDCOMMENT, comment.toString(), currentLineNumber);
                     }
                     else if(chars[currentIndex] == '/'){
                         currentIndex++;
-                        String comment = "//";
+                        StringBuilder comment = new StringBuilder("//");
                         while(currentIndex<chars.length){
                             currChar = (char)chars[currentIndex];
                             currentIndex++;
@@ -121,9 +121,9 @@ public class LexicalAnalyzer {
                                     break;
                                 }
                             }
-                            comment = comment+currChar;
+                            comment.append(currChar);
                         }
-                        return new Token(TokenType.INLINECMT, comment, cuurentLineNumber);
+                        return new Token(TokenType.INLINECMT, comment.toString(), currentLineNumber);
                     }
                 }
                 return new Token(TokenType.DIV, "/", lineNumber);
@@ -200,6 +200,7 @@ public class LexicalAnalyzer {
                 return new Token(TokenType.COLON, ":", lineNumber);
             }
             else if (IsUnknown(currChar)){
+                // TODO fix IsUnknown to be tab, sapce, enter and new line \n \t \r
                 if(currChar == 13){
                     this.lineNumber++;
                 }
@@ -250,10 +251,14 @@ public class LexicalAnalyzer {
             return false;
         if(word.length() ==1)
             return true;
-        if(word.startsWith("00"))
+        if(word.startsWith("0"))
             return false;
         //returns true if it does not contain illegal characters
         return !word.contains(".") && !word.contains("e") && !word.contains("+") && !word.contains("-");
+    }
+
+    private boolean validateId(String word) {
+        return word.length() >= 2 && word.charAt(0) != '_' && IsLetter(word.charAt(0));
     }
 
     private boolean IsPartOfNumberAlphabet(char currChar) {
@@ -263,41 +268,18 @@ public class LexicalAnalyzer {
     private static boolean IsLetter(char currChar){
         return (currChar >= 65 && currChar <= 90) || (currChar >= 97 && currChar <= 122);
     }
+
     private static boolean IsDigit(char currChar){
         return currChar >= '0' && currChar <= '9';
 
     }
 
-    private static boolean IsNonNegativeDigit(char currChar){
-        return currChar >= '1' && currChar <= '9';
-
-    }
-
-    private static boolean IsAlphanum(char currChar){
+    private static boolean IsAlphaNum(char currChar){
         return IsLetter(currChar) || IsDigit(currChar) || currChar == '_';
     }
 
     private static boolean IsUnknown(char currChar){
         return currChar <= 32 || currChar == 127;
-    }
-
-    private String GetIntegerIfAvailable(String word){
-        char currChar;
-
-        if(word.equals("0")){
-            return word;
-        }
-        while(currentIndex<chars.length){
-            currChar = (char)chars[currentIndex];
-            if(IsDigit(currChar)){
-                word+=currChar;
-                currentIndex++;
-            }
-            else{
-                return word;
-            }
-        }
-        return word;
     }
 
     private void GetRidOfBlankSpace(){
@@ -316,12 +298,16 @@ public class LexicalAnalyzer {
         }
     }
 
-    private Token CheckIfReservedWord(String word) {
+    private Token CheckIfReservedWordAndValidate(String word) {
         try {
             return new Token(TokenType.valueOf(word.toUpperCase()), word, lineNumber);
         }
         catch (Exception e){
-            return new Token(TokenType.ID, word, lineNumber);
+            if(validateId(word)){
+                return new Token(TokenType.ID, word, lineNumber);
+            }
+            return new Token(TokenType.INVALIDID, word, lineNumber);
+
         }
     }
 }
