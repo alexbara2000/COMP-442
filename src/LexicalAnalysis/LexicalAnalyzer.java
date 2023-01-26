@@ -119,8 +119,14 @@ public class LexicalAnalyzer {
                                 else if(currChar == '\n'){
                                     // TODO Refactor this once \r an \n make more sense
                                 }
-                                else
+                                else if(currChar == 10){
+
+                                }
+                                else{
                                     comment.append(currChar);
+                                }
+
+
                             }
                         }
                         if (numberOfOpenPar == 0){
@@ -136,7 +142,7 @@ public class LexicalAnalyzer {
                             currentIndex++;
                             if(IsUnknown(currChar)){
 
-                                if(currChar == 13){
+                                if(currChar == 13 || currChar == 10){
                                     this.lineNumber++;
                                     break;
                                 }
@@ -221,7 +227,7 @@ public class LexicalAnalyzer {
             }
             else if (IsUnknown(currChar)){
                 // TODO fix IsUnknown to be tab, sapce, enter and new line \n \t \r
-                if(currChar == 13){
+                if(currChar == 13 || currChar == 10){
                     this.lineNumber++;
                 }
             }
@@ -278,7 +284,7 @@ public class LexicalAnalyzer {
     }
 
     private boolean validateId(String word) {
-        return word.length() >= 2 && word.charAt(0) != '_' && IsLetter(word.charAt(0));
+        return word.length() >= 1 && word.charAt(0) != '_' && IsLetter(word.charAt(0));
     }
 
     private boolean IsPartOfNumberAlphabet(char currChar) {
@@ -308,7 +314,7 @@ public class LexicalAnalyzer {
             currChar = (char)chars[currentIndex];
 
             if (IsUnknown(currChar)){
-                if(currChar == 13){
+                if(currChar == 13 || currChar == 10){
                     this.lineNumber++;
                 }
                 currentIndex++;
@@ -318,7 +324,7 @@ public class LexicalAnalyzer {
         }
     }
 
-    private Token CheckIfReservedWordAndValidate(String word) {
+    private Token  CheckIfReservedWordAndValidate(String word) {
         try {
             return new Token(TokenType.valueOf(word.toUpperCase()), word, lineNumber);
         }
