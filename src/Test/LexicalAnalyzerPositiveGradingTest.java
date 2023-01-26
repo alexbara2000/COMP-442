@@ -119,6 +119,6 @@ class LexicalAnalyzerPositiveGradingTest {
         Assertions.assertEquals(new Token(TokenType.INLINECMT, "// this is an inline comment", 31), tokens.get(60));
         Assertions.assertEquals(new Token(TokenType.BLOCKCMT, "/* this is a single line block comment */", 33), tokens.get(61));
         Assertions.assertEquals(new Token(TokenType.BLOCKCMT, "/* this is a\\nmultiple line\\nblock comment \\n*/", 35), tokens.get(62));
-        Assertions.assertEquals(new Token(TokenType.BLOCKCMT, "/* this is an imbricated \\n/* block comment\\n*/\\n*/", 40), tokens.get(63));
+        Assertions.assertEquals(new Token(TokenType.BLOCKCMT, "/* this is an imbricated\\n/* block comment\\n*/\\n*/", 40), tokens.get(63));
     }
 }
