@@ -1,3 +1,8 @@
+package LexicalAnalysis;
+
+import Common.Token;
+import Common.TokenType;
+
 import java.io.File;
 import java.io.FileInputStream;
 

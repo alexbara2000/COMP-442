@@ -1,3 +1,5 @@
+package Common;
+
 public enum TokenType {
     EQ,
     PLUS,

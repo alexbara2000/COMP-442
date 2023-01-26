@@ -1,8 +1,25 @@
+package Common;
+
+import java.util.Objects;
+
 public class Token {
     private final TokenType type;
     private final String lexeme;
     private final int location;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Token token = (Token) o;
+        return location == token.location && type == token.type && lexeme.equals(token.lexeme);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, lexeme, location);
+    }
 
     public Token(TokenType type, String lexeme, int location){
         this.type = type;

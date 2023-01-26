@@ -1,10 +1,13 @@
-import java.io.File;
+import Common.Token;
+import Common.TokenType;
+import LexicalAnalysis.LexicalAnalyzer;
+
 import java.io.FileWriter;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         LexicalAnalyzer la = new LexicalAnalyzer("assignment1.COMP442-6421.paquet.2023.4/lexnegativegrading.src");
-//        LexicalAnalyzer la = new LexicalAnalyzer("assignment1.COMP442-6421.paquet.2023.4/lexpositivegrading.src");
+//        LexicalAnalysis.LexicalAnalyzer la = new LexicalAnalysis.LexicalAnalyzer("assignment1.COMP442-6421.paquet.2023.4/lexpositivegrading.src");
         Token token = la.getNextToken();
         int currentLineNumber = 1;
 
