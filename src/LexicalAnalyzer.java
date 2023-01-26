@@ -26,7 +26,7 @@ public class LexicalAnalyzer {
         if (currentIndex<chars.length){
             currChar = (char)chars[currentIndex];
             currentIndex++;
-            if(IsAlphaNum(currChar)){
+            if(IsLetter(currChar) || currChar == '_'){
                 word.append(currChar);
                 while(currentIndex<chars.length){
                     currChar = (char)chars[currentIndex];
@@ -42,6 +42,21 @@ public class LexicalAnalyzer {
             }
             else if(IsDigit(currChar)){
                 word.append(currChar);
+                // This takes care of the edge case where an id is 123abc
+                if(currentIndex<chars.length && ((char)chars[currentIndex] == '_'  || (IsLetter((char)chars[currentIndex])))){
+                    while(currentIndex<chars.length){
+                        currChar = (char) chars[currentIndex];
+                        if(IsAlphaNum(currChar)){
+                            currentIndex++;
+                            word.append(currChar);
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                    return new Token(TokenType.INVALIDNUM, word.toString(), lineNumber);
+
+                }
                 while(currentIndex<chars.length){
                     currChar = (char) chars[currentIndex];
                     if(IsPartOfNumberAlphabet(currChar)){
