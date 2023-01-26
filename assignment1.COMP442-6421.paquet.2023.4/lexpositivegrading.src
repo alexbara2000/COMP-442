@@ -32,12 +32,12 @@ abc1_abc
 
 /* this is a single line block comment */
 
-/* this is a 
+/* this is a
 multiple line
 block comment 
 */
 
-/* this is an imbricated 
+/* this is an imbricated
 /* block comment
 */
 */

@@ -31,7 +31,7 @@ public enum TokenType {
     COLON,
     CLASS,
     ELSE,
-    FUNCTiON,
+    FUNCTION,
     LEQ,
     ASSIGN,
     OPENSQBR,

@@ -86,7 +86,7 @@ public class LexicalAnalyzer {
                 return new Token(TokenType.PLUS, "+", lineNumber);
             }
             else if(currChar == '-'){
-                return new Token(TokenType.MINUS, "i", lineNumber);
+                return new Token(TokenType.MINUS, "-", lineNumber);
             }
             else if(currChar == '*'){
                 return new Token(TokenType.MULT, "*", lineNumber);
