@@ -50,4 +50,7 @@ public enum TokenType {
     INLINECMT,
     BLOCKCMT,
     INVALID,
+    INVALIDCHAR,
+    INVALIDNUM,
+    INVALIDID,
 }

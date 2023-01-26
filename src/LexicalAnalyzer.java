@@ -53,12 +53,12 @@ public class LexicalAnalyzer {
                     }
                 }
                 if(validateInteger(word.toString())){
-                    return new Token(TokenType.INTEGER, word.toString(), lineNumber);
+                    return new Token(TokenType.INTNUM, word.toString(), lineNumber);
                 }
                 if(validateFloat(word.toString())){
                     return new Token(TokenType.FLOATNUM, word.toString(), lineNumber);
                 }
-                return new Token(TokenType.INVALID, word.toString(), lineNumber);
+                return new Token(TokenType.INVALIDNUM, word.toString(), lineNumber);
 
 
             }
@@ -72,11 +72,11 @@ public class LexicalAnalyzer {
                 return new Token(TokenType.MULT, "*", lineNumber);
             }
             else if(currChar == '/'){
+                int cuurentLineNumber = lineNumber;
                 if(currentIndex < chars.length){
                     if(chars[currentIndex] == '*'){
                         String comment = "/*";
                         currentIndex++;
-                        // TODO add logic for embedded block comments
                         int numberOfOpenPar = 1;
                         while(currentIndex < chars.length && numberOfOpenPar > 0){
                             currChar = (char) chars[currentIndex];
@@ -103,7 +103,10 @@ public class LexicalAnalyzer {
                                     comment = comment + currChar;
                             }
                         }
-                        return new Token(TokenType.BLOCKCMT, comment, lineNumber);
+                        if (numberOfOpenPar == 0){
+                            return new Token(TokenType.BLOCKCMT, comment, cuurentLineNumber);
+                        }
+                        return new Token(TokenType.INVALID, comment, cuurentLineNumber);
                     }
                     else if(chars[currentIndex] == '/'){
                         currentIndex++;
@@ -120,7 +123,7 @@ public class LexicalAnalyzer {
                             }
                             comment = comment+currChar;
                         }
-                        return new Token(TokenType.INLINECMT, comment, lineNumber);
+                        return new Token(TokenType.INLINECMT, comment, cuurentLineNumber);
                     }
                 }
                 return new Token(TokenType.DIV, "/", lineNumber);
@@ -201,8 +204,7 @@ public class LexicalAnalyzer {
                     this.lineNumber++;
                 }
             }
-
-            word.append(currChar);
+            return new Token(TokenType.INVALIDCHAR, Character.toString(currChar), lineNumber);
         }
         return null;
     }
