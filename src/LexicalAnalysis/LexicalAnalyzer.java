@@ -31,11 +31,11 @@ public class LexicalAnalyzer {
         if (currentIndex<chars.length){
             currChar = (char)chars[currentIndex];
             currentIndex++;
-            if(IsLetter(currChar) || currChar == '_'){
+            if(isLetter(currChar) || currChar == '_'){
                 word.append(currChar);
                 while(currentIndex<chars.length){
                     currChar = (char)chars[currentIndex];
-                    if(IsAlphaNum(currChar)){
+                    if(isAlphaNum(currChar)){
                         word.append(currChar);
                         currentIndex++;
                     }
@@ -45,13 +45,13 @@ public class LexicalAnalyzer {
                 }
                 return CheckIfReservedWordAndValidate(word.toString());
             }
-            else if(IsDigit(currChar)){
+            else if(isDigit(currChar)){
                 word.append(currChar);
                 // This takes care of the edge case where an id is 123abc
-                if(currentIndex<chars.length && ((char)chars[currentIndex] == '_'  || (IsLetter((char)chars[currentIndex])))){
+                if(currentIndex<chars.length && ((char)chars[currentIndex] == '_'  || (isLetter((char)chars[currentIndex])))){
                     while(currentIndex<chars.length){
                         currChar = (char) chars[currentIndex];
-                        if(IsAlphaNum(currChar)){
+                        if(isAlphaNum(currChar)){
                             currentIndex++;
                             word.append(currChar);
                         }
@@ -64,7 +64,7 @@ public class LexicalAnalyzer {
                 }
                 while(currentIndex<chars.length){
                     currChar = (char) chars[currentIndex];
-                    if(IsPartOfNumberAlphabet(currChar)){
+                    if(isPartOfNumberAlphabet(currChar)){
                         currentIndex++;
                         word.append(currChar);
                     }
@@ -112,21 +112,17 @@ public class LexicalAnalyzer {
                             }
                             else{
                                 currentIndex++;
-                                if(currChar == '\r'){
+                                if(currChar == '\n'){
                                     comment.append("\\").append("n");
                                     lineNumber++;
                                 }
-                                else if(currChar == '\n'){
-                                    // TODO Refactor this once \r an \n make more sense
+                                else if(currChar == '\r'){
+                                    // Do nothing
                                 }
-                                else if(currChar == 10){
 
-                                }
                                 else{
                                     comment.append(currChar);
                                 }
-
-
                             }
                         }
                         if (numberOfOpenPar == 0){
@@ -140,11 +136,13 @@ public class LexicalAnalyzer {
                         while(currentIndex<chars.length){
                             currChar = (char)chars[currentIndex];
                             currentIndex++;
-                            if(IsUnknown(currChar)){
-
-                                if(currChar == 13 || currChar == 10){
+                            if(isBlankSpace(currChar)){
+                                if(currChar == '\n'){
                                     this.lineNumber++;
                                     break;
+                                }
+                                if(currChar == '\r'){
+                                    continue;
                                 }
                             }
                             comment.append(currChar);
@@ -225,9 +223,8 @@ public class LexicalAnalyzer {
                 }
                 return new Token(TokenType.COLON, ":", lineNumber);
             }
-            else if (IsUnknown(currChar)){
-                // TODO fix IsUnknown to be tab, sapce, enter and new line \n \t \r
-                if(currChar == 13 || currChar == 10){
+            else if (isBlankSpace(currChar)){
+                if(currChar == '\n'){
                     this.lineNumber++;
                 }
             }
@@ -284,28 +281,28 @@ public class LexicalAnalyzer {
     }
 
     private boolean validateId(String word) {
-        return word.length() >= 1 && word.charAt(0) != '_' && IsLetter(word.charAt(0));
+        return word.length() >= 1 && word.charAt(0) != '_' && isLetter(word.charAt(0));
     }
 
-    private boolean IsPartOfNumberAlphabet(char currChar) {
+    private boolean isPartOfNumberAlphabet(char currChar) {
         return (currChar >= '0' && currChar <= '9') || currChar == 'e' || currChar == '+' || currChar == '-' || currChar == '.';
     }
 
-    private static boolean IsLetter(char currChar){
-        return (currChar >= 65 && currChar <= 90) || (currChar >= 97 && currChar <= 122);
+    private static boolean isLetter(char currChar){
+        return (currChar >= 'A' && currChar <= 'Z') || (currChar >= 'a' && currChar <= 'z');
     }
 
-    private static boolean IsDigit(char currChar){
+    private static boolean isDigit(char currChar){
         return currChar >= '0' && currChar <= '9';
 
     }
 
-    private static boolean IsAlphaNum(char currChar){
-        return IsLetter(currChar) || IsDigit(currChar) || currChar == '_';
+    private static boolean isAlphaNum(char currChar){
+        return isLetter(currChar) || isDigit(currChar) || currChar == '_';
     }
 
-    private static boolean IsUnknown(char currChar){
-        return currChar <= 32 || currChar == 127;
+    private static boolean isBlankSpace(char currChar){
+        return currChar == ' ' || currChar == '\t' || currChar == '\n' || currChar == '\r';
     }
 
     private void GetRidOfBlankSpace(){
@@ -313,8 +310,8 @@ public class LexicalAnalyzer {
         while (currentIndex<chars.length){
             currChar = (char)chars[currentIndex];
 
-            if (IsUnknown(currChar)){
-                if(currChar == 13 || currChar == 10){
+            if (isBlankSpace(currChar)){
+                if(currChar == '\n' ){
                     this.lineNumber++;
                 }
                 currentIndex++;
