@@ -47,7 +47,7 @@ class LexicalAnalyzerNegativeGradingTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testInvalid(){
+    void testInvalidId(){
         Assertions.assertEquals(new Token(TokenType.INVALIDID, "_abc", 18), tokens.get(18));
         Assertions.assertEquals(new Token(TokenType.INVALIDID, "_1abc", 20), tokens.get(20));
 
