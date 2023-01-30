@@ -18,6 +18,9 @@ public class LexDriver {
 
         la = new LexicalAnalysis.LexicalAnalyzer("assignment1.COMP442-6421.paquet.2023.4/example-bubblesort.src");
         createOutFiles(la, "example-bubblesort");
+
+        la = new LexicalAnalysis.LexicalAnalyzer("moreTests.txt");
+        createOutFiles(la, "moreTest");
     }
 
     private static void createOutFiles(LexicalAnalyzer la, String fileName) throws IOException {
