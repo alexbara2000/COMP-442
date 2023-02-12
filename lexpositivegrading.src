@@ -1,16 +1,16 @@
 ==	+	or	(	;	integer	while	localvar
 <>	-	and	)	,	float	if 	constructor
-<	*	not	{	.	void	then	attribute
+<	*	not	{	.	void	th_en	attribute
 >	/		}	:	class	else	function
 <=	=		[	=>	self	read	public
 >=			]	::	isa	write	private
 						return	
 
 
+<3@4
+0.0e+0
 
-
-
-0
+0.0
 1
 10
 12
@@ -25,8 +25,8 @@
 abc 	
 abc1
 a1bc	
-abc_1abc	
-abc1_abc	
+/*abc_1abc
+abc1_abc*/
 
 // this is an inline comment
 
@@ -40,7 +40,7 @@ block comment
 /* this is an imbricated
 /* block comment
 */
-*/
+
 
 
 

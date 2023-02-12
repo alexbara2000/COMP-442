@@ -7,19 +7,19 @@ import java.io.IOException;
 
 public class LexDriver {
     public static void main(String[] args) throws Exception {
-        LexicalAnalysis.LexicalAnalyzer la = new LexicalAnalysis.LexicalAnalyzer("assignment1.COMP442-6421.paquet.2023.4/lexnegativegrading.src");
+        LexicalAnalysis.LexicalAnalyzer la = new LexicalAnalysis.LexicalAnalyzer("lexnegativegrading.src");
         createOutFiles(la, "lexnegativegrading");
 
-        la = new LexicalAnalysis.LexicalAnalyzer("assignment1.COMP442-6421.paquet.2023.4/lexpositivegrading.src");
+        la = new LexicalAnalysis.LexicalAnalyzer("lexpositivegrading.src");
         createOutFiles(la, "lexpositivegrading");
 
-        la = new LexicalAnalysis.LexicalAnalyzer("assignment1.COMP442-6421.paquet.2023.4/example-polynomial.src");
+        la = new LexicalAnalysis.LexicalAnalyzer("example-polynomial.src");
         createOutFiles(la, "example-polynomial");
 
-        la = new LexicalAnalysis.LexicalAnalyzer("assignment1.COMP442-6421.paquet.2023.4/example-bubblesort.src");
+        la = new LexicalAnalysis.LexicalAnalyzer("example-bubblesort.src");
         createOutFiles(la, "example-bubblesort");
 
-        la = new LexicalAnalysis.LexicalAnalyzer("moreTests.txt");
+        la = new LexicalAnalysis.LexicalAnalyzer("moreTests.src");
         createOutFiles(la, "moreTest");
     }
 
