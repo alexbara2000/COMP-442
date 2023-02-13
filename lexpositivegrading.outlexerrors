@@ -1,0 +1,2 @@
+Lexical error: Invalid character: "@": line 10.
+Lexical error: Invalid comment: "/* this is an imbricated\n/* block comment\n*/\n\n\n\n\n": line 40.

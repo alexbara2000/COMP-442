@@ -55,4 +55,6 @@ public enum TokenType {
     INVALIDCHAR,
     INVALIDNUM,
     INVALIDID,
+    EPSILON,
+    EMPTY,
 }
