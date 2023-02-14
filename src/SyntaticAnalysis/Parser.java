@@ -15,36 +15,20 @@ public class Parser {
     public int lengthofInput;
     private int indexOfInput=-1;
     private String production = "";
+    private ArrayList<ArrayList<TokenType>> followSet;
+    private ArrayList<ArrayList<TokenType>> firstSet;
     //Stack
     Stack<String> stack= new Stack<>();
-    Map<String, String> data = null;
-    //Table of rules
-    String [][] table=
-            {
-                    {"E",null,null,"E",null,null}
-                    ,
-                    {"TK",null,null,"TK",null,""}
-                    ,
-                    {null,"+TK",null,null,"",""}
-                    ,
-                    {"FH",null,null,"FH",null,null}
-                    ,
-                    {null,"","*FH",null,"",""}
-                    ,
-                    {"a",null,null,"(E)",null,null}
-
-
-            };
-    //ArrayList<String> nonTerminals = new ArrayList<>(Arrays.asList("S","E","K","T","H","F"));
-    //ArrayList<String> terminals = new ArrayList<>(Arrays.asList("a","+","*","(",")","$"));
+    Map<String, String> data;
     ArrayList<TokenType> terminals = new ArrayList<>();
     ArrayList<String> nonTerminals = new ArrayList<>();
 
     ArrayList<String> test = new ArrayList<>();
-    ArrayList<String> nullableNonTerminals = new ArrayList<>(Arrays.asList("K","H"));
+    ArrayList<String> nullableNonTerminals = new ArrayList<>(List.of("REPTSTART0"));
 
 
     public Parser(String path) throws Exception {
+
         this.input= new LexicalAnalyzer(path);
 
         String csvFile = "src/Common/grammar.csv";
@@ -124,13 +108,19 @@ public class Parser {
         Token token=input.getNextToken();
         String top;
         System.out.println(token);
+        boolean isValid = true;
 
         while(!stack.peek().equals("$"))
         {
-            while(token.getType() == TokenType.BLOCKCMT || token.getType() == TokenType.BLOCKCMT){
-                token = input.getNextToken();
+            try{
+                while(token.getType() == TokenType.BLOCKCMT || token.getType() == TokenType.INLINECMT){
+                    token = input.getNextToken();
+                }
+                //System.out.println(token);
             }
-            System.out.println(token);
+            catch (Exception e){
+
+            }
             if(token == null && nullableNonTerminals.contains(stack.peek())){
                 stack.pop();
                 continue;
@@ -138,33 +128,50 @@ public class Parser {
             top=stack.peek();
             System.out.println(stack);
             System.out.println(production);
+            System.out.println(token);
+            System.out.println(top);
             try{
                 if(terminals.contains(getActualTop(top))){
+                    // add if statement
                     production += stack.pop()+ " ";
                     token = input.getNextToken();
                 }
                 else{
-                    System.out.println("error1");
-                    return;
+                    skipError(token);
+                    isValid = false;
                 }
             }
             catch (Exception e){
-                System.out.println("******");
-                System.out.println(top);
-                System.out.println(nonTerminals.indexOf(top));
-
-
                 if(data.get(nonTerminals.indexOf(top) +","+terminals.indexOf(token.getType())) != null){
                     stack.pop();
                     inverseRHSMMultiPush(data.get(nonTerminals.indexOf(top) +","+terminals.indexOf(token.getType())));
                 }
                 else {
-                    System.out.println("error2");
-                    return;
+                    skipError(token);
+                    isValid = true;
                 }
             }
         }
-        System.out.println("Input is Accepted by LL1");
+        if(isValid){
+            System.out.println("Input is accepted by the grammar");
+        }
+        else {
+            System.out.println("Input is not accepted by the grammar");
+        }
+
+    }
+
+    private void skipError(Token token) {
+        System.out.println(token.getLocation());
+        String top = stack.peek();
+        if(token == null || follow(top)){
+
+        }
+    }
+
+    private boolean follow(String top) {
+
+        return true;
     }
 
     private TokenType getActualTop(String top) {
@@ -221,7 +228,7 @@ public class Parser {
 
         for (int i = productions.length - 1; i>=2; i--){
             if(productions[i].equals("&epsilon")){
-                stack.push("");
+                //stack.push("");
             }
             else{
                 stack.push(productions[i]);
