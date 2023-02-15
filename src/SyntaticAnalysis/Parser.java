@@ -15,8 +15,8 @@ public class Parser {
     public int lengthofInput;
     private int indexOfInput=-1;
     private String production = "";
-    private ArrayList<ArrayList<TokenType>> followSet;
-    private ArrayList<ArrayList<TokenType>> firstSet;
+    private Map<String, ArrayList<TokenType>> followSet = new HashMap<>();
+    private Map<String, ArrayList<TokenType>> firstSet = new HashMap<>();
     //Stack
     Stack<String> stack= new Stack<>();
     Map<String, String> data;
@@ -29,6 +29,9 @@ public class Parser {
 
     public Parser(String path) throws Exception {
 
+        populateFollowSet();
+        populateFirstSet();
+        
         this.input= new LexicalAnalyzer(path);
 
         String csvFile = "src/Common/grammar.csv";
@@ -54,23 +57,100 @@ public class Parser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        // now you can access the data in your Map
-//        for (Map.Entry<String, String> entry : data.entrySet()) {
-//            System.out.println(entry.getKey() + ": " + entry.getValue());
-//        }
-        for(var token: terminals){
-            System.out.println(token);
+    private void populateFirstSet() {
+        String firstSetFile = "assignment2.COMP442-6421.paquet.2023.4/COMP442.grammar.grm.first";
+        String line = "";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
+            while ((line = br.readLine()) != null) {
+                String[] initialSplit = line.split(" ");
+                String key = initialSplit[0].substring(7, initialSplit[0].length()-3);
+                ArrayList<TokenType> values = new ArrayList<>();
+                for(int i=1; i<initialSplit.length; i++){
+                    if(initialSplit[i].contains("EPSILON")){
+                        values.add(TokenType.EPSILON);
+                    }
+                    else{
+                        String valueToAdd = initialSplit[i].substring(initialSplit[i].indexOf('\'')+1, initialSplit[i].lastIndexOf('\'')).toUpperCase();
+                        switch (valueToAdd) {
+                            case "$" -> values.add(TokenType.EPSILON);
+                            case ")" -> values.add(TokenType.CLOSEPAR);
+                            case "(" -> values.add(TokenType.OPENPAR);
+                            case "}" -> values.add(TokenType.CLOSECUBR);
+                            case "{" -> values.add(TokenType.OPENCUBR);
+                            case "NEQ" -> values.add(TokenType.NOTEQ);
+                            case "]" -> values.add(TokenType.CLOSESQBR);
+                            case "[" -> values.add(TokenType.OPENSQBR);
+                            case "FLOATLIT" -> values.add(TokenType.FLOATNUM);
+                            case "INTLIT" -> values.add(TokenType.INTNUM);
+                            case "ARROW" -> values.add(TokenType.RETURNTYPE);
+                            case "EQUAL", "=" -> values.add(TokenType.ASSIGN);
+                            case "SR" -> values.add(TokenType.SCOPEOP);
+                            case "," -> values.add(TokenType.COMMA);
+                            case "-" -> values.add(TokenType.MINUS);
+                            case "+" -> values.add(TokenType.PLUS);
+                            case "/" -> values.add(TokenType.DIV);
+                            case "*" -> values.add(TokenType.MULT);
+                            case ";" -> values.add(TokenType.SEMI);
+                            case "." -> values.add(TokenType.DOT);
+                            default -> values.add(TokenType.valueOf(valueToAdd.toUpperCase()));
+                        }
+                    }
+                }
+                firstSet.put(key, values);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println();
-        for(var token: nonTerminals){
-            System.out.println(token);
+    }
+
+    private void populateFollowSet() {
+        String firstSetFile = "assignment2.COMP442-6421.paquet.2023.4/COMP442.grammar.grm.follow";
+        String line = "";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
+            while ((line = br.readLine()) != null) {
+                String[] initialSplit = line.split(" ");
+                String key = initialSplit[0].substring(7, initialSplit[0].length()-3);
+                ArrayList<TokenType> values = new ArrayList<>();
+                for(int i=1; i<initialSplit.length; i++){
+                    if(initialSplit[i].contains("EPSILON")){
+                        values.add(TokenType.EPSILON);
+                    }
+                    else{
+                        String valueToAdd = initialSplit[i].substring(initialSplit[i].indexOf('\'')+1, initialSplit[i].lastIndexOf('\'')).toUpperCase();
+                        switch (valueToAdd) {
+                            case "$" -> values.add(TokenType.EPSILON);
+                            case ")" -> values.add(TokenType.CLOSEPAR);
+                            case "(" -> values.add(TokenType.OPENPAR);
+                            case "}" -> values.add(TokenType.CLOSECUBR);
+                            case "{" -> values.add(TokenType.OPENCUBR);
+                            case "NEQ" -> values.add(TokenType.NOTEQ);
+                            case "]" -> values.add(TokenType.CLOSESQBR);
+                            case "[" -> values.add(TokenType.OPENSQBR);
+                            case "FLOATLIT" -> values.add(TokenType.FLOATNUM);
+                            case "INTLIT" -> values.add(TokenType.INTNUM);
+                            case "ARROW" -> values.add(TokenType.RETURNTYPE);
+                            case "EQUAL", "=" -> values.add(TokenType.ASSIGN);
+                            case "SR" -> values.add(TokenType.SCOPEOP);
+                            case "," -> values.add(TokenType.COMMA);
+                            case "-" -> values.add(TokenType.MINUS);
+                            case "+" -> values.add(TokenType.PLUS);
+                            case "/" -> values.add(TokenType.DIV);
+                            case "*" -> values.add(TokenType.MULT);
+                            case ";" -> values.add(TokenType.SEMI);
+                            case "." -> values.add(TokenType.DOT);
+                            default -> values.add(TokenType.valueOf(valueToAdd.toUpperCase()));
+                        }
+                    }
+                }
+                followSet.put(key, values);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        System.out.println(nonTerminals.indexOf("APARAMS"));
-        System.out.println(terminals.indexOf(TokenType.ID));
-        System.out.println(data.get(nonTerminals.indexOf("APARAMS") + "," + terminals.indexOf(TokenType.ID)));
-
     }
 
     private void AddTerminals(String value) {
