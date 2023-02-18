@@ -34,7 +34,7 @@ public class Parser {
         
         this.input= new LexicalAnalyzer(path);
 
-        String csvFile = "src/Common/grammar.csv";
+        String csvFile = "src/Common/updatedGrammar.csv";
         String line = "";
         String csvSplitBy = ",";
         data = new HashMap<>();
@@ -66,7 +66,7 @@ public class Parser {
         try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
             while ((line = br.readLine()) != null) {
                 String[] initialSplit = line.split(" ");
-                String key = initialSplit[0].substring(7, initialSplit[0].length()-3);
+                String key = initialSplit[0].substring(7, initialSplit[0].length()-3).replace("-", "").toUpperCase();
                 ArrayList<TokenType> values = new ArrayList<>();
                 for(int i=1; i<initialSplit.length; i++){
                     if(initialSplit[i].contains("EPSILON")){
@@ -101,8 +101,7 @@ public class Parser {
                 }
                 firstSet.put(key, values);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
     }
 
@@ -113,10 +112,10 @@ public class Parser {
         try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
             while ((line = br.readLine()) != null) {
                 String[] initialSplit = line.split(" ");
-                String key = initialSplit[0].substring(7, initialSplit[0].length()-3);
+                String key = initialSplit[0].substring(8, initialSplit[0].length()-3).replace("-", "").toUpperCase();
                 ArrayList<TokenType> values = new ArrayList<>();
                 for(int i=1; i<initialSplit.length; i++){
-                    if(initialSplit[i].contains("EPSILON")){
+                    if(initialSplit[i].contains("EPSILON") || initialSplit[i].contains("$")){
                         values.add(TokenType.EPSILON);
                     }
                     else{
@@ -148,8 +147,7 @@ public class Parser {
                 }
                 followSet.put(key, values);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
     }
 
@@ -206,18 +204,15 @@ public class Parser {
                 continue;
             }
             top=stack.peek();
-            System.out.println(stack);
             System.out.println(production);
-            System.out.println(token);
-            System.out.println(top);
             try{
-                if(terminals.contains(getActualTop(top))){
+                if(terminals.contains(getActualTop(top)) && getActualTop(top) == token.getType()){
                     // add if statement
                     production += stack.pop()+ " ";
                     token = input.getNextToken();
                 }
                 else{
-                    skipError(token);
+                    token = skipError(token);
                     isValid = false;
                 }
             }
@@ -227,8 +222,8 @@ public class Parser {
                     inverseRHSMMultiPush(data.get(nonTerminals.indexOf(top) +","+terminals.indexOf(token.getType())));
                 }
                 else {
-                    skipError(token);
-                    isValid = true;
+                    token = skipError(token);
+                    isValid = false;
                 }
             }
         }
@@ -241,17 +236,22 @@ public class Parser {
 
     }
 
-    private void skipError(Token token) {
+    private Token skipError(Token token) {
         System.out.println(token.getLocation());
         String top = stack.peek();
-        if(token == null || follow(top)){
-
+        System.out.println(top);
+        if(token == null || followSet.get(top).contains(token.getType())){
+            stack.pop();
         }
-    }
-
-    private boolean follow(String top) {
-
-        return true;
+        else {
+            while ( (!firstSet.get(top).contains(token.getType()) || firstSet.get(top).contains(TokenType.EPSILON)) && !followSet.get(top).contains(token.getType())){
+                token = input.getNextToken();
+                if(token == null){
+                    return null;
+                }
+            }
+        }
+        return token;
     }
 
     private TokenType getActualTop(String top) {
@@ -295,6 +295,9 @@ public class Parser {
             }
             case "SR" -> {
                 return TokenType.SCOPEOP;
+            }
+            case "RETURNTYPE" -> {
+                throw new RuntimeException();
             }
             default -> {
                 return TokenType.valueOf(top.toUpperCase());
