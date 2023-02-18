@@ -6,6 +6,7 @@ import LexicalAnalysis.LexicalAnalyzer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class Parser {
     //input
     public LexicalAnalyzer input;
     private String production = "";
+    private ArrayList<String> derivations = new ArrayList<>();
     private Map<String, ArrayList<TokenType>> followSet = new HashMap<>();
     private Map<String, ArrayList<TokenType>> firstSet = new HashMap<>();
     private ArrayList<String> nullable = new ArrayList<>();
@@ -22,16 +24,18 @@ public class Parser {
     Map<String, String> data;
     ArrayList<TokenType> terminals = new ArrayList<>();
     ArrayList<String> nonTerminals = new ArrayList<>();
-
-    ArrayList<String> test = new ArrayList<>();
-    ArrayList<String> nullableNonTerminals = new ArrayList<>(List.of("REPTSTART0"));
+    FileWriter outDerivationWriter;
+    FileWriter outSyntaxErrorsWriter;
 
 
     public Parser(String path) throws Exception {
 
-        populateFirstSet();
+        String pathPrefix = path.split("\\.")[0];
+        outDerivationWriter = new FileWriter(pathPrefix+"outerivation");
+        outSyntaxErrorsWriter = new FileWriter(pathPrefix+".outsyntaxsrrors");
+        populateFirstAndFollowSet();
         
-        this.input= new LexicalAnalyzer(path);
+        this.input= new LexicalAnalyzer("assignment2.COMP442-6421.paquet.2023.4/"+path);
 
         String csvFile = "src/Common/updatedGrammar.csv";
         String line = "";
@@ -58,7 +62,7 @@ public class Parser {
         }
     }
 
-    private void populateFirstSet() {
+    private void populateFirstAndFollowSet() {
         String firstSetFile = "src/Common/firstAndFollowSet.csv";
         String line = "";
 
@@ -126,7 +130,7 @@ public class Parser {
                         }
                     }
                 }
-                firstSet.put(key, followValues);
+                followSet.put(key, followValues);
             }
         } catch (Exception e) {
         }
@@ -159,14 +163,13 @@ public class Parser {
     }
 
     //algorithm
-    public void parse()
-    {
+    public void parse() throws IOException {
         stack.push("$");//
         stack.push("START");
-        //Read one token from input
+        derivations.add("START");
+
         Token token=input.getNextToken();
         String top;
-        System.out.println(token);
         boolean isValid = true;
 
         while(!stack.peek().equals("$"))
@@ -175,21 +178,27 @@ public class Parser {
                 while(token.getType() == TokenType.BLOCKCMT || token.getType() == TokenType.INLINECMT){
                     token = input.getNextToken();
                 }
-                //System.out.println(token);
             }
             catch (Exception e){
 
             }
             if(token == null && nullable.contains(stack.peek())){
+                derivations.remove(stack.peek());
+                outDerivationWriter.write(String.join(" ", derivations) + "\n");
+
+                if(endable.contains(stack.peek())){
+                    break;
+                }
                 stack.pop();
                 continue;
             }
+
             top=stack.peek();
-            System.out.println(production);
+            outDerivationWriter.write(String.join(" ", derivations) + "\n");
+
             try{
                 if(terminals.contains(getActualTop(top)) && getActualTop(top) == token.getType()){
-                    // add if statement
-                    production += stack.pop()+ " ";
+                    stack.pop();
                     token = input.getNextToken();
                 }
                 else{
@@ -199,8 +208,10 @@ public class Parser {
             }
             catch (Exception e){
                 if(data.get(nonTerminals.indexOf(top) +","+terminals.indexOf(token.getType())) != null){
-                    stack.pop();
-                    inverseRHSMMultiPush(data.get(nonTerminals.indexOf(top) +","+terminals.indexOf(token.getType())));
+                    String popedString = stack.pop();
+                    int index = derivations.indexOf(popedString);
+                    derivations.remove(popedString);
+                    inverseRHSMMultiPush(data.get(nonTerminals.indexOf(top) +","+terminals.indexOf(token.getType())), index);
                 }
                 else {
                     token = skipError(token);
@@ -215,22 +226,24 @@ public class Parser {
             System.out.println("Input is not accepted by the grammar");
         }
 
+        outSyntaxErrorsWriter.close();
+        outDerivationWriter.close();
     }
 
-    private Token skipError(Token token) {
-        System.out.println(token.getLocation());
+    private Token skipError(Token token) throws IOException {
+        outSyntaxErrorsWriter.write("Syntax error for the following token" + token);
         String top = stack.peek();
+        System.out.println(token);
         System.out.println(top);
-        if(!followSet.containsKey(top) || !firstSet.containsKey(top)){
-            stack.pop();
-            return token;
-        }
         if(token == null || followSet.get(top).contains(token.getType())){
             stack.pop();
+            System.out.println(stack.peek());
         }
         else {
-            while ( (!firstSet.get(top).contains(token.getType()) || firstSet.get(top).contains(TokenType.EPSILON)) && !followSet.get(top).contains(token.getType())){
+            while ( (!firstSet.get(top).contains(token.getType()) || nullable.contains(top)) && !followSet.get(top).contains(token.getType())){
+
                 token = input.getNextToken();
+                System.out.println(token);
                 if(token == null){
                     return null;
                 }
@@ -291,7 +304,7 @@ public class Parser {
     }
 
 
-    private void inverseRHSMMultiPush(String rule){
+    private void inverseRHSMMultiPush(String rule, int index){
         String[] productions = rule.split(" ");
 
         for (int i = productions.length - 1; i>=2; i--){
@@ -302,10 +315,18 @@ public class Parser {
                 stack.push(productions[i]);
             }
         }
+        for (int i = 2; i< productions.length; i++){
+            if(productions[i].equals("&epsilon")){
+            }
+            else{
+                derivations.add(index + i -2,productions[i]);
+            }
+        }
     }
 
     public static void main(String[] args) throws Exception {
-        Parser parser=new Parser("assignment2.COMP442-6421.paquet.2023.4/example-bubblesort.src");
+        String fileToParse = "example-bubblesort.src";
+        Parser parser=new Parser(fileToParse);
         parser.parse();
 
     }
