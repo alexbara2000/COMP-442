@@ -12,11 +12,11 @@ import java.util.*;
 public class Parser {
     //input
     public LexicalAnalyzer input;
-    public int lengthofInput;
-    private int indexOfInput=-1;
     private String production = "";
     private Map<String, ArrayList<TokenType>> followSet = new HashMap<>();
     private Map<String, ArrayList<TokenType>> firstSet = new HashMap<>();
+    private ArrayList<String> nullable = new ArrayList<>();
+    private ArrayList<String> endable = new ArrayList<>();
     //Stack
     Stack<String> stack= new Stack<>();
     Map<String, String> data;
@@ -29,7 +29,6 @@ public class Parser {
 
     public Parser(String path) throws Exception {
 
-        populateFollowSet();
         populateFirstSet();
         
         this.input= new LexicalAnalyzer(path);
@@ -60,92 +59,74 @@ public class Parser {
     }
 
     private void populateFirstSet() {
-        String firstSetFile = "assignment2.COMP442-6421.paquet.2023.4/COMP442.grammar.grm.first";
+        String firstSetFile = "src/Common/firstAndFollowSet.csv";
         String line = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
+            line = br.readLine();
             while ((line = br.readLine()) != null) {
-                String[] initialSplit = line.split(" ");
-                String key = initialSplit[0].substring(7, initialSplit[0].length()-3).replace("-", "").toUpperCase();
-                ArrayList<TokenType> values = new ArrayList<>();
-                for(int i=1; i<initialSplit.length; i++){
-                    if(initialSplit[i].contains("EPSILON")){
-                        values.add(TokenType.EPSILON);
+                String[] initialSplit = line.split(",");
+                String key = initialSplit[0];
+                if(initialSplit[3].contains("yes")){
+                    nullable.add(key.toUpperCase());
+                }
+                if(initialSplit[3].contains("no")){
+                    endable.add(key.toUpperCase());
+                }
+                String[] firstSplit = initialSplit[1].split(" ");
+                String[] followSplit = initialSplit[2].split(" ");
+
+                ArrayList<TokenType> firstValues = new ArrayList<>();
+                for(int i=0; i<firstSplit.length; i++){
+                    if(firstSplit[i].contains("∅")){
+                        firstValues.add(TokenType.EPSILON);
                     }
                     else{
-                        String valueToAdd = initialSplit[i].substring(initialSplit[i].indexOf('\'')+1, initialSplit[i].lastIndexOf('\'')).toUpperCase();
+                        String valueToAdd = firstSplit[i].toUpperCase();
                         switch (valueToAdd) {
-                            case "$" -> values.add(TokenType.EPSILON);
-                            case ")" -> values.add(TokenType.CLOSEPAR);
-                            case "(" -> values.add(TokenType.OPENPAR);
-                            case "}" -> values.add(TokenType.CLOSECUBR);
-                            case "{" -> values.add(TokenType.OPENCUBR);
-                            case "NEQ" -> values.add(TokenType.NOTEQ);
-                            case "]" -> values.add(TokenType.CLOSESQBR);
-                            case "[" -> values.add(TokenType.OPENSQBR);
-                            case "FLOATLIT" -> values.add(TokenType.FLOATNUM);
-                            case "INTLIT" -> values.add(TokenType.INTNUM);
-                            case "ARROW" -> values.add(TokenType.RETURNTYPE);
-                            case "EQUAL", "=" -> values.add(TokenType.ASSIGN);
-                            case "SR" -> values.add(TokenType.SCOPEOP);
-                            case "," -> values.add(TokenType.COMMA);
-                            case "-" -> values.add(TokenType.MINUS);
-                            case "+" -> values.add(TokenType.PLUS);
-                            case "/" -> values.add(TokenType.DIV);
-                            case "*" -> values.add(TokenType.MULT);
-                            case ";" -> values.add(TokenType.SEMI);
-                            case "." -> values.add(TokenType.DOT);
-                            default -> values.add(TokenType.valueOf(valueToAdd.toUpperCase()));
+                            case "RPAR" -> firstValues.add(TokenType.CLOSEPAR);
+                            case "LPAR" -> firstValues.add(TokenType.OPENPAR);
+                            case "RCURBR" -> firstValues.add(TokenType.CLOSECUBR);
+                            case "LCURBR" -> firstValues.add(TokenType.OPENCUBR);
+                            case "NEQ" -> firstValues.add(TokenType.NOTEQ);
+                            case "RSQBR" -> firstValues.add(TokenType.CLOSESQBR);
+                            case "LSQBR" -> firstValues.add(TokenType.OPENSQBR);
+                            case "FLOATLIT" -> firstValues.add(TokenType.FLOATNUM);
+                            case "INTLIT" -> firstValues.add(TokenType.INTNUM);
+                            case "ARROW" -> firstValues.add(TokenType.RETURNTYPE);
+                            case "EQUAL" -> firstValues.add(TokenType.ASSIGN);
+                            case "SR" -> firstValues.add(TokenType.SCOPEOP);
+                            default -> firstValues.add(TokenType.valueOf(valueToAdd.toUpperCase()));
                         }
                     }
                 }
-                firstSet.put(key, values);
-            }
-        } catch (Exception e) {
-        }
-    }
+                firstSet.put(key, firstValues);
 
-    private void populateFollowSet() {
-        String firstSetFile = "assignment2.COMP442-6421.paquet.2023.4/COMP442.grammar.grm.follow";
-        String line = "";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
-            while ((line = br.readLine()) != null) {
-                String[] initialSplit = line.split(" ");
-                String key = initialSplit[0].substring(8, initialSplit[0].length()-3).replace("-", "").toUpperCase();
-                ArrayList<TokenType> values = new ArrayList<>();
-                for(int i=1; i<initialSplit.length; i++){
-                    if(initialSplit[i].contains("EPSILON") || initialSplit[i].contains("$")){
-                        values.add(TokenType.EPSILON);
+                ArrayList<TokenType> followValues = new ArrayList<>();
+                for(int i=0; i<followSplit.length; i++){
+                    if(followSplit[i].contains("∅")){
+                        followValues.add(TokenType.EPSILON);
                     }
                     else{
-                        String valueToAdd = initialSplit[i].substring(initialSplit[i].indexOf('\'')+1, initialSplit[i].lastIndexOf('\'')).toUpperCase();
+                        String valueToAdd = followSplit[i].toUpperCase();
                         switch (valueToAdd) {
-                            case "$" -> values.add(TokenType.EPSILON);
-                            case ")" -> values.add(TokenType.CLOSEPAR);
-                            case "(" -> values.add(TokenType.OPENPAR);
-                            case "}" -> values.add(TokenType.CLOSECUBR);
-                            case "{" -> values.add(TokenType.OPENCUBR);
-                            case "NEQ" -> values.add(TokenType.NOTEQ);
-                            case "]" -> values.add(TokenType.CLOSESQBR);
-                            case "[" -> values.add(TokenType.OPENSQBR);
-                            case "FLOATLIT" -> values.add(TokenType.FLOATNUM);
-                            case "INTLIT" -> values.add(TokenType.INTNUM);
-                            case "ARROW" -> values.add(TokenType.RETURNTYPE);
-                            case "EQUAL", "=" -> values.add(TokenType.ASSIGN);
-                            case "SR" -> values.add(TokenType.SCOPEOP);
-                            case "," -> values.add(TokenType.COMMA);
-                            case "-" -> values.add(TokenType.MINUS);
-                            case "+" -> values.add(TokenType.PLUS);
-                            case "/" -> values.add(TokenType.DIV);
-                            case "*" -> values.add(TokenType.MULT);
-                            case ";" -> values.add(TokenType.SEMI);
-                            case "." -> values.add(TokenType.DOT);
-                            default -> values.add(TokenType.valueOf(valueToAdd.toUpperCase()));
+                            case "RPAR" -> followValues.add(TokenType.CLOSEPAR);
+                            case "LPAR" -> followValues.add(TokenType.OPENPAR);
+                            case "RCURBR" -> followValues.add(TokenType.CLOSECUBR);
+                            case "LCURBR" -> followValues.add(TokenType.OPENCUBR);
+                            case "NEQ" -> followValues.add(TokenType.NOTEQ);
+                            case "RSQBR" -> followValues.add(TokenType.CLOSESQBR);
+                            case "LSQBR" -> followValues.add(TokenType.OPENSQBR);
+                            case "FLOATLIT" -> followValues.add(TokenType.FLOATNUM);
+                            case "INTLIT" -> followValues.add(TokenType.INTNUM);
+                            case "ARROW" -> followValues.add(TokenType.RETURNTYPE);
+                            case "EQUAL" -> followValues.add(TokenType.ASSIGN);
+                            case "SR" -> followValues.add(TokenType.SCOPEOP);
+                            default -> followValues.add(TokenType.valueOf(valueToAdd.toUpperCase()));
                         }
                     }
                 }
-                followSet.put(key, values);
+                firstSet.put(key, followValues);
             }
         } catch (Exception e) {
         }
@@ -199,7 +180,7 @@ public class Parser {
             catch (Exception e){
 
             }
-            if(token == null && nullableNonTerminals.contains(stack.peek())){
+            if(token == null && nullable.contains(stack.peek())){
                 stack.pop();
                 continue;
             }
@@ -240,6 +221,10 @@ public class Parser {
         System.out.println(token.getLocation());
         String top = stack.peek();
         System.out.println(top);
+        if(!followSet.containsKey(top) || !firstSet.containsKey(top)){
+            stack.pop();
+            return token;
+        }
         if(token == null || followSet.get(top).contains(token.getType())){
             stack.pop();
         }
@@ -320,8 +305,6 @@ public class Parser {
     }
 
     public static void main(String[] args) throws Exception {
-        // TODO code application logic here
-
         Parser parser=new Parser("assignment2.COMP442-6421.paquet.2023.4/example-bubblesort.src");
         parser.parse();
 
