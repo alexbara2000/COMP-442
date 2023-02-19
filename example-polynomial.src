@@ -36,15 +36,15 @@ function QUADRATIC::evaluate(x: float) => float
 
 function QUADRATIC::constructor(A: float, B: float, C: float)
 {
-  self.a = A;
-  self.b = B;
-  self.c = C;
+  a = A;
+  b = B;
+  c = C;
 }
 
 function LINEAR::constructor(A: float, B: float) 
 {
-  self.a = A;
-  self.b = B;
+  a = A;
+  b = B;
 }
 
 function LINEAR::evaluate(x: float) => float 
@@ -60,7 +60,6 @@ function main() => void
 {
   localvar f1: LINEAR(2, 3.5);
   localvar f2: QUADRATIC(-2.0, 1.0, 0.0);
-  localvar counter: integer = 1;	
 
   while(counter <= 10)
   {

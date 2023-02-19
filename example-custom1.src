@@ -1,0 +1,386 @@
+function bubbleSort(arr: integer[], size: integer) => void 
+{
+  localvar n    : integer;
+  localvar i    : integer;
+  localvar j    : integer;
+  localvar temp : integer;
+  localvar testString : string;
+  n = size;
+  i = 0;
+  j = 0;
+  temp = 0;
+  while (i < n-1) { 
+    while (j < n-i-1) {
+      if (arr[j] > arr[j+1]) 
+        then {
+          // swap temp and arr[i]
+          temp = arr[j];
+          arr[j] = arr[j+1];
+          arr[j+1] = temp;
+        } else ;
+        j = j+1;
+      };
+    i = i+1;
+  };
+}
+   
+function printArray(arr: integer[], size: integer) => void 
+{
+  localvar n: integer;
+  localvar i: integer; 
+  n = size;
+  i = 0; 
+  while (i<n) { 
+    write(arr[i]);
+      i = i+1;
+  };
+} 
+
+function functionBody(arr: integer[], size: integer) => void 
+{
+  localvar n: integer;
+  n = size;
+  localvar i: integer; 
+  i = 0; 
+  while (i<n) { 
+    write(arr[i]);
+    i = i+1;
+  };
+  
+    while (i<n) { 
+      write(arr[i]);
+    };
+  
+    while (i<n) { };
+
+    if (arr[j] > arr[j+1]) 
+      then {
+        temp = arr[j];
+      } else ;
+      
+ if (arr[j] > arr[j+1]) 
+   then {
+   } else {
+        temp = arr[j];
+   };
+} 
+
+function variableIdNest(arr: integer[], size: integer) => void 
+{
+  localvar n: integer;
+  n = n;
+  n = n.n;
+  n = n.n();
+  n = n.n(1.0);
+  n = n.n(n);
+  n = n(n).n;
+  n = n(n).n();
+  n = n(n).n(1.0);
+  n = n.n[n];
+  n = n.n[1*9];
+  n = n[n].n;
+  n = n[n].n[n];
+  n = n.n[n][n];
+  n = n[n][n].n;
+  n = n[n][n].n[n][n];
+  n = n(n).n[n];
+  n = n(n).n[n][n];
+  
+  n = n[a][b][10 / 9 ][c];
+} 
+
+function expressionsTest() => void 
+{
+  localvar n: integer;
+  localvar i: integer;
+  
+  n = i;
+  n = n + 1;
+  n = n - 1;
+  n = n * 10;
+  n = n / 10;
+  n = n > 5;
+  n = n < 5;
+  n = n >= 5;
+  n = n <= 5;
+  n = n <> 5;
+  n = n + 5 * 10;
+  n = n - 5 * 10;
+  n = n * 10 / 5;
+  n = n * 6 / 44 > 9;
+  n = n * 6 / 44 > i;
+  n = (n+10) * 8;
+  n = (n + (8 * i) / 9);
+  n = -n;
+  n = -19 + -n;
+  n = 1 - -n;
+  n = 1 - --n;
+  n = 17 * -n;
+  n = 10.99 * 0.99 + i;
+  n = not 8 > i;
+  n = 7 > 0 and i;
+  n = 7 > 0 or i;
+  n = n[9] * 9 + n[i*2];
+} 
+
+function functionBody(arr: integer[], size: integer) => void 
+{
+  localvar n: integer;
+} 
+
+function functionBody(arr: integer[], size: integer) => float 
+{
+  localvar n: integer;
+  read(n);
+  write(n);
+  
+  return (n+1.111);
+} 
+
+function functionCalls(x: integer) => integer {
+  localvar i: integer; 
+  i = 0; 
+  printArray(x);
+  printArray(x, y);
+  printArray(x, y, z, a, b, c);
+  printArray(0, 1.0, arr[i], a, b, c);
+  printArray(0, 1.0, arr[i], a, arr[1][i], c);
+  printArray(a, printArray(x, y, z));
+  
+  i = printArray(77);
+  printArray(i+1, arr[i]);
+  printArray(i+1);
+  return (i);
+} 
+
+function functionParams(x: integer, y: float, z: id, a: integer[10]) => void {} 
+
+function variableDecls(x: integer) => void {
+   localvar i: integer; 
+   localvar i: float; 
+   localvar i: id; 
+   localvar i: integer[]; 
+   localvar i: integer[10]; 
+   localvar i: float[]; 
+   localvar i: float[10]; 
+   localvar i: integer[][]; 
+   localvar i: float[][]; 
+   localvar i: float[2][]; 
+   localvar i: integer[9][3]; 
+} 
+
+function printArray(x: float) => integer {
+  localvar i: integer; 
+  i = 0; 
+  return (i);
+} 
+
+function printArray(x: id) => integer {
+  localvar i: integer; 
+  i = 0; 
+  return (i);
+} 
+
+function printArray(x: id) => id {
+  localvar i: integer; 
+  i = 0; 
+  return (i);
+} 
+
+function printArray(x: float[]) => integer {
+  localvar i: integer; 
+  i = 0; 
+  return (i);
+} 
+
+function printArray(x: float[5]) => float {
+  localvar i: integer; 
+  i = 0; 
+  return (i);
+} 
+
+function printArray(x: float[][]) => float {
+  localvar i: integer; 
+  i = 0; 
+  return (i);
+} 
+
+function printArray(x: float[10][111]) => float {
+  localvar i: integer; 
+  i = 0; 
+  return (i);
+}
+
+function testFunction() => string {
+  return ("Hello");
+}
+
+class POLYNOMIAL {
+  public function evaluate: (x: float) => float;
+};
+
+class LINEAR isa POLYNOMIAL {
+  private attribute a: float;
+  private attribute b: float;
+  public  constructor: (A: float, B: float);
+  public  function evaluate: (x: float) => float;
+};
+
+class QUADRATIC isa POLYNOMIAL {
+  private attribute a: float;
+  private attribute b: float;
+  private attribute c: float;
+  public  constructor: (A: float, B: float, C: float);
+  private  function evaluate: (x: float) => float;
+};
+
+class Test1 {
+  private attribute a: float;
+};
+
+class Test2 {
+  public attribute a: float;
+  public attribute a: float;
+};
+
+class Test3 {
+  public function evaluate: (x: float) => float;
+  public function evaluate: (x: float) => float;
+};
+
+class Test4 isa Test2, Test3 {
+  private function evaluate: (x: float) => float;
+};
+
+class Test4 { };
+
+/*
+    classes
+    --------------------------------------
+| | no class declaration
+|X| class declaration
+|X| multiple class declarations
+|X| no data member declaration
+|X| data member declaration
+|X| multiple data member declaration
+|X| no member function declaration
+|X| member function declaration
+|X| multiple member function declaration
+|X| no member
+|X| no inherited class
+|X| one inherited class
+|X| multiple inherited classes
+|X| private member specifier
+|X| public member specifier
+
+    functions: definitions
+    --------------------------------------
+|X| no main function definition
+| | main function definition
+| | no free function definition
+|X| free function definition
+|X| multiple free function definitions
+| | no member function definition
+|X| member function definition
+|X| multiple member function definitions
+|X| return type: void
+|X| return type: integer
+|X| return type: float
+|X| return type: id
+| | return type: array (not allowed)
+
+    functions: formal parameters
+    --------------------------------------
+|X| type: integer
+|X| type: float
+|X| type: id
+|X| type: 1-dim array 
+|X| type: n-dim array
+|X| type: array (with size)
+|X| type: array (without size)
+
+    functions: calls
+    --------------------------------------
+|X| free function call
+|X| member function call
+|X| parameters:0
+|X| parameters:1
+|X| parameters:n
+|X| array parameter - 1-dim
+|X| array parameter - n-dim
+|X| array parameter - with size
+|X| array parameter - without size
+|X| function call as statement
+|X| function call as expression factor
+|X| expression as parameter
+
+    variable declaration
+    --------------------------------------
+|X| type: integer
+|X| type: float
+|X| type: string
+|X| type: id
+|X| type: 1-dim array 
+|X| type: n-dim array
+|X| type: array (with size)
+|X| type: array (without size) (not allowed)
+
+    function body: local variable declarations
+    --------------------------------------
+| | no local variable declarations
+|X| local variable declarations
+|X| intertwined statements and variable declarations
+
+    function body: statements
+    --------------------------------------
+|X| no statement
+|X| 1 statement
+|X| n statements
+|X| if statement
+|X| if: empty then or else blocks
+|X| if: 1-statement then or else blocks
+|X| if: n-statements then or else blocks
+|X| while statement
+|X| while: empty block
+|X| while: 1-statement block
+|X| while: n-statement block
+|X| read(<variable>) statement
+|X| write(<expr>) statement
+|X| return(<expr>) statement
+|X| assignment statement
+
+    variable + idnest
+    --------------------------------------
+|X| id
+|X| id.id
+|X| id.id(id)
+|X| id(id).id
+|X| id(id).id()
+|X| id.id[id]
+|X| id[id].id
+|X| id[id].id[id]
+|X| id.id[id][id]
+|X| id[id][id].id
+|X| id[id][id].id[id][id]
+|X| id(id).id[id]
+|X| id(id).id[id][id]
+|X| expression as array index
+
+    expressions
+    --------------------------------------
+|X| single variable
+|X| involving addop
+|X| involving multop
+|X| involving relop
+|X| involving addop + multop
+|X| involving multop + relop
+|X| involving addop + multop + relop
+|X| involving parentheses
+|X| involving nested parentheses
+|X| involving not
+|X| involving sign
+|X| involving literals
+|X| involving variable + idnest
+|X| involving function calls
+|X| involving all the above in one expression
+*/

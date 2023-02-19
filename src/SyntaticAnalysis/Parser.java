@@ -31,11 +31,11 @@ public class Parser {
     public Parser(String path) throws Exception {
 
         String pathPrefix = path.split("\\.")[0];
-        outDerivationWriter = new FileWriter(pathPrefix+"outerivation");
+        outDerivationWriter = new FileWriter(pathPrefix+".outderivation");
         outSyntaxErrorsWriter = new FileWriter(pathPrefix+".outsyntaxsrrors");
         populateFirstAndFollowSet();
         
-        this.input= new LexicalAnalyzer("assignment2.COMP442-6421.paquet.2023.4/"+path);
+        this.input= new LexicalAnalyzer(path);
 
         String csvFile = "src/Common/updatedGrammar.csv";
         String line = "";
@@ -231,11 +231,17 @@ public class Parser {
     }
 
     private Token skipError(Token token) throws IOException {
-        outSyntaxErrorsWriter.write("Syntax error for the following token" + token);
+        outSyntaxErrorsWriter.write("Syntax error for the following token" + token + "\n");
         String top = stack.peek();
         System.out.println(token);
         System.out.println(top);
+        Stack<String> tempStack = (Stack<String>)stack.clone();
+        while(!followSet.containsKey(tempStack.peek())){
+            tempStack.pop();
+        }
+        top = tempStack.peek();
         if(token == null || followSet.get(top).contains(token.getType())){
+            stack = tempStack;
             stack.pop();
             System.out.println(stack.peek());
         }
