@@ -32,7 +32,7 @@ public class Parser {
 
         String pathPrefix = path.split("\\.")[0];
         outDerivationWriter = new FileWriter(pathPrefix+".outderivation");
-        outSyntaxErrorsWriter = new FileWriter(pathPrefix+".outsyntaxsrrors");
+        outSyntaxErrorsWriter = new FileWriter(pathPrefix+".outsyntaxerrors");
         populateFirstAndFollowSet();
         
         this.input= new LexicalAnalyzer(path);
@@ -236,6 +236,9 @@ public class Parser {
         System.out.println(token);
         System.out.println(top);
         Stack<String> tempStack = (Stack<String>)stack.clone();
+        if(!followSet.containsKey(tempStack.peek())){
+            return input.getNextToken();
+        }
         while(!followSet.containsKey(tempStack.peek())){
             tempStack.pop();
         }
@@ -331,7 +334,7 @@ public class Parser {
     }
 
     public static void main(String[] args) throws Exception {
-        String fileToParse = "example-bubblesort.src";
+        String fileToParse = "example-custom1.src";
         Parser parser=new Parser(fileToParse);
         parser.parse();
 

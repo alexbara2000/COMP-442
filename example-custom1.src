@@ -211,10 +211,6 @@ function printArray(x: float[10][111]) => float {
   return (i);
 }
 
-function testFunction() => string {
-  return ("Hello");
-}
-
 class POLYNOMIAL {
   public function evaluate: (x: float) => float;
 };
