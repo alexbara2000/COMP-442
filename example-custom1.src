@@ -1,5 +1,6 @@
 function bubbleSort(arr: integer[], size: integer) => void 
 {
+  localvar i: integer[];
   localvar n    : integer;
   localvar i    : integer;
   localvar j    : integer;
@@ -166,7 +167,7 @@ function variableDecls(x: integer) => void {
    localvar i: integer[][]; 
    localvar i: float[][]; 
    localvar i: float[2][]; 
-   localvar i: integer[9][3]; 
+   localvar i: integer[9][3][4];
 } 
 
 function printArray(x: float) => integer {

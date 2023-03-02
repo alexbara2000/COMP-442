@@ -35,6 +35,8 @@ public class Token {
         return type;
     }
 
+    public String getLexeme() { return  lexeme;}
+
     @Override
     public String toString() {
         return "["+type.toString().toLowerCase()+", "+lexeme+", "+location+"]";

@@ -1,5 +1,7 @@
 package SyntaticAnalysis;
 
+import Common.AST;
+import Common.SemanticConcepts;
 import Common.Token;
 import Common.TokenType;
 import LexicalAnalysis.LexicalAnalyzer;
@@ -21,6 +23,7 @@ public class Parser {
     private ArrayList<String> endable = new ArrayList<>();
     //Stack
     Stack<String> stack= new Stack<>();
+    Stack<AST> ASTStack = new Stack<>();
     Map<String, String> data;
     ArrayList<TokenType> terminals = new ArrayList<>();
     ArrayList<String> nonTerminals = new ArrayList<>();
@@ -37,7 +40,7 @@ public class Parser {
         
         this.input= new LexicalAnalyzer(path);
 
-        String csvFile = "src/Common/updatedGrammar.csv";
+        String csvFile = "src/Common/grammarTable.csv";
         String line = "";
         String csvSplitBy = ",";
         data = new HashMap<>();
@@ -63,7 +66,7 @@ public class Parser {
     }
 
     private void populateFirstAndFollowSet() {
-        String firstSetFile = "src/Common/firstAndFollowSet.csv";
+        String firstSetFile = "src/Common/firstfollowSet.csv";
         String line = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
@@ -82,7 +85,7 @@ public class Parser {
 
                 ArrayList<TokenType> firstValues = new ArrayList<>();
                 for(int i=0; i<firstSplit.length; i++){
-                    if(firstSplit[i].contains("∅")){
+                    if(firstSplit[i].contains("∅") || firstSplit[i].contains("eof")){
                         firstValues.add(TokenType.EPSILON);
                     }
                     else{
@@ -99,8 +102,9 @@ public class Parser {
                             case "INTLIT" -> firstValues.add(TokenType.INTNUM);
                             case "ARROW" -> firstValues.add(TokenType.RETURNTYPE);
                             case "EQUAL" -> firstValues.add(TokenType.ASSIGN);
+                            case "CONSTRUCTORKEYWORD" -> firstValues.add(TokenType.CONSTRUCTOR);
                             case "SR" -> firstValues.add(TokenType.SCOPEOP);
-                            default -> firstValues.add(TokenType.valueOf(valueToAdd.toUpperCase()));
+                            default -> firstValues.add(TokenType.valueOf(valueToAdd));
                         }
                     }
                 }
@@ -108,7 +112,7 @@ public class Parser {
 
                 ArrayList<TokenType> followValues = new ArrayList<>();
                 for(int i=0; i<followSplit.length; i++){
-                    if(followSplit[i].contains("∅")){
+                    if(followSplit[i].contains("∅") || followSplit[i].contains("eof")){
                         followValues.add(TokenType.EPSILON);
                     }
                     else{
@@ -125,8 +129,9 @@ public class Parser {
                             case "INTLIT" -> followValues.add(TokenType.INTNUM);
                             case "ARROW" -> followValues.add(TokenType.RETURNTYPE);
                             case "EQUAL" -> followValues.add(TokenType.ASSIGN);
+                            case "CONSTRUCTORKEYWORD" -> followValues.add(TokenType.CONSTRUCTOR);
                             case "SR" -> followValues.add(TokenType.SCOPEOP);
-                            default -> followValues.add(TokenType.valueOf(valueToAdd.toUpperCase()));
+                            default -> followValues.add(TokenType.valueOf(valueToAdd));
                         }
                     }
                 }
@@ -152,13 +157,13 @@ public class Parser {
                 case "INTLIT" -> terminals.add(TokenType.INTNUM);
                 case "ARROW" -> terminals.add(TokenType.RETURNTYPE);
                 case "EQUAL" -> terminals.add(TokenType.ASSIGN);
+                case "CONSTRUCTORKEYWORD" -> terminals.add(TokenType.CONSTRUCTOR);
                 case "SR" -> terminals.add(TokenType.SCOPEOP);
                 default -> terminals.add(TokenType.valueOf(value.toUpperCase()));
             }
         }
         catch (Exception e){
             terminals.add(TokenType.EMPTY);
-            System.out.println("CAUGTH EXCEPTION: "+value);
         }
     }
 
@@ -169,53 +174,103 @@ public class Parser {
         derivations.add("START");
 
         Token token=input.getNextToken();
+        Token previousToken = token;
         String top;
         boolean isValid = true;
 
-        while(!stack.peek().equals("$"))
-        {
-            try{
-                while(token.getType() == TokenType.BLOCKCMT || token.getType() == TokenType.INLINECMT){
+        while(!stack.peek().equals("$") && !stack.peek().equals("eof")) {
+            try {
+                while (token.getType() == TokenType.BLOCKCMT || token.getType() == TokenType.INLINECMT) {
+                    previousToken = token;
                     token = input.getNextToken();
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
 
             }
-            if(token == null && nullable.contains(stack.peek())){
+            if (token == null && nullable.contains(stack.peek())) {
                 derivations.remove(stack.peek());
                 outDerivationWriter.write(String.join(" ", derivations) + "\n");
 
-                if(endable.contains(stack.peek())){
+                if (endable.contains(stack.peek())) {
                     break;
                 }
                 stack.pop();
                 continue;
             }
 
-            top=stack.peek();
-            outDerivationWriter.write(String.join(" ", derivations) + "\n");
+            top = stack.peek();
 
-            try{
-                if(terminals.contains(getActualTop(top)) && getActualTop(top) == token.getType()){
-                    stack.pop();
-                    token = input.getNextToken();
+            if (top.startsWith("_")) {
+                String semanticAction = stack.pop();
+
+                if(semanticAction.equals("_a1")){
+                    ASTStack.push(null);
                 }
-                else{
-                    token = skipError(token);
-                    isValid = false;
+                else if(semanticAction.equals("_a2")){
+                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
+                    //System.out.println(ASTStack.peek());
                 }
-            }
-            catch (Exception e){
-                if(data.get(nonTerminals.indexOf(top) +","+terminals.indexOf(token.getType())) != null){
-                    String popedString = stack.pop();
-                    int index = derivations.indexOf(popedString);
-                    derivations.remove(popedString);
-                    inverseRHSMMultiPush(data.get(nonTerminals.indexOf(top) +","+terminals.indexOf(token.getType())), index);
+                else if (semanticAction.equals("_a3")) {
+                    ArrayList<AST> childs = new ArrayList<>();
+                    while(ASTStack.peek() != null){
+                        childs.add(ASTStack.pop());
+                    }
+                    ASTStack.pop();
+                    AST parent = AST.makeNode(new SemanticConcepts("ARRAY SIZE", false), childs);
+                    parent.updateDepth();
+                    ASTStack.push(parent);
+//                    if(previousToken.getType() == TokenType.CLOSESQBR){
+//                        ASTStack.push(parent);
+//                        //System.out.println(ASTStack.peek());
+//                    }
                 }
-                else {
-                    token = skipError(token);
-                    isValid = false;
+                else if (semanticAction.equals("_lv1")){
+                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
+                }
+                else if (semanticAction.equals("_lv2")){
+                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
+                }
+                else if (semanticAction.equals("_lv3")){
+                    ArrayList<AST> childs = new ArrayList<>();
+                    for(int i =0; i<4; i++){
+                        childs.add(ASTStack.pop());
+                    }
+                    AST parent = AST.makeNode(new SemanticConcepts("VAR DECL", false), childs);
+                    parent.updateDepth();
+                    ASTStack.push(parent);
+                    System.out.println(ASTStack.peek());
+                }
+                else if (semanticAction.equals("_t")){
+                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
+                }
+            } else {
+                outDerivationWriter.write(String.join(" ", derivations) + "\n");
+                try {
+                    if (terminals.contains(getActualTop(top)) && getActualTop(top) == token.getType()) {
+                        stack.pop();
+                        previousToken = token;
+                        token = input.getNextToken();
+                    } else {
+                        previousToken = token;
+                        token = skipError(token);
+                        isValid = false;
+                    }
+                } catch (Exception e) {
+                    try {
+                        if (data.get(nonTerminals.indexOf(top) + "," + terminals.indexOf(token.getType())) != null) {
+                            String popedString = stack.pop();
+                            int index = derivations.indexOf(popedString);
+                            derivations.remove(popedString);
+                            inverseRHSMMultiPush(data.get(nonTerminals.indexOf(top) + "," + terminals.indexOf(token.getType())), index);
+                        } else {
+                            previousToken = token;
+                            token = skipError(token);
+                            isValid = false;
+                        }
+                    } catch (Exception b) {
+                        top = stack.pop();
+                        System.out.println(top);
+                    }
                 }
             }
         }
@@ -302,6 +357,9 @@ public class Parser {
             }
             case "SR" -> {
                 return TokenType.SCOPEOP;
+            }
+            case "CONSTRUCTORKEYWORD" -> {
+                return TokenType.CONSTRUCTOR;
             }
             case "RETURNTYPE" -> {
                 throw new RuntimeException();
