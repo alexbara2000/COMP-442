@@ -1,11 +1,15 @@
 nonterminal,first set,follow set,nullable,endable
-ADDOP,plus minus or,id intlit floatlit lpar not plus minus,no,yes
-ARRAYSIZE2,intlit rsqbr,lsqbr semi rpar comma,no,no
-CLASSDECL,class,eof class function,no,no
+START,class function,∅,yes,yes
+ARRAYSIZE2,intlit,lsqbr semi rpar comma,no,no
+SA36,∅,∅,no,no
+CLASSDECL,class,class function,no,yes
 EXPR2,eq neq lt gt leq geq,semi comma rpar,yes,no
+SA37,∅,semi mult div and rsqbr eq neq lt gt leq geq plus minus or comma rpar,no,no
+SA38,∅,semi mult div and rsqbr eq neq lt gt leq geq plus minus or comma rpar,no,no
 FACTOR2,lpar lsqbr,semi mult div and dot rsqbr eq neq lt gt leq geq plus minus or comma rpar,yes,no
-FUNCDEF,function,eof class function,no,no
-FUNCBODY,lcurbr,eof class function,no,no
+FPARAMS1,id,rpar,yes,no
+FUNCDEF,function,class function,no,yes
+FUNCBODY,lcurbr,class function,no,yes
 FUNCHEAD,function,lcurbr,no,no
 FUNCHEADTAIL,sr lpar,lcurbr,no,no
 FUNCHEADMEMBERTAIL,id constructorkeyword,lcurbr,no,no
@@ -16,7 +20,7 @@ MEMBERFUNCDECL,function constructorkeyword,public private rcurbr,no,no
 MEMBERFUNCHEAD,function constructorkeyword,semi,no,no
 FPARAMS,id,rpar,yes,no
 MEMBERVARDECL,attribute,public private rcurbr,no,no
-OPTINHERITS,isa,lcurbr,yes,no
+OPTINHERITS,iSA,lcurbr,yes,no
 ARITHEXPR,id intlit floatlit lpar not plus minus,semi rsqbr eq neq lt gt leq geq comma rpar,no,no
 RELOP,eq neq lt gt leq geq,id intlit floatlit lpar not plus minus,no,no
 APARAMSTAIL,comma,comma rpar,no,no
@@ -32,17 +36,17 @@ LOCALVARORSTAT,localvar id if while read write return,localvar id if while read 
 REPTLOCALVARORSTAT,localvar id if while read write return,rcurbr,yes,no
 MEMBERDECL,attribute function constructorkeyword,public private rcurbr,no,no
 REPTMEMBERDECL,public private,rcurbr,yes,no
-CLASSDECLORFUNCDEF,class function,eof class function,no,no
-REPTPROG0,class function,eof,yes,no
+CLASSDECLORFUNCDEF,class function,class function,no,yes
+REPTPROG0,class function,∅,yes,yes
 IDNEST,dot,semi mult div and dot rsqbr eq neq lt gt leq geq plus minus or comma rpar,no,no
 REPTVARIABLEORFUNCTIONCALL,dot,semi mult div and rsqbr eq neq lt gt leq geq plus minus or comma rpar,yes,no
 RETURNTYPE,void integer float id,semi lcurbr,no,no
+ADDOP,plus minus or,id intlit floatlit lpar not plus minus,no,no
 RIGHTRECARITHEXPR,plus minus or,semi rsqbr eq neq lt gt leq geq comma rpar,yes,no
 MULTOP,mult div and,id intlit floatlit lpar not plus minus,no,no
 SIGN,plus minus,id intlit floatlit lpar not plus minus,no,no
-START,eof class function,∅,no,no
-PROG,class function,eof,yes,no
 REPTSTATBLOCK1,id if while read write return,rcurbr,yes,no
+STATBLOCK1,id if while read write return,else semi,yes,no
 STATEMENT,id if while read write return,else semi localvar id if while read write return rcurbr,no,no
 RELEXPR,id intlit floatlit lpar not plus minus,rpar,no,no
 STATBLOCK,lcurbr id if while read write return,else semi,yes,no
@@ -64,3 +68,36 @@ APARAMS,id intlit floatlit lpar not plus minus,rpar,yes,no
 VARIDNEST,dot,rpar dot,no,no
 REPTIDNEST1,lsqbr,equal semi mult div and dot rsqbr eq neq lt gt leq geq plus minus or comma rpar,yes,no
 VISIBILITY,public private,attribute function constructorkeyword,no,no
+SA1,∅,mult div and attribute function constructorkeyword semi eq neq lt gt leq geq rsqbr iSA lcurbr id intlit floatlit not sr colon equal dot lpar lsqbr plus minus or comma rpar,yes,no
+SA2,∅,else public private comma localvar semi rcurbr if while read write return lsqbr dot id intlit floatlit lpar not plus minus rpar,yes,no
+SA3,∅,rpar comma semi,yes,no
+SA4,∅,rpar equal dot,yes,no
+SA5,∅,rpar,yes,no
+SA6,∅,semi comma rpar,yes,no
+SA7,∅,semi comma rpar,yes,no
+SA8,∅,semi rsqbr eq neq lt gt leq geq comma rpar,yes,no
+SA9,∅,rpar,yes,no
+SA10,∅,semi rsqbr eq neq lt gt leq geq plus minus or comma rpar,yes,no
+SA11,∅,rpar equal dot,yes,no
+SA12,∅,semi,yes,no
+SA13,∅,dot semi,yes,no
+SA14,∅,semi mult div and rsqbr eq neq lt gt leq geq plus minus or comma rpar,yes,no
+SA15,∅,∅,yes,no
+SA16,∅,rpar,yes,no
+SA17,∅,rpar semi,yes,no
+SA18,∅,rpar,yes,no
+SA19,∅,rpar,yes,no
+SA20,∅,semi,yes,no
+SA21,∅,semi,yes,no
+SA22,∅,semi,yes,no
+SA23,∅,else semi rcurbr,yes,no
+SA24,∅,∅,yes,no
+SA25,∅,lcurbr,yes,no
+SA26,∅,semi,yes,no
+SA27,∅,rpar comma,yes,no
+SA28,∅,rpar,yes,no
+SA29,∅,semi lcurbr,yes,no
+SA30,∅,rcurbr,yes,no
+SA31,∅,class function,yes,yes
+SA32,∅,rcurbr,yes,no
+SA33,∅,semi,yes,no

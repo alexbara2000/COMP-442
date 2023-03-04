@@ -200,49 +200,99 @@ public class Parser {
 
             top = stack.peek();
 
-            if (top.startsWith("_")) {
+            if (top.startsWith("SA")) {
                 String semanticAction = stack.pop();
+                System.out.println(semanticAction);
 
-                if(semanticAction.equals("_a1")){
-                    ASTStack.push(null);
+                switch (top) {
+                    case "SA1" -> AST.makeNode(previousToken);
+                    case "SA2" -> AST.makeNull();
+                    case "SA3" -> AST.makeFamily("array Size", -1);
+                    case "SA4" -> AST.makeFamily("rept idnest", -1);
+                    case "SA5" -> AST.makeFamily("aParams", -1);
+                    case "SA6" -> AST.makeFamily("expr", 1);
+                    case "SA7" -> AST.makeFamily("expr", 3);
+//                    case "SA8" -> AST.makemultopmode();
+                    case "SA9" -> AST.makeFamily("rel Expr", 3);
+//                    case "SA10" -> AST.makeMultopnode();
+                    case "SA11" -> AST.makeFamily("data member", 2);
+                    case "SA12" -> AST.makeFamily("dot", 2);
+                    case "SA13" -> AST.makeFamily("funct call", 2);
+                    case "SA14" -> AST.makeFamily("factor", 1);
+                    case "SA15" -> AST.makeFamily("factor", -1);
+                    case "SA16" -> AST.makeFamily("read stat", 1);
+                    case "SA17" -> AST.makeFamily("stat", 1);
+                    case "SA18" -> AST.makeFamily("write stat", 1);
+                    case "SA19" -> AST.makeFamily("return stat", 1);
+                    case "SA20" -> AST.makeFamily("while stat", 2);
+                    case "SA21" -> AST.makeFamily("if stat", 3);
+                    case "SA22" -> AST.makeFamily("assign stat", 2);
+                    case "SA23" -> AST.makeFamily("stat block", -1);
+                    case "SA24" -> AST.makeFamily("prog", -1);
+                    case "SA25" -> AST.makeFamily("inherit list", -1);
+                    case "SA26" -> AST.makeFamily("var decl", 3);
+                    case "SA27" -> AST.makeFamily("function param", 3);
+                    case "SA28" -> AST.makeFamily("function param list", -1);
+                    case "SA29" -> AST.makeFamily("function head", 3);
+                    case "SA30" -> AST.makeFamily("function body", -1);
+                    case "SA31" -> AST.makeFamily("function def", 2);
+                    case "SA32" -> AST.makeFamily("rept struct decl", -1);
+                    case "SA33" -> AST.makeFamily("struct decl", 3);
+                    case "SA34" -> AST.makeFamily("rept impl def", -1);
+                    case "SA35" -> AST.makeFamily("impl def", 2);
+//                    case "SA36" -> AST.makeFamily("empty array size", 3);
+//                    case "SA37" -> AST.makeFamily("not", 3);
+//                    case "SA38" -> AST.makeFamily("sign", 3);
+
                 }
-                else if(semanticAction.equals("_a2")){
-                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
-                    //System.out.println(ASTStack.peek());
-                }
-                else if (semanticAction.equals("_a3")) {
-                    ArrayList<AST> childs = new ArrayList<>();
-                    while(ASTStack.peek() != null){
-                        childs.add(ASTStack.pop());
-                    }
-                    ASTStack.pop();
-                    AST parent = AST.makeNode(new SemanticConcepts("ARRAY SIZE", false), childs);
-                    parent.updateDepth();
-                    ASTStack.push(parent);
-//                    if(previousToken.getType() == TokenType.CLOSESQBR){
-//                        ASTStack.push(parent);
-//                        //System.out.println(ASTStack.peek());
+
+//                sa8:makeAddOpNode(addOp, pop, pop, pop)
+//                sa10:makeMultOpNode(multOp, pop, pop, pop)
+//                sa36:makeNodeEmptySizeArray(token)
+//                sa37:makeNotNode(not)
+//                sa38:makeSignNode(sign)
+
+
+//                if(semanticAction.equals("_a1")){
+//                    ASTStack.push(null);
+//                }
+//                else if(semanticAction.equals("_a2")){
+//                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
+//                    //System.out.println(ASTStack.peek());
+//                }
+//                else if (semanticAction.equals("_a3")) {
+//                    ArrayList<AST> childs = new ArrayList<>();
+//                    while(ASTStack.peek() != null){
+//                        childs.add(ASTStack.pop());
 //                    }
-                }
-                else if (semanticAction.equals("_lv1")){
-                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
-                }
-                else if (semanticAction.equals("_lv2")){
-                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
-                }
-                else if (semanticAction.equals("_lv3")){
-                    ArrayList<AST> childs = new ArrayList<>();
-                    for(int i =0; i<4; i++){
-                        childs.add(ASTStack.pop());
-                    }
-                    AST parent = AST.makeNode(new SemanticConcepts("VAR DECL", false), childs);
-                    parent.updateDepth();
-                    ASTStack.push(parent);
-                    System.out.println(ASTStack.peek());
-                }
-                else if (semanticAction.equals("_t")){
-                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
-                }
+//                    ASTStack.pop();
+//                    AST parent = AST.makeNode(new SemanticConcepts("ARRAY SIZE", false), childs);
+//                    parent.updateDepth();
+//                    ASTStack.push(parent);
+////                    if(previousToken.getType() == TokenType.CLOSESQBR){
+////                        ASTStack.push(parent);
+////                        //System.out.println(ASTStack.peek());
+////                    }
+//                }
+//                else if (semanticAction.equals("_lv1")){
+//                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
+//                }
+//                else if (semanticAction.equals("_lv2")){
+//                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
+//                }
+//                else if (semanticAction.equals("_lv3")){
+//                    ArrayList<AST> childs = new ArrayList<>();
+//                    for(int i =0; i<4; i++){
+//                        childs.add(ASTStack.pop());
+//                    }
+//                    AST parent = AST.makeNode(new SemanticConcepts("VAR DECL", false), childs);
+//                    parent.updateDepth();
+//                    ASTStack.push(parent);
+//                    System.out.println(ASTStack.peek());
+//                }
+//                else if (semanticAction.equals("_t")){
+//                    ASTStack.push(AST.makeNode(new SemanticConcepts(previousToken.getLexeme(), true)));
+//                }
             } else {
                 outDerivationWriter.write(String.join(" ", derivations) + "\n");
                 try {
@@ -280,6 +330,8 @@ public class Parser {
         else {
             System.out.println("Input is not accepted by the grammar");
         }
+
+        System.out.println(AST.treeToString());
 
         outSyntaxErrorsWriter.close();
         outDerivationWriter.close();
@@ -392,7 +444,7 @@ public class Parser {
     }
 
     public static void main(String[] args) throws Exception {
-        String fileToParse = "example-custom1.src";
+        String fileToParse = "example-bubblesort.src";
         Parser parser=new Parser(fileToParse);
         parser.parse();
 

@@ -2,12 +2,15 @@ package Common;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class AST {
     AST parent;
     ArrayList<AST> childrens;
-    SemanticConcepts concept;
+    Object concept;
     int depth;
+
+    static Stack<AST> astStack = new Stack<>();
 
     public AST getParent() {
         return parent;
@@ -25,7 +28,7 @@ public class AST {
         this.childrens = childrens;
     }
 
-    public SemanticConcepts getConcept() {
+    public Object getConcept() {
         return concept;
     }
 
@@ -41,25 +44,58 @@ public class AST {
         this.depth = depth;
     }
 
-    public AST(AST parent, ArrayList<AST> childrens,SemanticConcepts concept, int depth){
+    public AST(AST parent, ArrayList<AST> childrens,Object concept, int depth){
         this.parent = parent;
         this.childrens = childrens;
         this.concept = concept;
         this.depth = depth;
     }
 
-    static public AST makeNode(){
-        return new AST(null, null, null,  0);
+    static public AST makeNull(){
+        astStack.push(null);
+        return null;
     }
     static public AST makeNode(SemanticConcepts concept){
-        return new AST(null, null, concept,  0);
+        AST node = new AST(null, null, concept,  0);
+        astStack.push(node);
+        return node;
     }
-    static public AST makeNode(SemanticConcepts concept, ArrayList<AST> childrens){
+    static public AST makeNode(Token concept){
+        AST node = new AST(null, null, concept,  0);
+        astStack.push(node);
+        return node;
+    }
+    static public AST makeFamily(SemanticConcepts concept, ArrayList<AST> childrens){
         AST parent = new AST(null, childrens, concept,  0);
 
         for (var child: parent.childrens){
             child.setParent(parent);
         }
+
+        return parent;
+    }
+
+    static public AST makeFamily(Object concept, int numOfPops){
+        ArrayList<AST> childrens = new ArrayList<>();
+        if(numOfPops != -1){
+            for(int i = 0; i < numOfPops; i++){
+                childrens.add(astStack.pop());
+            }
+        }
+        else {
+            while(astStack.peek() != null){
+                childrens.add(astStack.pop());
+            }
+            astStack.pop();
+        }
+        AST parent = new AST(null, childrens, concept,  0);
+
+        for (var child: parent.childrens){
+            child.setParent(parent);
+        }
+        parent.updateDepth();
+
+        astStack.push(parent);
 
         return parent;
     }
@@ -71,6 +107,14 @@ public class AST {
             child.setDepth(child.getDepth()+1);
             child.updateDepth();
         }
+    }
+
+    public static boolean isNull(){
+        return astStack.peek() == null;
+    }
+
+    public static String treeToString(){
+        return astStack.peek().toString();
     }
 
     @Override

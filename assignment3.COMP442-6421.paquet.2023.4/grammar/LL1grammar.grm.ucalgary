@@ -177,7 +177,7 @@ TYPE -> integer _t .
 TYPE -> float _t .
 TYPE -> id  _t .
 
-VARIABLE -> id  VARIABLE2  .
+VARIABLE -> id _v VARIABLE2  .
 
 VARIABLE2 -> REPTIDNEST1 REPTVARIABLE  . 
 VARIABLE2 -> lpar APARAMS rpar VARIDNEST  . 
