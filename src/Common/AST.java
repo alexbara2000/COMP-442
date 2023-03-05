@@ -1,7 +1,7 @@
 package Common;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Stack;
 
 public class AST {
@@ -95,6 +95,8 @@ public class AST {
         }
         parent.updateDepth();
 
+        Collections.reverse(childrens);
+
         astStack.push(parent);
 
         return parent;
@@ -109,6 +111,10 @@ public class AST {
         }
     }
 
+    public static void reverseTree(){
+
+    }
+
     public static boolean isNull(){
         return astStack.peek() == null;
     }
@@ -121,9 +127,9 @@ public class AST {
     public String toString() {
         StringBuilder tree = new StringBuilder();
         for(int i=0;i<depth; i++){
-            tree.append("|");
+            tree.append("|  ");
         }
-        tree.append(concept+"\n");
+        tree.append(concept).append("\n");
         if(childrens != null){
             for(var subtree: childrens){
                 tree.append(subtree.toString());
