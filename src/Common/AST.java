@@ -12,28 +12,8 @@ public class AST {
 
     static Stack<AST> astStack = new Stack<>();
 
-    public AST getParent() {
-        return parent;
-    }
-
     public void setParent(AST parent) {
         this.parent = parent;
-    }
-
-    public ArrayList<AST> getChildrens() {
-        return childrens;
-    }
-
-    public void setChildrens(ArrayList<AST> childrens) {
-        this.childrens = childrens;
-    }
-
-    public Object getConcept() {
-        return concept;
-    }
-
-    public void setConcept(SemanticConcepts concept) {
-        this.concept = concept;
     }
 
     public int getDepth() {
@@ -55,24 +35,11 @@ public class AST {
         astStack.push(null);
         return null;
     }
-    static public AST makeNode(SemanticConcepts concept){
-        AST node = new AST(null, null, concept,  0);
-        astStack.push(node);
-        return node;
-    }
+
     static public AST makeNode(Token concept){
         AST node = new AST(null, null, concept,  0);
         astStack.push(node);
         return node;
-    }
-    static public AST makeFamily(SemanticConcepts concept, ArrayList<AST> childrens){
-        AST parent = new AST(null, childrens, concept,  0);
-
-        for (var child: parent.childrens){
-            child.setParent(parent);
-        }
-
-        return parent;
     }
 
     static public AST makeFamily(Object concept, int numOfPops){
@@ -111,14 +78,6 @@ public class AST {
         }
     }
 
-    public static void reverseTree(){
-
-    }
-
-    public static boolean isNull(){
-        return astStack.peek() == null;
-    }
-
     public static String treeToString(){
         return astStack.peek().toString();
     }
@@ -137,19 +96,5 @@ public class AST {
         }
 
         return tree.toString();
-    }
-
-    public static void main(String[] args){
-//        AST first = AST.makeNode(new Token(TokenType.FLOAT, "Temp", 1));
-//        AST second = AST.makeNode(new Token(TokenType.INTNUM, "324", 1));
-//        AST parent = AST.makeNode(new Token(TokenType.FUNCTION, "Start", 2));
-//        first.setDepth(1);
-//        second.setDepth(1);
-//        ArrayList<AST> childs = new ArrayList<AST>();
-//        childs.add(first);
-//        childs.add(second);
-//        parent.setChildrens(childs);
-//
-//        System.out.println(parent);
     }
 }

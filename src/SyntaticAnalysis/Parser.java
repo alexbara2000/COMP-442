@@ -236,12 +236,13 @@ public class Parser {
                     case "SA29" -> AST.makeFamily("member variable declaration", -1);
                     case "SA30" -> AST.makeFamily("function params", -1);
                     case "SA31" -> AST.makeFamily("function head", -1);
-                    case "SA32" -> AST.makeFamily("function tail", -1);
+                    case "SA32" -> AST.makeFamily("function head tail", -1);
                     case "SA33" -> AST.makeFamily("argument params", -1);
                     case "SA34" -> AST.makeFamily("indice", -1);
                     case "SA35" -> AST.makeFamily("idnest", -1);
                     case "SA36" -> AST.makeFamily("statement idnest", -1);
                     case "SA37" -> AST.makeFamily("variable idnest", -1);
+                    case "SA38" -> AST.makeFamily("function param tail", -1);
                 }
             } else {
                 outDerivationWriter.write(String.join(" ", derivations) + "\n");
@@ -396,7 +397,7 @@ public class Parser {
     }
 
     public static void main(String[] args) throws Exception {
-        String fileToParse = "example-custom1.src";
+        String fileToParse = "example-bubblesort.src";
         Parser parser=new Parser(fileToParse);
         parser.parse();
 

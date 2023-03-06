@@ -3,13 +3,14 @@ start
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, bubbleSort, 2]
-|  |  |  |  function tail
-|  |  |  |  |  function head
-|  |  |  |  |  |  [id, arr, 2]
-|  |  |  |  |  |  [integer, integer, 2]
-|  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  [empty, epsilon, 2]
-|  |  |  |  |  |  function params
+|  |  |  |  function head tail
+|  |  |  |  |  function params
+|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  [id, arr, 2]
+|  |  |  |  |  |  |  [integer, integer, 2]
+|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  |  [empty, epsilon, 2]
+|  |  |  |  |  |  function param tail
 |  |  |  |  |  |  |  [id, size, 2]
 |  |  |  |  |  |  |  [integer, integer, 2]
 |  |  |  |  |  |  |  array Size
@@ -270,13 +271,14 @@ start
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, printArray, 28]
-|  |  |  |  function tail
-|  |  |  |  |  function head
-|  |  |  |  |  |  [id, arr, 28]
-|  |  |  |  |  |  [integer, integer, 28]
-|  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  [empty, epsilon, 28]
-|  |  |  |  |  |  function params
+|  |  |  |  function head tail
+|  |  |  |  |  function params
+|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  [id, arr, 28]
+|  |  |  |  |  |  |  [integer, integer, 28]
+|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  |  [empty, epsilon, 28]
+|  |  |  |  |  |  function param tail
 |  |  |  |  |  |  |  [id, size, 28]
 |  |  |  |  |  |  |  [integer, integer, 28]
 |  |  |  |  |  |  |  array Size
@@ -366,7 +368,7 @@ start
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, main, 41]
-|  |  |  |  function tail
+|  |  |  |  function head tail
 |  |  |  |  |  [void, void, 41]
 |  |  |  function body
 |  |  |  |  local variable
