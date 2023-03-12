@@ -9,11 +9,11 @@ start
 |  |  |  |  |  member function declaration
 |  |  |  |  |  |  [function, function, 3]
 |  |  |  |  |  |  [id, evaluate, 3]
-|  |  |  |  |  |  function head
-|  |  |  |  |  |  |  [id, x, 3]
-|  |  |  |  |  |  |  [float, float, 3]
-|  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  function params
+|  |  |  |  |  |  function params
+|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  |  [id, x, 3]
+|  |  |  |  |  |  |  |  [float, float, 3]
+|  |  |  |  |  |  |  |  array Size
 |  |  |  |  |  |  [float, float, 3]
 |  |  |  |  |  |  [float, float, 3]
 |  |  class definition
@@ -36,11 +36,12 @@ start
 |  |  |  |  [public, public, 9]
 |  |  |  |  member declaration
 |  |  |  |  |  member function declaration
-|  |  |  |  |  |  function head
-|  |  |  |  |  |  |  [id, A, 9]
-|  |  |  |  |  |  |  [float, float, 9]
-|  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  function params
+|  |  |  |  |  |  function params
+|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  |  [id, A, 9]
+|  |  |  |  |  |  |  |  [float, float, 9]
+|  |  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  function param tail
 |  |  |  |  |  |  |  |  [id, B, 9]
 |  |  |  |  |  |  |  |  [float, float, 9]
 |  |  |  |  |  |  |  |  array Size
@@ -49,11 +50,11 @@ start
 |  |  |  |  |  member function declaration
 |  |  |  |  |  |  [function, function, 10]
 |  |  |  |  |  |  [id, evaluate, 10]
-|  |  |  |  |  |  function head
-|  |  |  |  |  |  |  [id, x, 10]
-|  |  |  |  |  |  |  [float, float, 10]
-|  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  function params
+|  |  |  |  |  |  function params
+|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  |  [id, x, 10]
+|  |  |  |  |  |  |  |  [float, float, 10]
+|  |  |  |  |  |  |  |  array Size
 |  |  |  |  |  |  [float, float, 10]
 |  |  |  |  |  |  [float, float, 10]
 |  |  class definition
@@ -82,14 +83,16 @@ start
 |  |  |  |  [public, public, 17]
 |  |  |  |  member declaration
 |  |  |  |  |  member function declaration
-|  |  |  |  |  |  function head
-|  |  |  |  |  |  |  [id, A, 17]
-|  |  |  |  |  |  |  [float, float, 17]
-|  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  function params
+|  |  |  |  |  |  function params
+|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  |  [id, A, 17]
+|  |  |  |  |  |  |  |  [float, float, 17]
+|  |  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  function param tail
 |  |  |  |  |  |  |  |  [id, B, 17]
 |  |  |  |  |  |  |  |  [float, float, 17]
 |  |  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  function param tail
 |  |  |  |  |  |  |  |  [id, C, 17]
 |  |  |  |  |  |  |  |  [float, float, 17]
 |  |  |  |  |  |  |  |  array Size
@@ -98,23 +101,23 @@ start
 |  |  |  |  |  member function declaration
 |  |  |  |  |  |  [function, function, 18]
 |  |  |  |  |  |  [id, evaluate, 18]
-|  |  |  |  |  |  function head
-|  |  |  |  |  |  |  [id, x, 18]
-|  |  |  |  |  |  |  [float, float, 18]
-|  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  function params
+|  |  |  |  |  |  function params
+|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  |  [id, x, 18]
+|  |  |  |  |  |  |  |  [float, float, 18]
+|  |  |  |  |  |  |  |  array Size
 |  |  |  |  |  |  [float, float, 18]
 |  |  |  |  |  |  [float, float, 18]
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, POLYNOMIAL, 22]
-|  |  |  |  function tail
+|  |  |  |  function head tail
 |  |  |  |  |  [id, evaluate, 22]
-|  |  |  |  |  function head
-|  |  |  |  |  |  [id, x, 22]
-|  |  |  |  |  |  [float, float, 22]
-|  |  |  |  |  |  array Size
-|  |  |  |  |  |  function params
+|  |  |  |  |  function params
+|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  [id, x, 22]
+|  |  |  |  |  |  |  [float, float, 22]
+|  |  |  |  |  |  |  array Size
 |  |  |  |  |  [float, float, 22]
 |  |  |  |  |  [float, float, 22]
 |  |  |  function body
@@ -130,13 +133,13 @@ start
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, QUADRATIC, 27]
-|  |  |  |  function tail
+|  |  |  |  function head tail
 |  |  |  |  |  [id, evaluate, 27]
-|  |  |  |  |  function head
-|  |  |  |  |  |  [id, x, 27]
-|  |  |  |  |  |  [float, float, 27]
-|  |  |  |  |  |  array Size
-|  |  |  |  |  |  function params
+|  |  |  |  |  function params
+|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  [id, x, 27]
+|  |  |  |  |  |  |  [float, float, 27]
+|  |  |  |  |  |  |  array Size
 |  |  |  |  |  [float, float, 27]
 |  |  |  |  |  [float, float, 27]
 |  |  |  function body
@@ -206,15 +209,17 @@ start
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, QUADRATIC, 37]
-|  |  |  |  function tail
-|  |  |  |  |  function head
-|  |  |  |  |  |  [id, A, 37]
-|  |  |  |  |  |  [float, float, 37]
-|  |  |  |  |  |  array Size
-|  |  |  |  |  |  function params
+|  |  |  |  function head tail
+|  |  |  |  |  function params
+|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  [id, A, 37]
+|  |  |  |  |  |  |  [float, float, 37]
+|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  function param tail
 |  |  |  |  |  |  |  [id, B, 37]
 |  |  |  |  |  |  |  [float, float, 37]
 |  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  function param tail
 |  |  |  |  |  |  |  [id, C, 37]
 |  |  |  |  |  |  |  [float, float, 37]
 |  |  |  |  |  |  |  array Size
@@ -255,12 +260,13 @@ start
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, LINEAR, 44]
-|  |  |  |  function tail
-|  |  |  |  |  function head
-|  |  |  |  |  |  [id, A, 44]
-|  |  |  |  |  |  [float, float, 44]
-|  |  |  |  |  |  array Size
-|  |  |  |  |  |  function params
+|  |  |  |  function head tail
+|  |  |  |  |  function params
+|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  [id, A, 44]
+|  |  |  |  |  |  |  [float, float, 44]
+|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  function param tail
 |  |  |  |  |  |  |  [id, B, 44]
 |  |  |  |  |  |  |  [float, float, 44]
 |  |  |  |  |  |  |  array Size
@@ -290,13 +296,13 @@ start
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, LINEAR, 50]
-|  |  |  |  function tail
+|  |  |  |  function head tail
 |  |  |  |  |  [id, evaluate, 50]
-|  |  |  |  |  function head
-|  |  |  |  |  |  [id, x, 50]
-|  |  |  |  |  |  [float, float, 50]
-|  |  |  |  |  |  array Size
-|  |  |  |  |  |  function params
+|  |  |  |  |  function params
+|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  [id, x, 50]
+|  |  |  |  |  |  |  [float, float, 50]
+|  |  |  |  |  |  |  array Size
 |  |  |  |  |  [float, float, 50]
 |  |  |  |  |  [float, float, 50]
 |  |  |  function body
@@ -347,7 +353,7 @@ start
 |  |  function definition
 |  |  |  function head
 |  |  |  |  [id, main, 59]
-|  |  |  |  function tail
+|  |  |  |  function head tail
 |  |  |  |  |  [void, void, 59]
 |  |  |  function body
 |  |  |  |  local variable
@@ -414,50 +420,49 @@ start
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  |  write
-|  |  |  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 66]
-|  |  |  |  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  |  write
-|  |  |  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  [id, f1, 67]
-|  |  |  |  |  |  |  |  |  |  |  |  |  idnest
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, evaluate, 67]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  argument params
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 67]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  |  write
-|  |  |  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  [id, f2, 68]
-|  |  |  |  |  |  |  |  |  |  |  |  |  idnest
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, evaluate, 68]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  argument params
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 68]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  write
+|  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 66]
+|  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  statement
+|  |  |  |  |  |  |  write
+|  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [id, f1, 67]
+|  |  |  |  |  |  |  |  |  |  |  |  idnest
+|  |  |  |  |  |  |  |  |  |  |  |  |  [id, evaluate, 67]
+|  |  |  |  |  |  |  |  |  |  |  |  |  argument params
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 67]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  statement
+|  |  |  |  |  |  |  write
+|  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [id, f2, 68]
+|  |  |  |  |  |  |  |  |  |  |  |  idnest
+|  |  |  |  |  |  |  |  |  |  |  |  |  [id, evaluate, 68]
+|  |  |  |  |  |  |  |  |  |  |  |  |  argument params
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 68]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  recursive arithmetic expression

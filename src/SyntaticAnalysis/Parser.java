@@ -397,7 +397,7 @@ public class Parser {
     }
 
     public static void main(String[] args) throws Exception {
-        String fileToParse = "example-bubblesort.src";
+        String fileToParse = "example-polynomial.src";
         Parser parser=new Parser(fileToParse);
         parser.parse();
 
