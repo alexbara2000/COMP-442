@@ -4,7 +4,7 @@ import Common.AST;
 import Common.Token;
 import Common.TokenType;
 import LexicalAnalysis.LexicalAnalyzer;
-import SemanticAnalysis.Actions.*;
+import Nodes.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,9 +21,10 @@ public class Parser {
     private Map<String, ArrayList<TokenType>> firstSet = new HashMap<>();
     private ArrayList<String> nullable = new ArrayList<>();
     private ArrayList<String> endable = new ArrayList<>();
+
     //Stack
     Stack<String> stack= new Stack<>();
-    Stack<AST> ASTStack = new Stack<>();
+    Stack<Node> astStack = new Stack<>();
     Map<String, String> data;
     ArrayList<TokenType> terminals = new ArrayList<>();
     ArrayList<String> nonTerminals = new ArrayList<>();
@@ -170,7 +171,7 @@ public class Parser {
     }
 
     //algorithm
-    public AST parse() throws IOException {
+    public Node parse() throws IOException {
         stack.push("$");//
         stack.push("START");
         derivations.add("START");
@@ -201,50 +202,95 @@ public class Parser {
             }
 
             top = stack.peek();
+//            if (top.startsWith("SA")) {
+//                String semanticAction = stack.pop();
+//                switch (top){
+//                    case "SA1" -> AST.makeNode(previousToken);
+//                    case "SA2" -> AST.makeNode(new Token(TokenType.EMPTY, "epsilon", token.getLocation()));
+//                    case "SA3" -> AST.makeNull();
+//                    case "SA4" -> AST.makeFamily(new ArraySizeAction(), -1);
+//                    case "SA5" -> AST.makeFamily(new VariableAction(), -1);
+//                    case "SA6" -> AST.makeFamily(new LocalVariableAction(), -1);
+//                    case "SA7" -> AST.makeFamily(new StatementAction(), -1);
+//                    case "SA8" -> AST.makeFamily(new ExpressionAction(), -1);
+//                    case "SA9" -> AST.makeFamily(new ArithmeticExpressionAction(), -1);
+//                    case "SA10" -> AST.makeFamily(new TermAction(), -1);
+//                    case "SA11" -> AST.makeFamily(new FactorAction(), -1);
+//                    case "SA12" -> AST.makeFamily(new RecursiveArithmeticExpressionAction(), -1);
+//                    case "SA13" -> AST.makeFamily(new RecursiveTermAction(), -1);
+//                    case "SA14" -> AST.makeFamily(new RelExpressionAction(), -1);
+//                    case "SA15" -> AST.makeFamily(new IfStatementAction(), -1);
+//                    case "SA16" -> AST.makeFamily(new WhileLoopAction(), -1);
+//                    case "SA17" -> AST.makeFamily(new ReadAction(), -1);
+//                    case "SA18" -> AST.makeFamily(new WriteAction(), -1);
+//                    case "SA19" -> AST.makeFamily(new ReturnAction(), -1);
+//                    case "SA20" -> AST.makeFamily(new FunctionBodyAction(), -1);
+//                    case "SA21" -> AST.makeFamily(new FunctionDefinitionAction(), -1);
+//                    case "SA22" -> AST.makeFamily(new ClassDefinitionAction(), -1);
+//                    case "SA23" -> AST.makeFamily(new StartAction(), -1);
+//                    case "SA24" -> AST.makeFamily(new ProgramAction(), -1);
+//                    case "SA25" -> AST.makeFamily(new InheritanceAction(), -1);
+//                    case "SA26" -> AST.makeFamily(new RepeatMemberDeclarationAction(), -1);
+//                    case "SA27" -> AST.makeFamily(new MemberDeclarationAction(), -1);
+//                    case "SA28" -> AST.makeFamily(new MemberFunctionDeclarationAction(), -1);
+//                    case "SA29" -> AST.makeFamily(new MemberVariableDeclarationAction(), -1);
+//                    case "SA30" -> AST.makeFamily(new FunctionParamsAction(), -1);
+//                    case "SA31" -> AST.makeFamily(new FunctionHeadAction(), -1);
+//                    case "SA32" -> AST.makeFamily(new FunctionHeadTailAction(), -1);
+//                    case "SA33" -> AST.makeFamily(new ArgumentParamsAction(), -1);
+//                    case "SA34" -> AST.makeFamily(new IndiceAction(), -1);
+//                    case "SA35" -> AST.makeFamily(new IdnestAction(), -1);
+//                    case "SA36" -> AST.makeFamily(new StatementIdnestAction(), -1);
+//                    case "SA37" -> AST.makeFamily(new VariableIdnestAction(), -1);
+//                    case "SA38" -> AST.makeFamily(new FunctionParamTailAction(), -1);
+//                }
+//            }
+
 
             if (top.startsWith("SA")) {
                 String semanticAction = stack.pop();
                 switch (top){
-                    case "SA1" -> AST.makeNode(previousToken);
-                    case "SA2" -> AST.makeNode(new Token(TokenType.EMPTY, "epsilon", token.getLocation()));
-                    case "SA3" -> AST.makeNull();
-                    case "SA4" -> AST.makeFamily(new ArraySizeAction(), -1);
-                    case "SA5" -> AST.makeFamily(new VariableAction(), -1);
-                    case "SA6" -> AST.makeFamily(new LocalVariableAction(), -1);
-                    case "SA7" -> AST.makeFamily(new StatementAction(), -1);
-                    case "SA8" -> AST.makeFamily(new ExpressionAction(), -1);
-                    case "SA9" -> AST.makeFamily(new ArithmeticExpressionAction(), -1);
-                    case "SA10" -> AST.makeFamily(new TermAction(), -1);
-                    case "SA11" -> AST.makeFamily(new FactorAction(), -1);
-                    case "SA12" -> AST.makeFamily(new RecursiveArithmeticExpressionAction(), -1);
-                    case "SA13" -> AST.makeFamily(new RecursiveTermAction(), -1);
-                    case "SA14" -> AST.makeFamily(new RelExpressionAction(), -1);
-                    case "SA15" -> AST.makeFamily(new IfStatementAction(), -1);
-                    case "SA16" -> AST.makeFamily(new WhileLoopAction(), -1);
-                    case "SA17" -> AST.makeFamily(new ReadAction(), -1);
-                    case "SA18" -> AST.makeFamily(new WriteAction(), -1);
-                    case "SA19" -> AST.makeFamily(new ReturnAction(), -1);
-                    case "SA20" -> AST.makeFamily(new FunctionBodyAction(), -1);
-                    case "SA21" -> AST.makeFamily(new FunctionDefinitionAction(), -1);
-                    case "SA22" -> AST.makeFamily(new ClassDefinitionAction(), -1);
-                    case "SA23" -> AST.makeFamily(new StartAction(), -1);
-                    case "SA24" -> AST.makeFamily(new ProgramAction(), -1);
-                    case "SA25" -> AST.makeFamily(new InheritanceAction(), -1);
-                    case "SA26" -> AST.makeFamily(new RepeatMemberDeclarationAction(), -1);
-                    case "SA27" -> AST.makeFamily(new MemberDeclarationAction(), -1);
-                    case "SA28" -> AST.makeFamily(new MemberFunctionDeclarationAction(), -1);
-                    case "SA29" -> AST.makeFamily(new MemberVariableDeclarationAction(), -1);
-                    case "SA30" -> AST.makeFamily(new FunctionParamsAction(), -1);
-                    case "SA31" -> AST.makeFamily(new FunctionHeadAction(), -1);
-                    case "SA32" -> AST.makeFamily(new FunctionHeadTailAction(), -1);
-                    case "SA33" -> AST.makeFamily(new ArgumentParamsAction(), -1);
-                    case "SA34" -> AST.makeFamily(new IndiceAction(), -1);
-                    case "SA35" -> AST.makeFamily(new IdnestAction(), -1);
-                    case "SA36" -> AST.makeFamily(new StatementIdnestAction(), -1);
-                    case "SA37" -> AST.makeFamily(new VariableIdnestAction(), -1);
-                    case "SA38" -> AST.makeFamily(new FunctionParamTailAction(), -1);
+                    case "SA1" -> astStack.push(new Node(null, null, previousToken, 0));
+                    case "SA2" -> astStack.push(new Node(null, null, new Token(TokenType.EMPTY, "epsilon", token.getLocation()), 0));
+                    case "SA3" -> astStack.push(null);
+                    case "SA4" -> makeFamily(new ArraySizeNode(null, null,  0));
+                    case "SA5" -> makeFamily(new VariableNode(null,null,0));
+                    case "SA6" -> makeFamily(new LocalVariableNode(null,null,0));
+                    case "SA7" -> makeFamily(new StatementNode(null,null,0));
+                    case "SA8" -> makeFamily(new ExpressionNode(null,null,0));
+                    case "SA9" -> makeFamily(new ArithmeticExpressionNode(null,null,0));
+                    case "SA10" -> makeFamily(new TermNode(null,null,0));
+                    case "SA11" -> makeFamily(new FactorNode(null,null,0));
+                    case "SA12" -> makeFamily(new RecursiveArithmeticExpressionNode(null,null,0));
+                    case "SA13" -> makeFamily(new RecursiveTermNode(null,null,0));
+                    case "SA14" -> makeFamily(new RelExpressionNode(null,null,0));
+                    case "SA15" -> makeFamily(new IfStatementNode(null,null,0));
+                    case "SA16" -> makeFamily(new WhileLoopNode(null,null,0));
+                    case "SA17" -> makeFamily(new ReadNode(null,null,0));
+                    case "SA18" -> makeFamily(new WriteNode(null,null,0));
+                    case "SA19" -> makeFamily(new ReturnNode(null,null,0));
+                    case "SA20" -> makeFamily(new FunctionBodyNode(null,null,0));
+                    case "SA21" -> makeFamily(new FunctionDefinitionNode(null,null,0));
+                    case "SA22" -> makeFamily(new ClassDefinitionNode(null,null,0));
+                    case "SA23" -> makeFamily(new StartNode(null,null,0));
+                    case "SA24" -> makeFamily(new ProgramNode(null,null,0));
+                    case "SA25" -> makeFamily(new InheritanceNode(null,null,0));
+                    case "SA26" -> makeFamily(new RecursiveMemberDeclarationNode(null,null,0));
+                    case "SA27" -> makeFamily(new MemberDeclarationNode(null,null,0));
+                    case "SA28" -> makeFamily(new MemberFunctionDeclarationNode(null,null,0));
+                    case "SA29" -> makeFamily(new MemberVariableDeclarationNode(null,null,0));
+                    case "SA30" -> makeFamily(new FunctionParamsNode(null,null,0));
+                    case "SA31" -> makeFamily(new FunctionHeadNode(null,null,0));
+                    case "SA32" -> makeFamily(new FunctionHeadTailNode(null,null,0));
+                    case "SA33" -> makeFamily(new ArgumentParamsNode(null,null,0));
+                    case "SA34" -> makeFamily(new IndiceNode(null,null,0));
+                    case "SA35" -> makeFamily(new IdnestNode(null,null,0));
+                    case "SA36" -> makeFamily(new StatementIdnestNode(null,null,0));
+                    case "SA37" -> makeFamily(new VariableIdnestNode(null,null,0));
+                    case "SA38" -> makeFamily(new FunctionParamsTailNode(null,null,0));
                 }
-            } else {
+            }
+            else {
                 outDerivationWriter.write(String.join(" ", derivations) + "\n");
                 try {
                     if (terminals.contains(getActualTop(top)) && getActualTop(top) == token.getType()) {
@@ -282,14 +328,13 @@ public class Parser {
             System.out.println("Input is not accepted by the grammar");
         }
 
-//        System.out.println(AST.treeToString());
 
-        outASTWriter.write(AST.treeToString());
+        outASTWriter.write(astStack.peek().toString());
         outASTWriter.close();
         outSyntaxErrorsWriter.close();
         outDerivationWriter.close();
 
-        return AST.astStack.peek();
+        return astStack.peek();
     }
 
     private Token skipError(Token token) throws IOException {
@@ -396,5 +441,25 @@ public class Parser {
                 derivations.add(index + i -2,productions[i]);
             }
         }
+    }
+
+    private Node makeFamily(Node parent){
+        ArrayList<Node> childrens = new ArrayList<>();
+        while(astStack.peek() != null){
+            childrens.add(astStack.pop());
+        }
+        astStack.pop();
+
+        Collections.reverse(childrens);
+        parent.setChildren(childrens);
+
+        for (var child: parent.getChildren()){
+            child.setParent(parent);
+        }
+        parent.updateDepth();
+
+        astStack.push(parent);
+
+        return parent;
     }
 }
