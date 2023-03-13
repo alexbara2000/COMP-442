@@ -10,7 +10,7 @@ public class AST {
     Object concept;
     int depth;
 
-    static Stack<AST> astStack = new Stack<>();
+    public static Stack<AST> astStack = new Stack<>();
 
     public void setParent(AST parent) {
         this.parent = parent;
@@ -98,3 +98,6 @@ public class AST {
         return tree.toString();
     }
 }
+
+
+
