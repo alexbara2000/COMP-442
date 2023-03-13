@@ -1,6 +1,8 @@
 package Nodes;
 
 import Common.Token;
+import SemanticAnalysis.Table.SymbolTable;
+import SemanticAnalysis.Table.SymbolTableEntry;
 import SemanticAnalysis.Visitor.Visitor;
 
 import java.util.ArrayList;
@@ -12,6 +14,24 @@ public class Node {
     ArrayList<Node> childrens;
     Object concept;
     int depth;
+
+
+    public Object getConcept() {
+        return concept;
+    }
+
+    SymbolTable table = null;
+    SymbolTableEntry entry = null;
+
+    public SymbolTableEntry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(SymbolTableEntry entry) {
+        this.entry = entry;
+    }
+
+
 
     public void setParent(Node parent) {
         this.parent = parent;
@@ -31,7 +51,15 @@ public class Node {
         return childrens;
     }
 
-    public Node(Node parent, ArrayList<Node> childrens,Object concept, int depth){
+    public void setTable(SymbolTable table) {
+        this.table = table;
+    }
+
+    public SymbolTable getTable() {
+        return table;
+    }
+
+    public Node(Node parent, ArrayList<Node> childrens, Object concept, int depth){
         this.parent = parent;
         this.childrens = childrens;
         this.concept = concept;

@@ -3,13 +3,13 @@ package SemanticAnalysis.Table;
 import java.util.ArrayList;
 
 public class SymbolTableEntry {
-    public String             m_kind       = null;
-    public String             m_type       = null;
-    public String             m_name       = null;
-    public int                m_size       = 0;
-    public int                m_offset     = 0;
-    public SymbolTable             m_subtable   = null;
-    public ArrayList<Integer> m_dims    = new ArrayList<>();
+    public String m_kind = null;
+    public String m_type = null;
+    public String m_name = null;
+    public int m_size = 0;
+    public int m_offset = 0;
+    public SymbolTable m_subtable = null;
+    public ArrayList<Integer> m_dims = new ArrayList<>();
 
     public SymbolTableEntry() {}
 

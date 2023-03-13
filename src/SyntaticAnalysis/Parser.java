@@ -250,8 +250,8 @@ public class Parser {
             if (top.startsWith("SA")) {
                 String semanticAction = stack.pop();
                 switch (top){
-                    case "SA1" -> astStack.push(new Node(null, null, previousToken, 0));
-                    case "SA2" -> astStack.push(new Node(null, null, new Token(TokenType.EMPTY, "epsilon", token.getLocation()), 0));
+                    case "SA1" -> astStack.push(new Node(null, new ArrayList<>(), previousToken, 0));
+                    case "SA2" -> astStack.push(new Node(null, new ArrayList<>(), new Token(TokenType.EMPTY, "epsilon", token.getLocation()), 0));
                     case "SA3" -> astStack.push(null);
                     case "SA4" -> makeFamily(new ArraySizeNode(null, null,  0));
                     case "SA5" -> makeFamily(new VariableNode(null,null,0));

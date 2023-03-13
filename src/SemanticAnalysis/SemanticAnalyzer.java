@@ -15,9 +15,6 @@ public class SemanticAnalyzer {
 
         SymbolTableCreatorVisitor tableCreatorVisitor = new SymbolTableCreatorVisitor();
         headNode.accept(tableCreatorVisitor);
-
-
-        //firstPass(headNode);
     }
 
     private static void firstPass(Node headNode) {
