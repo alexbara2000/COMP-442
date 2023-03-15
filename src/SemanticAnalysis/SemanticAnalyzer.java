@@ -8,7 +8,7 @@ import SyntaticAnalysis.Parser;
 
 public class SemanticAnalyzer {
     public static void main(String[] args) throws Exception {
-        String fileToParse = "example-bubblesort.src";
+        String fileToParse = "example-polynomial.src";
         Parser parser=new Parser(fileToParse);
         Node headNode = parser.parse();
         System.out.println(headNode);

@@ -18,7 +18,7 @@ class QUADRATIC isa POLYNOMIAL {
   public  function evaluate: (x: float) => float;
 };
 
-// ====== member function implementations ====== //  
+// ====== member function implementations ====== //
 function POLYNOMIAL::evaluate(x: float) => float
 {
   return (0);
@@ -41,20 +41,20 @@ function QUADRATIC::constructor(A: float, B: float, C: float)
   c = C;
 }
 
-function LINEAR::constructor(A: float, B: float) 
+function LINEAR::constructor(A: float, B: float)
 {
   a = A;
   b = B;
 }
 
-function LINEAR::evaluate(x: float) => float 
+function LINEAR::evaluate(x: float) => float
 {
   localvar result: float;
   result = 0.0;
   result = a * x + b;
   return (result);
 }
- 
+
 // ====== main ====== //
 function main() => void
 {
@@ -108,7 +108,7 @@ function main() => void
 | | type: integer
 |X| type: float
 | | type: id
-| | type: 1-dim array 
+| | type: 1-dim array
 | | type: n-dim array
 | | type: array (with size)
 | | type: array (without size)
@@ -134,7 +134,7 @@ function main() => void
 | | type: float
 | | type: string
 |X| type: id
-| | type: 1-dim array 
+| | type: 1-dim array
 | | type: n-dim array
 | | type: array (with size)
 | | type: array (without size)

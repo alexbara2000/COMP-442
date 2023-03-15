@@ -37,6 +37,12 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
     @Override
     public void visit(ClassDefinitionNode node) {
+        String classname = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
+        SymbolTable localtable = new SymbolTable(1,classname, node.getTable());
+        node.setEntry( new ClassEntry(classname, localtable));
+        node.getTable().addEntry(node.getEntry());
+        node.setTable(localtable);
+
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.setTable(node.getTable());
@@ -73,28 +79,17 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
     @Override
     public void visit(FunctionDefinitionNode node) {
-//        String ftype = p_node.getChildren().get(0).getData();
-//        String fname = p_node.getChildren().get(1).getData();
-//        SymTab localtable = new SymTab(1,fname, p_node.m_symtab);
-//        Vector<VarEntry> paramlist = new Vector<VarEntry>();
-//        for (Node param : p_node.getChildren().get(2).getChildren()){
-//            // parameter dimension list
-//            Vector<Integer> dimlist = new Vector<Integer>();
-//            for (Node dim : param.getChildren().get(2).getChildren()){
-//                // parameter dimension
-//                Integer dimval = Integer.parseInt(dim.getData());
-//                dimlist.add(dimval);
-//            }
-//            paramlist.add((VarEntry) p_node.m_symtabentry);
-//        }
-//        p_node.m_symtabentry = new FuncEntry(ftype, fname, paramlist, localtable);
-//        p_node.m_symtab.addEntry(p_node.m_symtabentry);
-//        p_node.m_symtab = localtable;
         Token id =(Token)node.getChildren().get(0).getChildren().get(0).getConcept();
         ArrayList<Node> funcParams =node.getChildren().get(0).getChildren().get(1).getChildren();
-        String returnType = ((Token)funcParams.get(funcParams.size()-1).getConcept()).getLexeme();
+        String returnType;
+        try{
+            returnType = ((Token)funcParams.get(funcParams.size()-1).getConcept()).getLexeme();
+        }
+        catch (Exception e){
+            returnType = null;
+        }
         String fname = id.getLexeme();
-        SymbolTable localtable = new SymbolTable(1,fname, node.getTable());
+        SymbolTable localtable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
 
         ArrayList<VarEntry> paramlist = new ArrayList<>();
         for (Node param : funcParams.get(0).getChildren()){
@@ -194,6 +189,11 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
     @Override
     public void visit(InheritanceNode node) {
+        ArrayList<String> idNames = new ArrayList<>();
+        for(Node idNode: node.getChildren()){
+            idNames.add(((Token)idNode.getConcept()).getLexeme());
+        }
+        node.getTable().addEntry(new InheritEntry(idNames, null));
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.setTable(node.getTable());
@@ -208,24 +208,30 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
         String vartype = ((Token)node.getChildren().get(2).getConcept()).getLexeme();
         String varid = ((Token)node.getChildren().get(1).getConcept()).getLexeme();
-        ArrayList<Integer> dimlist = null;
-        if (!(node.getChildren().get(3).getChildren().size() == 0)){
-            dimlist = new ArrayList<>();
+        if(node.getChildren().get(3).getConcept().equals("argument params")){
+            //localvar for function
         }
-        for (Node dim : node.getChildren().get(3).getChildren()){
+        else{
+            ArrayList<Integer> dimlist = null;
+            if (!(node.getChildren().get(3).getChildren().size() == 0)){
+                dimlist = new ArrayList<>();
+            }
+            for (Node dim : node.getChildren().get(3).getChildren()){
 
-            // parameter dimension
-            Integer dimval;
-            if(((Token)dim.getConcept()).getLexeme().equals("epsilon")){
-                dimval=null;
+                // parameter dimension
+                Integer dimval;
+                if(((Token)dim.getConcept()).getLexeme().equals("epsilon")){
+                    dimval=null;
+                }
+                else{
+                    dimval = Integer.parseInt(((Token)dim.getConcept()).getLexeme());
+                }
+                dimlist.add(dimval);
             }
-            else{
-                dimval = Integer.parseInt(((Token)dim.getConcept()).getLexeme());
-            }
-            dimlist.add(dimval);
+            node.setEntry(new VarEntry("local", vartype, varid, dimlist));
+            node.getTable().addEntry(node.getEntry());
         }
-        node.setEntry(new VarEntry("local", vartype, varid, dimlist));
-        node.getTable().addEntry(node.getEntry());
+
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.setTable(node.getTable());
@@ -237,6 +243,92 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
     @Override
     public void visit(MemberDeclarationNode node) {
+        String visibility = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
+        String memberType = node.getChildren().get(1).getConcept().toString();
+        if(memberType.equals("member function declaration")){
+            ArrayList<Node> functionDeclaration = node.getChildren().get(1).getChildren();
+            String fname;
+            String kind;
+            String type = "";
+
+            try{
+                //this means it is not a constructor
+                kind = "function";
+                fname =((Token)functionDeclaration.get(1).getConcept()).getLexeme();
+                type = ((Token)functionDeclaration.get(3).getConcept()).getLexeme();
+            }
+            catch (Exception e){
+                //this is the constructor
+                kind = "constructor";
+                fname = "build";
+                type = node.getTable().m_name;
+            }
+
+            //Getting the var entry with the dim size
+            ArrayList<VarEntry> fParams = new ArrayList<>();
+
+            try{
+                Node params;
+                if(kind.equals("constructor")){
+                    params = functionDeclaration.get(1);
+                }
+                else{
+                    params = functionDeclaration.get(2);
+                }
+                for(var entry: params.getChildren()){
+                    ArrayList<Integer> dims = new ArrayList<>();
+                    String innerType = ((Token)entry.getChildren().get(1).getConcept()).getLexeme();
+                    String innerName = ((Token)entry.getChildren().get(0).getConcept()).getLexeme();
+
+                    for(var arraySize: entry.getChildren().get(2).getChildren()){
+                        if(((Token)arraySize.getConcept()).getLexeme().equals("epsilon")){
+                            dims.add(null);
+                        }
+                        else {
+                            dims.add(Integer.parseInt(((Token)arraySize.getConcept()).getLexeme()));
+                        }
+                    }
+
+                    fParams.add(new VarEntry("local", innerType, innerName, dims));
+                }
+            }
+            catch (Exception e){
+             // there are no params for the function
+            }
+
+            SymbolTable localtable;
+            if(kind.equals("constructor")){
+                localtable = new SymbolTable(node.getTable().m_tablelevel+1,"function", node.getTable());
+            }
+            else{
+                localtable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
+            }
+
+            FuncEntry newFuncEntry;
+            if(kind.equals("constructor")){
+                newFuncEntry = new MemberConstructorEntry(kind, type, fname, fParams, visibility, localtable);
+            }
+            else{
+                newFuncEntry = new MemberFuncEntry(kind, type,fname, fParams, visibility, localtable);
+            }
+
+
+            node.setEntry(newFuncEntry);
+            node.getTable().addEntry(node.getEntry());
+            node.setTable(localtable);
+
+            for(var fparam: fParams){
+                node.getTable().addEntry(fparam);
+            }
+            if (kind.equals("constructor")){
+                node.getTable().addEntry(new VarEntry("local", "void", "result", null));
+            }
+            else {
+                node.getTable().addEntry(new VarEntry("local", type, "result", null));
+            }
+        }
+
+
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.setTable(node.getTable());

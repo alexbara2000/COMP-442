@@ -10,12 +10,23 @@ public class VarEntry extends SymbolTableEntry {
 	}
 		
 	public String toString(){
+		String dimsToDisplay = "";
+		if(m_dims != null && m_dims.size() != 0){
+			for(var dim: m_dims){
+				if(dim != null){
+					dimsToDisplay = dimsToDisplay + "[" + dim + "]";
+				}
+				else {
+					dimsToDisplay = dimsToDisplay + "[]";
+				}
+			}
+		}
+
 		return 	String.format("%-12s" , "| " + m_kind) +
 				String.format("%-12s" , "| " + m_name) + 
-				String.format("%-12s"  , "| " + m_type) + 
-              	String.format("%-12s"  , "| " + (m_dims == null? "": m_dims)) +
-				String.format("%-8s"  , "| " + m_size) + 
-				String.format("%-8s"  , "| " + m_offset)
-		        + "|";
+				String.format("%-12s"  , "| " + m_type+dimsToDisplay) +
+//				String.format("%-8s"  , "| " + m_size) +
+//				String.format("%-8s"  , "| " + m_offset) +
+		        "|";
 	}
 }

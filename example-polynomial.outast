@@ -1,111 +1,113 @@
 start
-|  program
+|  Program
 |  |  class definition
 |  |  |  [id, POLYNOMIAL, 2]
 |  |  |  inheritance
-|  |  |  rept member declaration
-|  |  |  |  [public, public, 3]
+|  |  |  recursive member declaration
 |  |  |  |  member declaration
+|  |  |  |  |  [public, public, 3]
 |  |  |  |  |  member function declaration
 |  |  |  |  |  |  [function, function, 3]
 |  |  |  |  |  |  [id, evaluate, 3]
 |  |  |  |  |  |  function params
-|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  |  [id, x, 3]
 |  |  |  |  |  |  |  |  [float, float, 3]
-|  |  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  |  array size
 |  |  |  |  |  |  [float, float, 3]
 |  |  |  |  |  |  [float, float, 3]
 |  |  class definition
 |  |  |  [id, LINEAR, 6]
 |  |  |  inheritance
 |  |  |  |  [id, POLYNOMIAL, 6]
-|  |  |  rept member declaration
-|  |  |  |  [private, private, 7]
+|  |  |  recursive member declaration
 |  |  |  |  member declaration
+|  |  |  |  |  [private, private, 7]
 |  |  |  |  |  member variable declaration
 |  |  |  |  |  |  [id, a, 7]
 |  |  |  |  |  |  [float, float, 7]
-|  |  |  |  |  |  array Size
-|  |  |  |  [private, private, 8]
+|  |  |  |  |  |  array size
 |  |  |  |  member declaration
+|  |  |  |  |  [private, private, 8]
 |  |  |  |  |  member variable declaration
 |  |  |  |  |  |  [id, b, 8]
 |  |  |  |  |  |  [float, float, 8]
-|  |  |  |  |  |  array Size
-|  |  |  |  [public, public, 9]
+|  |  |  |  |  |  array size
 |  |  |  |  member declaration
+|  |  |  |  |  [public, public, 9]
 |  |  |  |  |  member function declaration
+|  |  |  |  |  |  [constructor, constructor, 9]
 |  |  |  |  |  |  function params
-|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  |  [id, A, 9]
 |  |  |  |  |  |  |  |  [float, float, 9]
-|  |  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  |  array size
+|  |  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  |  [id, B, 9]
 |  |  |  |  |  |  |  |  [float, float, 9]
-|  |  |  |  |  |  |  |  array Size
-|  |  |  |  [public, public, 10]
+|  |  |  |  |  |  |  |  array size
 |  |  |  |  member declaration
+|  |  |  |  |  [public, public, 10]
 |  |  |  |  |  member function declaration
 |  |  |  |  |  |  [function, function, 10]
 |  |  |  |  |  |  [id, evaluate, 10]
 |  |  |  |  |  |  function params
-|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  |  [id, x, 10]
 |  |  |  |  |  |  |  |  [float, float, 10]
-|  |  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  |  array size
 |  |  |  |  |  |  [float, float, 10]
 |  |  |  |  |  |  [float, float, 10]
 |  |  class definition
 |  |  |  [id, QUADRATIC, 13]
 |  |  |  inheritance
 |  |  |  |  [id, POLYNOMIAL, 13]
-|  |  |  rept member declaration
-|  |  |  |  [private, private, 14]
+|  |  |  recursive member declaration
 |  |  |  |  member declaration
+|  |  |  |  |  [private, private, 14]
 |  |  |  |  |  member variable declaration
 |  |  |  |  |  |  [id, a, 14]
 |  |  |  |  |  |  [float, float, 14]
-|  |  |  |  |  |  array Size
-|  |  |  |  [private, private, 15]
+|  |  |  |  |  |  array size
 |  |  |  |  member declaration
+|  |  |  |  |  [private, private, 15]
 |  |  |  |  |  member variable declaration
 |  |  |  |  |  |  [id, b, 15]
 |  |  |  |  |  |  [float, float, 15]
-|  |  |  |  |  |  array Size
-|  |  |  |  [private, private, 16]
+|  |  |  |  |  |  array size
 |  |  |  |  member declaration
+|  |  |  |  |  [private, private, 16]
 |  |  |  |  |  member variable declaration
 |  |  |  |  |  |  [id, c, 16]
 |  |  |  |  |  |  [float, float, 16]
-|  |  |  |  |  |  array Size
-|  |  |  |  [public, public, 17]
+|  |  |  |  |  |  array size
 |  |  |  |  member declaration
+|  |  |  |  |  [public, public, 17]
 |  |  |  |  |  member function declaration
+|  |  |  |  |  |  [constructor, constructor, 17]
 |  |  |  |  |  |  function params
-|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  |  [id, A, 17]
 |  |  |  |  |  |  |  |  [float, float, 17]
-|  |  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  |  array size
+|  |  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  |  [id, B, 17]
 |  |  |  |  |  |  |  |  [float, float, 17]
-|  |  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  |  array size
+|  |  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  |  [id, C, 17]
 |  |  |  |  |  |  |  |  [float, float, 17]
-|  |  |  |  |  |  |  |  array Size
-|  |  |  |  [public, public, 18]
+|  |  |  |  |  |  |  |  array size
 |  |  |  |  member declaration
+|  |  |  |  |  [public, public, 18]
 |  |  |  |  |  member function declaration
 |  |  |  |  |  |  [function, function, 18]
 |  |  |  |  |  |  [id, evaluate, 18]
 |  |  |  |  |  |  function params
-|  |  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  |  [id, x, 18]
 |  |  |  |  |  |  |  |  [float, float, 18]
-|  |  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  |  array size
 |  |  |  |  |  |  [float, float, 18]
 |  |  |  |  |  |  [float, float, 18]
 |  |  function definition
@@ -114,10 +116,10 @@ start
 |  |  |  |  function head tail
 |  |  |  |  |  [id, evaluate, 22]
 |  |  |  |  |  function params
-|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  [id, x, 22]
 |  |  |  |  |  |  |  [float, float, 22]
-|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  array size
 |  |  |  |  |  [float, float, 22]
 |  |  |  |  |  [float, float, 22]
 |  |  |  function body
@@ -136,10 +138,10 @@ start
 |  |  |  |  function head tail
 |  |  |  |  |  [id, evaluate, 27]
 |  |  |  |  |  function params
-|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  [id, x, 27]
 |  |  |  |  |  |  |  [float, float, 27]
-|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  array size
 |  |  |  |  |  [float, float, 27]
 |  |  |  |  |  [float, float, 27]
 |  |  |  function body
@@ -147,7 +149,7 @@ start
 |  |  |  |  |  [localvar, localvar, 29]
 |  |  |  |  |  [id, result, 29]
 |  |  |  |  |  [float, float, 29]
-|  |  |  |  |  array Size
+|  |  |  |  |  array size
 |  |  |  |  statement
 |  |  |  |  |  [id, result, 31]
 |  |  |  |  |  statement idnest
@@ -210,19 +212,20 @@ start
 |  |  |  function head
 |  |  |  |  [id, QUADRATIC, 37]
 |  |  |  |  function head tail
+|  |  |  |  |  [constructor, constructor, 37]
 |  |  |  |  |  function params
-|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  [id, A, 37]
 |  |  |  |  |  |  |  [float, float, 37]
-|  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  array size
+|  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  [id, B, 37]
 |  |  |  |  |  |  |  [float, float, 37]
-|  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  array size
+|  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  [id, C, 37]
 |  |  |  |  |  |  |  [float, float, 37]
-|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  array size
 |  |  |  function body
 |  |  |  |  statement
 |  |  |  |  |  [id, a, 39]
@@ -261,15 +264,16 @@ start
 |  |  |  function head
 |  |  |  |  [id, LINEAR, 44]
 |  |  |  |  function head tail
+|  |  |  |  |  [constructor, constructor, 44]
 |  |  |  |  |  function params
-|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  [id, A, 44]
 |  |  |  |  |  |  |  [float, float, 44]
-|  |  |  |  |  |  |  array Size
-|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  |  array size
+|  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  [id, B, 44]
 |  |  |  |  |  |  |  [float, float, 44]
-|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  array size
 |  |  |  function body
 |  |  |  |  statement
 |  |  |  |  |  [id, a, 46]
@@ -299,10 +303,10 @@ start
 |  |  |  |  function head tail
 |  |  |  |  |  [id, evaluate, 50]
 |  |  |  |  |  function params
-|  |  |  |  |  |  function param tail
+|  |  |  |  |  |  function params tail
 |  |  |  |  |  |  |  [id, x, 50]
 |  |  |  |  |  |  |  [float, float, 50]
-|  |  |  |  |  |  |  array Size
+|  |  |  |  |  |  |  array size
 |  |  |  |  |  [float, float, 50]
 |  |  |  |  |  [float, float, 50]
 |  |  |  function body
@@ -310,7 +314,7 @@ start
 |  |  |  |  |  [localvar, localvar, 52]
 |  |  |  |  |  [id, result, 52]
 |  |  |  |  |  [float, float, 52]
-|  |  |  |  |  array Size
+|  |  |  |  |  array size
 |  |  |  |  statement
 |  |  |  |  |  [id, result, 53]
 |  |  |  |  |  statement idnest
