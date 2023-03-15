@@ -208,11 +208,11 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
         String vartype = ((Token)node.getChildren().get(2).getConcept()).getLexeme();
         String varid = ((Token)node.getChildren().get(1).getConcept()).getLexeme();
+        ArrayList<Integer> dimlist = null;
         if(node.getChildren().get(3).getConcept().equals("argument params")){
             //localvar for function
         }
         else{
-            ArrayList<Integer> dimlist = null;
             if (!(node.getChildren().get(3).getChildren().size() == 0)){
                 dimlist = new ArrayList<>();
             }
@@ -228,9 +228,9 @@ public class SymbolTableCreatorVisitor implements Visitor{
                 }
                 dimlist.add(dimval);
             }
-            node.setEntry(new VarEntry("local", vartype, varid, dimlist));
-            node.getTable().addEntry(node.getEntry());
         }
+        node.setEntry(new VarEntry("local", vartype, varid, dimlist));
+        node.getTable().addEntry(node.getEntry());
 
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -289,7 +289,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
                         }
                     }
 
-                    fParams.add(new VarEntry("local", innerType, innerName, dims));
+                    fParams.add(new VarEntry("param", innerType, innerName, dims));
                 }
             }
             catch (Exception e){
@@ -326,6 +326,26 @@ public class SymbolTableCreatorVisitor implements Visitor{
             else {
                 node.getTable().addEntry(new VarEntry("local", type, "result", null));
             }
+        }
+        else{
+            //Data declaration
+            String dname =((Token)node.getChildren().get(1).getChildren().get(0).getConcept()).getLexeme();
+            String dtype =((Token)node.getChildren().get(1).getChildren().get(1).getConcept()).getLexeme();
+            String dkind = "data";
+
+            ArrayList<Integer> dims = new ArrayList<>();
+
+            for(var arraySize: node.getChildren().get(1).getChildren().get(2).getChildren()){
+                if(((Token)arraySize.getConcept()).getLexeme().equals("epsilon")){
+                    dims.add(null);
+                }
+                else {
+                    dims.add(Integer.parseInt(((Token)arraySize.getConcept()).getLexeme()));
+                }
+            }
+
+            node.setEntry(new DataEntry(dkind, dtype, dname, dims, visibility));
+            node.getTable().addEntry(node.getEntry());
         }
 
 
