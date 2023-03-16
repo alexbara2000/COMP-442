@@ -1,6 +1,7 @@
 package SemanticAnalysis.Visitor;
 
 import Common.Token;
+import Common.TokenType;
 import Nodes.*;
 import SemanticAnalysis.Table.*;
 
@@ -79,41 +80,106 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
     @Override
     public void visit(FunctionDefinitionNode node) {
-        Token id =(Token)node.getChildren().get(0).getChildren().get(0).getConcept();
-        ArrayList<Node> funcParams =node.getChildren().get(0).getChildren().get(1).getChildren();
-        String returnType;
+
+        Node fundHead = node.getChildren().get(0);
+        boolean isMemberFunction = false;
+        String memberClass = "";
+        String fname ="";
+        String fType = "";
+        ArrayList<VarEntry> fParams= new ArrayList<>();
+
         try{
-            returnType = ((Token)funcParams.get(funcParams.size()-1).getConcept()).getLexeme();
+            Token secondParam = ((Token)fundHead.getChildren().get(1).getConcept());
+            if(secondParam.getType() == TokenType.ID){
+                memberClass = ((Token)fundHead.getChildren().get(0).getConcept()).getLexeme();
+                fname = ((Token)fundHead.getChildren().get(1).getConcept()).getLexeme();
+                isMemberFunction = true;
+            }
         }
         catch (Exception e){
-            returnType = null;
+            //free function
         }
-        String fname = id.getLexeme();
+        if(!isMemberFunction){
+            fname = ((Token)fundHead.getChildren().get(0).getConcept()).getLexeme();
+        }
+        // TODO check for constructor
+        fType = ((Token)fundHead.getChildren().get(fundHead.getChildren().size()-1).getConcept()).getLexeme();
+
+        
+        // get params list
+        Node params = null;
+        boolean hasParams = false;
+        if(isMemberFunction && fundHead.getChildren().get(2).getConcept().equals("function params")){
+            hasParams = true;
+            params = fundHead.getChildren().get(2);
+        }
+        if(!isMemberFunction && fundHead.getChildren().get(1).getConcept().equals("function params")){
+            hasParams = true;
+            params = fundHead.getChildren().get(1);
+        }
+        if(hasParams){
+            for(var entry: params.getChildren()){
+                ArrayList<Integer> dims = new ArrayList<>();
+                String innerType = ((Token)entry.getChildren().get(1).getConcept()).getLexeme();
+                String innerName = ((Token)entry.getChildren().get(0).getConcept()).getLexeme();
+
+                for(var arraySize: entry.getChildren().get(2).getChildren()){
+                    if(((Token)arraySize.getConcept()).getLexeme().equals("epsilon")){
+                        dims.add(null);
+                    }
+                    else {
+                        dims.add(Integer.parseInt(((Token)arraySize.getConcept()).getLexeme()));
+                    }
+                }
+                fParams.add(new VarEntry("param", innerType, innerName, dims));
+            }
+        }
+
         SymbolTable localtable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
 
-        ArrayList<VarEntry> paramlist = new ArrayList<>();
-        for (Node param : funcParams.get(0).getChildren()){
-            // parameter dimension list
-            ArrayList<Integer> dimlist = new ArrayList<>();
-            for (Node dim : param.getChildren().get(2).getChildren()){
-                // parameter dimension
-                Integer dimval;
-                if(((Token)dim.getConcept()).getLexeme().equals("epsilon")){
-                    dimval = null;
-                }
-                else{
-                    dimval = Integer.parseInt(((Token)dim.getConcept()).getLexeme());
-                }
-                dimlist.add(dimval);
-
-            }
-            paramlist.add((new VarEntry("function parameter", ((Token) param.getChildren().get(1).getConcept()).getLexeme(), ((Token) param.getChildren().get(0).getConcept()).getLexeme(), dimlist)));
-        }
+        FuncEntry newFuncEntry = new FuncEntry(fType,fname, fParams, localtable, memberClass);
 
 
-        node.setEntry(new FuncEntry(returnType, fname, paramlist, localtable));
+        node.setEntry(newFuncEntry);
         node.getTable().addEntry(node.getEntry());
         node.setTable(localtable);
+
+
+//        Token id =(Token)node.getChildren().get(0).getChildren().get(0).getConcept();
+//        ArrayList<Node> funcParams =node.getChildren().get(0).getChildren().get(1).getChildren();
+//        String returnType;
+//        try{
+//            returnType = ((Token)funcParams.get(funcParams.size()-1).getConcept()).getLexeme();
+//        }
+//        catch (Exception e){
+//            returnType = null;
+//        }
+//        String fname = id.getLexeme();
+//        SymbolTable localtable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
+//
+//        ArrayList<VarEntry> paramlist = new ArrayList<>();
+//        for (Node param : funcParams.get(0).getChildren()){
+//            // parameter dimension list
+//            ArrayList<Integer> dimlist = new ArrayList<>();
+//            for (Node dim : param.getChildren().get(2).getChildren()){
+//                // parameter dimension
+//                Integer dimval;
+//                if(((Token)dim.getConcept()).getLexeme().equals("epsilon")){
+//                    dimval = null;
+//                }
+//                else{
+//                    dimval = Integer.parseInt(((Token)dim.getConcept()).getLexeme());
+//                }
+//                dimlist.add(dimval);
+//
+//            }
+//            paramlist.add((new VarEntry("function parameter", ((Token) param.getChildren().get(1).getConcept()).getLexeme(), ((Token) param.getChildren().get(0).getConcept()).getLexeme(), dimlist)));
+//        }
+//
+//
+//        node.setEntry(new FuncEntry(returnType, fname, paramlist, localtable));
+//        node.getTable().addEntry(node.getEntry());
+//        node.setTable(localtable);
 
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
