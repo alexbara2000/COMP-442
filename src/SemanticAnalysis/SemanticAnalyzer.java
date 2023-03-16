@@ -13,7 +13,7 @@ public class SemanticAnalyzer {
         Node headNode = parser.parse();
         System.out.println(headNode);
 
-        SymbolTableCreatorVisitor tableCreatorVisitor = new SymbolTableCreatorVisitor();
+        SymbolTableCreatorVisitor tableCreatorVisitor = new SymbolTableCreatorVisitor("example-polynomial.src");
         headNode.accept(tableCreatorVisitor);
     }
 

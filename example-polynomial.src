@@ -1,3 +1,41 @@
+// ====== struct declarations ====== //
+class POLYNOMIAL {
+  public function evaluate: (x: float) => float;
+};
+class POLYNOMIAL {
+  public function evaluate: (x: float) => float;
+};
+
+class LINEAR isa POLYNOMIAL {
+  private attribute a: float;
+  private attribute b: float;
+  public  constructor: (A: float, B: float);
+  public  function evaluate: (x: float) => float;
+};
+
+class QUADRATIC isa POLYNOMIAL {
+  private attribute a: float;
+  private attribute b: float;
+  private attribute c: float;
+  public  constructor: (A: float, B: float, C: float);
+  public  function evaluate: (x: float) => float;
+};
+
+// ====== member function implementations ====== //
+function POLYNOMIAL::evaluate(x: float) => float
+{
+  return (0);
+}
+
+function QUADRATIC::evaluate(x: float) => float
+{
+  localvar result: float;
+  //Using Horner's method
+  result = a;
+  result = result * x + b;
+  result = result * x + c;
+  return (result);
+}
 
 function QUADRATIC::constructor(A: float, B: float, C: float)
 {

@@ -5,10 +5,23 @@ import Common.TokenType;
 import Nodes.*;
 import SemanticAnalysis.Table.*;
 
+import javax.xml.crypto.Data;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
 public class SymbolTableCreatorVisitor implements Visitor{
+    FileWriter outSemanticErrorsWriter;
+    FileWriter outSymbolTablesWriter;
+    Node headNode = null;
+
+    public SymbolTableCreatorVisitor(String path) throws IOException {
+        String pathPrefix = path.split("\\.")[0];
+        outSemanticErrorsWriter = new FileWriter(pathPrefix+".outsemanticerrors");
+        outSymbolTablesWriter = new FileWriter(pathPrefix+".outsymboltables");
+    }
+
     @Override
     public void visit(ArgumentParamsNode node) {
         for (Node child : node.getChildren() ) {
@@ -39,8 +52,17 @@ public class SymbolTableCreatorVisitor implements Visitor{
     @Override
     public void visit(ClassDefinitionNode node) {
         String classname = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
+        int location = ((Token)node.getChildren().get(0).getConcept()).getLocation();
         SymbolTable localtable = new SymbolTable(1,classname, node.getTable());
-        node.setEntry( new ClassEntry(classname, localtable));
+        ClassEntry tempClassEntry = new ClassEntry(classname, localtable);
+        if(node.getTable().lookupLocalEntry(tempClassEntry)){
+            try {
+                outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared classes at line: " +location);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        node.setEntry(tempClassEntry);
         node.getTable().addEntry(node.getEntry());
         node.setTable(localtable);
 
@@ -83,6 +105,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
         Node fundHead = node.getChildren().get(0);
         boolean isMemberFunction = false;
+        boolean isConstructor = false;
         String memberClass = "";
         String fname ="";
         String fType = "";
@@ -95,21 +118,27 @@ public class SymbolTableCreatorVisitor implements Visitor{
                 fname = ((Token)fundHead.getChildren().get(1).getConcept()).getLexeme();
                 isMemberFunction = true;
             }
+            if(secondParam.getType() == TokenType.CONSTRUCTOR){
+                isConstructor = true;
+                fname = "build";
+                memberClass = ((Token)fundHead.getChildren().get(0).getConcept()).getLexeme();
+            }
         }
         catch (Exception e){
             //free function
         }
-        if(!isMemberFunction){
+        if(!isMemberFunction && !isConstructor){
             fname = ((Token)fundHead.getChildren().get(0).getConcept()).getLexeme();
         }
-        // TODO check for constructor
-        fType = ((Token)fundHead.getChildren().get(fundHead.getChildren().size()-1).getConcept()).getLexeme();
+
+        if(!isConstructor)
+            fType = ((Token)fundHead.getChildren().get(fundHead.getChildren().size()-1).getConcept()).getLexeme();
 
         
         // get params list
         Node params = null;
         boolean hasParams = false;
-        if(isMemberFunction && fundHead.getChildren().get(2).getConcept().equals("function params")){
+        if((isMemberFunction || isConstructor) && fundHead.getChildren().get(2).getConcept().equals("function params")){
             hasParams = true;
             params = fundHead.getChildren().get(2);
         }
@@ -134,52 +163,24 @@ public class SymbolTableCreatorVisitor implements Visitor{
                 fParams.add(new VarEntry("param", innerType, innerName, dims));
             }
         }
+        SymbolTable localTable;
+        SymbolTableEntry newFuncEntry;
 
-        SymbolTable localtable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
+        if(isConstructor){
+            localTable = new SymbolTable(node.getTable().m_tablelevel+1,"Constructor", node.getTable());
+            newFuncEntry = new FuncConstructorEntry(fname, fParams, localTable, memberClass);
+        }
+        else {
+            localTable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
+            newFuncEntry = new FuncEntry(fType,fname, fParams, localTable, memberClass);
+        }
 
-        FuncEntry newFuncEntry = new FuncEntry(fType,fname, fParams, localtable, memberClass);
 
 
         node.setEntry(newFuncEntry);
         node.getTable().addEntry(node.getEntry());
-        node.setTable(localtable);
+        node.setTable(localTable);
 
-
-//        Token id =(Token)node.getChildren().get(0).getChildren().get(0).getConcept();
-//        ArrayList<Node> funcParams =node.getChildren().get(0).getChildren().get(1).getChildren();
-//        String returnType;
-//        try{
-//            returnType = ((Token)funcParams.get(funcParams.size()-1).getConcept()).getLexeme();
-//        }
-//        catch (Exception e){
-//            returnType = null;
-//        }
-//        String fname = id.getLexeme();
-//        SymbolTable localtable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
-//
-//        ArrayList<VarEntry> paramlist = new ArrayList<>();
-//        for (Node param : funcParams.get(0).getChildren()){
-//            // parameter dimension list
-//            ArrayList<Integer> dimlist = new ArrayList<>();
-//            for (Node dim : param.getChildren().get(2).getChildren()){
-//                // parameter dimension
-//                Integer dimval;
-//                if(((Token)dim.getConcept()).getLexeme().equals("epsilon")){
-//                    dimval = null;
-//                }
-//                else{
-//                    dimval = Integer.parseInt(((Token)dim.getConcept()).getLexeme());
-//                }
-//                dimlist.add(dimval);
-//
-//            }
-//            paramlist.add((new VarEntry("function parameter", ((Token) param.getChildren().get(1).getConcept()).getLexeme(), ((Token) param.getChildren().get(0).getConcept()).getLexeme(), dimlist)));
-//        }
-//
-//
-//        node.setEntry(new FuncEntry(returnType, fname, paramlist, localtable));
-//        node.getTable().addEntry(node.getEntry());
-//        node.setTable(localtable);
 
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -274,6 +275,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
         String vartype = ((Token)node.getChildren().get(2).getConcept()).getLexeme();
         String varid = ((Token)node.getChildren().get(1).getConcept()).getLexeme();
+        int location = ((Token)node.getChildren().get(1).getConcept()).getLocation();
         ArrayList<Integer> dimlist = null;
         if(node.getChildren().get(3).getConcept().equals("argument params")){
             //localvar for function
@@ -295,16 +297,24 @@ public class SymbolTableCreatorVisitor implements Visitor{
                 dimlist.add(dimval);
             }
         }
-        node.setEntry(new VarEntry("local", vartype, varid, dimlist));
-        node.getTable().addEntry(node.getEntry());
+        VarEntry tempVarEntry = new VarEntry("local", vartype, varid, dimlist);
+        if(node.getTable().lookupLocalEntry(tempVarEntry)){
+            try {
+                outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared local variables at line: " +location);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            node.setEntry(tempVarEntry);
+            node.getTable().addEntry(node.getEntry());
+        }
 
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.setTable(node.getTable());
             child.accept(this);
         }
-
-
     }
 
     @Override
@@ -396,6 +406,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
         else{
             //Data declaration
             String dname =((Token)node.getChildren().get(1).getChildren().get(0).getConcept()).getLexeme();
+            int location =((Token)node.getChildren().get(1).getChildren().get(0).getConcept()).getLocation();
             String dtype =((Token)node.getChildren().get(1).getChildren().get(1).getConcept()).getLexeme();
             String dkind = "data";
 
@@ -410,8 +421,18 @@ public class SymbolTableCreatorVisitor implements Visitor{
                 }
             }
 
-            node.setEntry(new DataEntry(dkind, dtype, dname, dims, visibility));
-            node.getTable().addEntry(node.getEntry());
+            DataEntry tempDataEntry = new DataEntry(dkind, dtype, dname, dims, visibility);
+            if(node.getTable().lookupLocalEntry(tempDataEntry)){
+                try {
+                    outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared data member at line: " +location);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                node.setEntry(tempDataEntry);
+                node.getTable().addEntry(node.getEntry());
+            }
         }
 
 
@@ -514,6 +535,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
     @Override
     public void visit(StartNode node) {
+        headNode = node;
         SymbolTable sm = new SymbolTable(0, "global", null);
         node.setTable(sm);
         for (Node child : node.getChildren() ) {
@@ -522,6 +544,14 @@ public class SymbolTableCreatorVisitor implements Visitor{
             child.accept(this);
         }
         System.out.println(node.getTable());
+        try {
+            outSymbolTablesWriter.write(node.getTable().toString());
+            outSymbolTablesWriter.close();
+            outSemanticErrorsWriter.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

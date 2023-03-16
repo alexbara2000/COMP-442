@@ -12,6 +12,11 @@ public class ClassEntry extends SymbolTableEntry {
 				"|" + 
 				m_subtable;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		ClassEntry classEntry = (ClassEntry)obj;
+		return m_name.equals(classEntry.m_name);
+	}
 }
 

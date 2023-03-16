@@ -31,4 +31,18 @@ public class DataEntry extends SymbolTableEntry {
 //				String.format("%-8s"  , "| " + m_offset) +
 		        "|";
 	}
+
+	public boolean Objectequals(Object obj) {
+		DataEntry dataEntry = (DataEntry)obj;
+		return m_kind.equals(dataEntry.m_kind) &&
+				m_type.equals(dataEntry.m_type) &&
+				m_name.equals(dataEntry.m_name) &&
+				m_visibility.equals(dataEntry.m_visibility) &&
+				m_dims.equals(dataEntry.m_dims);
+	}
+
+	public boolean equals(Object obj) {
+		DataEntry dataEntry = (DataEntry) obj;
+		return m_name.equals(dataEntry.m_name);
+	}
 }

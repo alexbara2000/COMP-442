@@ -59,4 +59,13 @@ public class SymbolTable {
         stringtoreturn.append(prelinespacing).append("=====================================================");
         return stringtoreturn.toString();
     }
+
+
+    public boolean lookupLocalEntry(SymbolTableEntry newEntry){
+        for(var entry: m_symlist){
+            if(entry.equals(newEntry))
+                return true;
+        }
+        return false;
+    }
 }
