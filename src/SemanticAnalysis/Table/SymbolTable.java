@@ -68,4 +68,23 @@ public class SymbolTable {
         }
         return false;
     }
+    public boolean lookupLocalEntryName(SymbolTableEntry newEntry){
+        for(var entry: m_symlist){
+            if(entry.equalsName(newEntry))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasSameParams(FuncEntry funcEntry){
+        for(var entry: m_symlist){
+            if(entry instanceof FuncEntry){
+                FuncEntry actualEntry = (FuncEntry) entry;
+                if(actualEntry.sameParams(funcEntry)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

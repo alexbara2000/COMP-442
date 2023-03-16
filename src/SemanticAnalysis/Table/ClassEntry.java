@@ -15,8 +15,14 @@ public class ClassEntry extends SymbolTableEntry {
 
 	@Override
 	public boolean equals(Object obj) {
-		ClassEntry classEntry = (ClassEntry)obj;
-		return m_name.equals(classEntry.m_name);
+		try{
+			ClassEntry classEntry = (ClassEntry)obj;
+			return m_name.equals(classEntry.m_name);
+		}
+		catch (Exception e){
+			return false;
+		}
+
 	}
 }
 

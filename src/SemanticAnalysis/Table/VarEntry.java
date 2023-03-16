@@ -27,7 +27,7 @@ public class VarEntry extends SymbolTableEntry {
 				String.format("%-12s"  , "| " + m_type+dimsToDisplay) +
 		        "|";
 	}
-	public boolean objectEquals(Object obj) {
+	public boolean equalsName(Object obj) {
 		VarEntry varEntry = (VarEntry) obj;
 		return m_kind.equals(varEntry.m_kind) &&
 				m_type.equals(varEntry.m_type) &&
@@ -36,6 +36,7 @@ public class VarEntry extends SymbolTableEntry {
 	}
 	public boolean equals(Object obj) {
 		VarEntry varEntry = (VarEntry) obj;
-		return m_name.equals(varEntry.m_name);
+		return m_name.equals(varEntry.m_name) && m_dims.equals(varEntry.m_dims) && m_type.equals(varEntry.m_type);
 	}
+
 }

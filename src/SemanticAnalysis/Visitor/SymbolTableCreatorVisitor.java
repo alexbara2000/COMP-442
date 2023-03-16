@@ -109,6 +109,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
         String memberClass = "";
         String fname ="";
         String fType = "";
+        int location = 0;
         ArrayList<VarEntry> fParams= new ArrayList<>();
 
         try{
@@ -116,16 +117,19 @@ public class SymbolTableCreatorVisitor implements Visitor{
             if(secondParam.getType() == TokenType.ID){
                 memberClass = ((Token)fundHead.getChildren().get(0).getConcept()).getLexeme();
                 fname = ((Token)fundHead.getChildren().get(1).getConcept()).getLexeme();
+                location = ((Token)fundHead.getChildren().get(1).getConcept()).getLocation();
                 isMemberFunction = true;
             }
             if(secondParam.getType() == TokenType.CONSTRUCTOR){
                 isConstructor = true;
                 fname = "build";
                 memberClass = ((Token)fundHead.getChildren().get(0).getConcept()).getLexeme();
+                location = ((Token)fundHead.getChildren().get(0).getConcept()).getLocation();
             }
         }
         catch (Exception e){
             //free function
+            System.out.println("Here");
         }
         if(!isMemberFunction && !isConstructor){
             fname = ((Token)fundHead.getChildren().get(0).getConcept()).getLexeme();
@@ -164,18 +168,34 @@ public class SymbolTableCreatorVisitor implements Visitor{
             }
         }
         SymbolTable localTable;
-        SymbolTableEntry newFuncEntry;
+        FuncEntry newFuncEntry;
 
         if(isConstructor){
             localTable = new SymbolTable(node.getTable().m_tablelevel+1,"Constructor", node.getTable());
-            newFuncEntry = new FuncConstructorEntry(fname, fParams, localTable, memberClass);
+            newFuncEntry = new FuncEntry("Constructor", fType, "build", fParams, localTable, memberClass);
         }
         else {
             localTable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
-            newFuncEntry = new FuncEntry(fType,fname, fParams, localTable, memberClass);
+            newFuncEntry = new FuncEntry("Function", fType,fname, fParams, localTable, memberClass);
         }
 
+        if(node.getTable().lookupLocalEntry(newFuncEntry)){
+            if(headNode.getTable().hasSameParams(newFuncEntry)){
+                try {
+                    outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiple declared functions at line: " +location);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                try {
+                    outSemanticErrorsWriter.write("SEMANTIC WARNING: two functions with the same name but with different parameter lists: " +location);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
+        }
 
         node.setEntry(newFuncEntry);
         node.getTable().addEntry(node.getEntry());
@@ -298,7 +318,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
             }
         }
         VarEntry tempVarEntry = new VarEntry("local", vartype, varid, dimlist);
-        if(node.getTable().lookupLocalEntry(tempVarEntry)){
+        if(node.getTable().lookupLocalEntryName(tempVarEntry)){
             try {
                 outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared local variables at line: " +location);
             } catch (IOException e) {

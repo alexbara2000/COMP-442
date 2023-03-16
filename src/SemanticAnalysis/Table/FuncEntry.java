@@ -8,8 +8,8 @@ public class FuncEntry extends SymbolTableEntry {
 	public ArrayList<VarEntry> m_params   = new ArrayList<>();
 	public String m_memberClass = null;
 	
-	public FuncEntry(String p_type, String p_name, ArrayList<VarEntry> p_params, SymbolTable p_table, String p_memberClass){
-		super("func", p_type, p_name, p_table);
+	public FuncEntry(String p_kind, String p_type, String p_name, ArrayList<VarEntry> p_params, SymbolTable p_table, String p_memberClass){
+		super(p_kind, p_type, p_name, p_table);
 		m_params = p_params;
 		m_memberClass = p_memberClass;
 	}
@@ -48,6 +48,13 @@ public class FuncEntry extends SymbolTableEntry {
 	@Override
 	public boolean equals(Object obj) {
 		FuncEntry funcEntry = (FuncEntry) obj;
-		return m_name.equals(funcEntry.m_name) && m_memberClass.equals(funcEntry.m_memberClass);
+		return m_name.equals(funcEntry.m_name) && m_memberClass.equals(funcEntry.m_memberClass) && m_kind.equals(funcEntry.m_kind);
+	}
+
+	public boolean sameParams(FuncEntry funcEntry){
+		return m_name.equals(funcEntry.m_name) &&
+				m_memberClass.equals(funcEntry.m_memberClass) &&
+				m_kind.equals(funcEntry.m_kind) &&
+				m_params.equals(funcEntry.m_params);
 	}
 }

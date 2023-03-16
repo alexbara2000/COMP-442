@@ -19,4 +19,10 @@ public class SymbolTableEntry {
         m_name = p_name;
         m_subtable = p_subtable;
     }
+
+
+    public boolean equalsName(Object obj) {
+        SymbolTableEntry ste = (SymbolTableEntry) (obj);
+        return ste.m_name.equals(m_name);
+    }
 }
