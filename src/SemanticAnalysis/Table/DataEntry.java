@@ -42,7 +42,12 @@ public class DataEntry extends SymbolTableEntry {
 	}
 
 	public boolean equals(Object obj) {
-		DataEntry dataEntry = (DataEntry) obj;
-		return m_name.equals(dataEntry.m_name);
+		try{
+			DataEntry dataEntry = (DataEntry) obj;
+			return m_name.equals(dataEntry.m_name);
+		}
+		catch (Exception e){
+			return false;
+		}
 	}
 }

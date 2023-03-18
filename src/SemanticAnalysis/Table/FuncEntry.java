@@ -47,8 +47,13 @@ public class FuncEntry extends SymbolTableEntry {
 
 	@Override
 	public boolean equals(Object obj) {
-		FuncEntry funcEntry = (FuncEntry) obj;
-		return m_name.equals(funcEntry.m_name) && m_memberClass.equals(funcEntry.m_memberClass) && m_kind.equals(funcEntry.m_kind);
+		try{
+			FuncEntry funcEntry = (FuncEntry) obj;
+			return m_name.equals(funcEntry.m_name) && m_memberClass.equals(funcEntry.m_memberClass) && m_kind.equals(funcEntry.m_kind);
+		}
+			catch (Exception e){
+			return false;
+		}
 	}
 
 	public boolean sameParams(FuncEntry funcEntry){

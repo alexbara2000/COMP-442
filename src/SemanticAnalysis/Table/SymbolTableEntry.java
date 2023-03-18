@@ -22,7 +22,12 @@ public class SymbolTableEntry {
 
 
     public boolean equalsName(Object obj) {
-        SymbolTableEntry ste = (SymbolTableEntry) (obj);
-        return ste.m_name.equals(m_name);
+        try{
+            SymbolTableEntry ste = (SymbolTableEntry) (obj);
+            return ste.m_name.equals(m_name);
+        }
+            catch (Exception e){
+            return false;
+        }
     }
 }

@@ -57,7 +57,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
         ClassEntry tempClassEntry = new ClassEntry(classname, localtable);
         if(node.getTable().lookupLocalEntry(tempClassEntry)){
             try {
-                outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared classes at line: " +location);
+                outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared classes at line: " +location+"\n");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -132,6 +132,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
             System.out.println("Here");
         }
         if(!isMemberFunction && !isConstructor){
+            location = ((Token)fundHead.getChildren().get(0).getConcept()).getLocation();
             fname = ((Token)fundHead.getChildren().get(0).getConcept()).getLexeme();
         }
 
@@ -182,21 +183,21 @@ public class SymbolTableCreatorVisitor implements Visitor{
         if(node.getTable().lookupLocalEntry(newFuncEntry)){
             if(headNode.getTable().hasSameParams(newFuncEntry)){
                 try {
-                    outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiple declared functions at line: " +location);
+                    outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiple declared functions at line: " +location +"\n");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
             else {
                 try {
-                    outSemanticErrorsWriter.write("SEMANTIC WARNING: two functions with the same name but with different parameter lists: " +location);
+                    outSemanticErrorsWriter.write("SEMANTIC WARNING: two functions with the same name but with different parameter lists: " +location + "\n");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
 
         }
-
+//TODO for each param push an entry
         node.setEntry(newFuncEntry);
         node.getTable().addEntry(node.getEntry());
         node.setTable(localTable);
@@ -320,7 +321,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
         VarEntry tempVarEntry = new VarEntry("local", vartype, varid, dimlist);
         if(node.getTable().lookupLocalEntryName(tempVarEntry)){
             try {
-                outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared local variables at line: " +location);
+                outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared local variables at line: " +location + "\n");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -442,9 +443,9 @@ public class SymbolTableCreatorVisitor implements Visitor{
             }
 
             DataEntry tempDataEntry = new DataEntry(dkind, dtype, dname, dims, visibility);
-            if(node.getTable().lookupLocalEntry(tempDataEntry)){
+            if(node.getTable().lookupInheritedEntry(tempDataEntry)){
                 try {
-                    outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared data member at line: " +location);
+                    outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared data member at line: " +location + "\n");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

@@ -35,8 +35,13 @@ public class VarEntry extends SymbolTableEntry {
 				m_dims.equals(varEntry.m_dims);
 	}
 	public boolean equals(Object obj) {
-		VarEntry varEntry = (VarEntry) obj;
-		return m_name.equals(varEntry.m_name) && m_dims.equals(varEntry.m_dims) && m_type.equals(varEntry.m_type);
+		try{
+			VarEntry varEntry = (VarEntry) obj;
+			return m_name.equals(varEntry.m_name) && m_dims.equals(varEntry.m_dims) && m_type.equals(varEntry.m_type);
+		}
+			catch (Exception e){
+			return false;
+		}
 	}
 
 }

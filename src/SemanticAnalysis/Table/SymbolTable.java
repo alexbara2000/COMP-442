@@ -44,6 +44,22 @@ public class SymbolTable {
         }
         return returnvalue;
     }
+    public boolean lookupNameReturnsBool(String p_tolookup) {
+        SymbolTableEntry returnvalue = new SymbolTableEntry();
+        boolean found = false;
+        for( SymbolTableEntry rec : m_symlist) {
+            if (p_tolookup.equals(rec.m_name)) {
+                returnvalue = rec;
+                found = true;
+            }
+        }
+        if (!found) {
+            if (m_uppertable != null) {
+                returnvalue = m_uppertable.lookupName(p_tolookup);
+            }
+        }
+        return found;
+    }
 
     public String toString(){
         StringBuilder stringtoreturn = new StringBuilder();
@@ -68,6 +84,19 @@ public class SymbolTable {
         }
         return false;
     }
+    public boolean lookupInheritedEntry(SymbolTableEntry newEntry){
+        for(var entry: m_symlist){
+            if(entry.equals(newEntry))
+                return true;
+        }
+        if(m_uppertable == null || m_uppertable.m_symlist == null || m_uppertable.m_symlist.size() == 0){
+            return false;
+        }
+        else{
+            return m_uppertable.lookupInheritedEntry(newEntry);
+        }
+
+    }
     public boolean lookupLocalEntryName(SymbolTableEntry newEntry){
         for(var entry: m_symlist){
             if(entry.equalsName(newEntry))
@@ -75,6 +104,7 @@ public class SymbolTable {
         }
         return false;
     }
+
 
     public boolean hasSameParams(FuncEntry funcEntry){
         for(var entry: m_symlist){
