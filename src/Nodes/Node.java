@@ -36,6 +36,9 @@ public class Node {
     public void setParent(Node parent) {
         this.parent = parent;
     }
+    public Node getParent() {
+        return parent;
+    }
 
     public int getDepth() {
         return depth;

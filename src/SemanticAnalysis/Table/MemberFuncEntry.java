@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MemberFuncEntry extends FuncEntry{
     public String m_visibility;
     public MemberFuncEntry(String p_kind, String p_type, String p_name, ArrayList<VarEntry> p_params, String p_visibility, SymbolTable p_table){
-        super("Function",p_type, p_name, p_params, p_table, "");
+        super("member function",p_type, p_name, p_params, p_table, "");
         this.m_visibility = p_visibility;
         this.m_kind = p_kind;
     }

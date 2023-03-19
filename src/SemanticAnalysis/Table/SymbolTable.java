@@ -117,4 +117,47 @@ public class SymbolTable {
         }
         return false;
     }
+
+    public ArrayList<FuncEntry> isFuncCallReturnTables(String id) {
+        ArrayList<FuncEntry> funcEntries = new ArrayList<>();
+        for(var entries: m_symlist){
+            if(entries instanceof FuncEntry && entries.m_name.equals(id)){
+                funcEntries.add((FuncEntry)entries);
+            }
+        }
+        return  funcEntries;
+    }
+
+    public boolean isDataMember(String id){
+        boolean found = false;
+        for( SymbolTableEntry rec : m_symlist) {
+            if(rec.m_subtable != null){
+                found = rec.m_subtable.isDataMember(id);
+                if(found){
+                    return true;
+                }
+            }
+            if (id.equals(rec.m_name) && rec.m_kind.equals("data")) {
+                return true;
+            }
+        }
+        return found;
+    }
+
+    public boolean idExists(String id){
+        String rep = this.toString();
+        if(!rep.contains(id))
+            return false;
+        for( SymbolTableEntry rec : m_symlist) {
+            if(rec.m_subtable != null){
+                if(rec.m_subtable.idExists(id)){
+                    return true;
+                }
+            }
+            if (id.equals(rec.m_name) || id.equals("build") || id.equals(rec.m_kind) || id.equals(rec.m_type) || rec.m_kind.equals("data")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

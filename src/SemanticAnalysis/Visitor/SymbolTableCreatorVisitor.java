@@ -197,10 +197,13 @@ public class SymbolTableCreatorVisitor implements Visitor{
             }
 
         }
-//TODO for each param push an entry
         node.setEntry(newFuncEntry);
         node.getTable().addEntry(node.getEntry());
         node.setTable(localTable);
+
+        for(var fparam: fParams){
+            node.getTable().addEntry(fparam);
+        }
 
 
         for (Node child : node.getChildren() ) {

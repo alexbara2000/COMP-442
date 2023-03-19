@@ -13,12 +13,11 @@ public class SemanticAnalyzer {
         Parser parser=new Parser(fileToParse);
         Node headNode = parser.parse();
         System.out.println(headNode);
-        String path = "example-polynomial.src";
 
-        SymbolTableCreatorVisitor tableCreatorVisitor = new SymbolTableCreatorVisitor(path);
+        SymbolTableCreatorVisitor tableCreatorVisitor = new SymbolTableCreatorVisitor(fileToParse);
         headNode.accept(tableCreatorVisitor);
 
-        TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor(path);
+        TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor(fileToParse);
         headNode.accept(typeCheckingVisitor);
     }
 
