@@ -16,6 +16,8 @@ public class TypeCheckingVisitor implements Visitor{
     String currentType = "";
 
     Token previousId = null;
+    Token previousToken = null;
+    int numberOfDims = 0;
 
     public TypeCheckingVisitor(String path) throws IOException {
         String pathPrefix = path.split("\\.")[0];
@@ -250,7 +252,7 @@ public class TypeCheckingVisitor implements Visitor{
             }
             catch (Exception e){
                 try {
-                    outSemanticErrorsWriter.write("undeclared member function"+ currToken.getLocation() + "\n");
+                    outSemanticErrorsWriter.write("undeclared member function "+ currToken.getLocation() + "\n");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -260,6 +262,16 @@ public class TypeCheckingVisitor implements Visitor{
         if(currToken.getType() == TokenType.ID){
             previousId = currToken;
         }
+        if(currToken.getType() == TokenType.SELF )
+                if( previousToken != null && previousToken.getType() == TokenType.DOT){
+            try {
+                outSemanticErrorsWriter.write("Wrong use of the self operator"+ currToken.getLocation() + "\n");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        previousToken = currToken;
+
 
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -378,10 +390,32 @@ public class TypeCheckingVisitor implements Visitor{
 
             if(isFirstChildId){
                 currentType = node.getTable().lookupName(id).m_type;
-                if(currentType == null || ((Token)node.getChildren().get(1).getConcept()).getType() != TokenType.ASSIGN)
-                    currentType = "";
+                if(node.getChildren().get(1).getConcept() instanceof Token)
+                    if(currentType == null || ((Token)node.getChildren().get(1).getConcept()).getType() != TokenType.ASSIGN)
+                        currentType = "";
             }
         }
+        numberOfDims = 0;
+        for(var childs: node.getChildren()){
+            if(node.getConcept().equals("indice")){
+                numberOfDims++;
+            }
+        }
+        if(numberOfDims!=0){
+            for(var entries: node.getTable().m_symlist) {
+                if (entries.m_name.equals(id)) {
+                    try {
+                        if(!headNode.getTable().isDataMember(id)){
+                            outSemanticErrorsWriter.write("wrong number of dimensions used: "+ location + "\n");
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+
+
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);

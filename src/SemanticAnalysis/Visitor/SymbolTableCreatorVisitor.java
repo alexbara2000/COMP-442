@@ -128,8 +128,6 @@ public class SymbolTableCreatorVisitor implements Visitor{
             }
         }
         catch (Exception e){
-            //free function
-            System.out.println("Here");
         }
         if(!isMemberFunction && !isConstructor){
             location = ((Token)fundHead.getChildren().get(0).getConcept()).getLocation();
@@ -446,6 +444,13 @@ public class SymbolTableCreatorVisitor implements Visitor{
             }
 
             DataEntry tempDataEntry = new DataEntry(dkind, dtype, dname, dims, visibility);
+            if(headNode.getTable().isDataMember(dname)){
+                try {
+                    outSemanticErrorsWriter.write("SEMANTIC Warning: Shadow inheritance of data members: " +location + "\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if(node.getTable().lookupInheritedEntry(tempDataEntry)){
                 try {
                     outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared data member at line: " +location + "\n");

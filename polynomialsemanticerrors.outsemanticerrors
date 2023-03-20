@@ -1,0 +1,16 @@
+SEMANTIC ERRORS: multiply declared classes at line: 6
+SEMANTIC Warning: Shadow inheritance of data members: 13
+SEMANTIC ERRORS: multiply declared data member at line: 13
+SEMANTIC Warning: Shadow inheritance of data members: 20
+SEMANTIC Warning: Shadow inheritance of data members: 21
+SEMANTIC ERRORS: multiple declared functions at line: 95
+SEMANTIC WARNING: two functions with the same name but with different parameter lists: 96
+undeclared member function 72
+Invalid number of params: 113
+Invalid number of params: 113
+the type of the left and right hand side of the assignment operator must be the same at location: 115
+the type of the left and right hand side of the assignment operator must be the same at location: 115
+function undefined has not been declared: 116
+Variable undefined has not been declared: 116
+the type of the left and right hand side of the assignment operator must be the same at location: 117
+Cannot call a function without a member of the class: 123
