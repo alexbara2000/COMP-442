@@ -29,7 +29,7 @@ class C isa E {
 	private attribute d: integer;
 };
 
-class E isa C {                                                         // 14.1
+class E isa C {                                                         // 14.1 done
 	private attribute f: integer;
 };
 
@@ -72,8 +72,7 @@ function QUADRATIC::constructor(B: float, C: float)
     localvar new_function: QUADRATIC ;
     new_function.a = A + B * 3;                                            // 10.1
     new_function.b = B;
-    new_function.c = 1;                                                    // 10.2 
-    return (1);                                                            // 10.3
+    return (1);                                                            // 10.3 done
   }
   // 6.1
 function QUADRATIC::build2(A: float, B: float, C: float) => QUADRATIC
@@ -106,14 +105,16 @@ function printArray(arr: integer[], size: integer) => void
 // ====== main ====== //
 function main() => void
 {
-  localvar a: a;                                                           // 11.5
+  localvar a: a;                                                           // 11.5 done
   localvar c: C;
   localvar f1: LINEAR;
   localvar f2: QUADRATIC;
   localvar counter: integer;
+  localvar x: float;
   localvar counter: integer;                                                 // 8.4 done
   localvar i: integer[2][3];
   localvar j: integer[1][2][3];
+  x = counter;                                                             // 10.2
   f1.build(2, 3.5);
   f2.build(-2.0, 1.0, 0.0);
   c.b = 1;                                                                 // 11.2

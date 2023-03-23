@@ -141,6 +141,7 @@
 |    | local     | f1        | LINEAR    |
 |    | local     | f2        | QUADRATIC |
 |    | local     | counter   | integer   |
+|    | local     | x         | float     |
 |    | local     | i         | integer[2][3]|
 |    | local     | j         | integer[1][2][3]|
 |    =====================================================

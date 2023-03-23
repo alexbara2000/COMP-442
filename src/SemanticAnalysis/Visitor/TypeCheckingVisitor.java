@@ -155,6 +155,16 @@ public class TypeCheckingVisitor implements Visitor{
 
     @Override
     public void visit(LocalVariableNode node) {
+        String id = ((Token)node.getChildren().get(1).getConcept()).getLexeme();
+        String type = ((Token)node.getChildren().get(2).getConcept()).getLexeme();
+        int location = ((Token)node.getChildren().get(2).getConcept()).getLocation();
+        if(id.equals(type)){
+            try {
+                outSemanticErrorsWriter.write("Cannot assign a variable to itself: "+ location + "\n");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
@@ -329,9 +339,19 @@ public class TypeCheckingVisitor implements Visitor{
 
     @Override
     public void visit(ReturnNode node) {
+        String tableName = node.getTable().m_name;
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
+        }
+        if(tableName.equals("Constructor")){
+            if(previousToken.getType() == TokenType.INTNUM || previousToken.getType() == TokenType.FLOATNUM){
+                try {
+                    outSemanticErrorsWriter.write("wrong return type "+ previousToken.getLocation() + "\n");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
         }
     }
 
