@@ -213,7 +213,7 @@ public class TypeCheckingVisitor implements Visitor{
                     for (var cousin: cousins){
                         if(cousin.getConcept().equals("argument params")){
                             int numberOfParams = cousin.getChildren().size();
-                            String funcCallToCheck = ((Token)cousins.get(2).getConcept()).getLexeme();
+                            String funcCallToCheck = ((Token)cousins.get(0).getConcept()).getLexeme();
                             ArrayList<FuncEntry> funcCalls =  headNode.getTable().isFuncCallReturnTables(funcCallToCheck);
                             if(funcCalls.size() != 0){
                                 boolean validNumbOfArgs = false;
@@ -397,17 +397,15 @@ public class TypeCheckingVisitor implements Visitor{
         }
         numberOfDims = 0;
         for(var childs: node.getChildren()){
-            if(node.getConcept().equals("indice")){
+            if(childs.getConcept().equals("indice")){
                 numberOfDims++;
             }
         }
         if(numberOfDims!=0){
             for(var entries: node.getTable().m_symlist) {
-                if (entries.m_name.equals(id)) {
+                if (entries.m_name.equals(id) && entries.m_dims.size() != numberOfDims) {
                     try {
-                        if(!headNode.getTable().isDataMember(id)){
-                            outSemanticErrorsWriter.write("wrong number of dimensions used: "+ location + "\n");
-                        }
+                        outSemanticErrorsWriter.write("wrong number of dimensions used: "+ location + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

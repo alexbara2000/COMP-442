@@ -16,6 +16,8 @@ public class SymbolTableCreatorVisitor implements Visitor{
     FileWriter outSymbolTablesWriter;
     Node headNode = null;
 
+    String currentClass = "";
+
     public SymbolTableCreatorVisitor(String path) throws IOException {
         String pathPrefix = path.split("\\.")[0];
         outSemanticErrorsWriter = new FileWriter(pathPrefix+".outsemanticerrors");
@@ -52,6 +54,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
     @Override
     public void visit(ClassDefinitionNode node) {
         String classname = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
+        currentClass = classname;
         int location = ((Token)node.getChildren().get(0).getConcept()).getLocation();
         SymbolTable localtable = new SymbolTable(1,classname, node.getTable());
         ClassEntry tempClassEntry = new ClassEntry(classname, localtable);
@@ -282,6 +285,21 @@ public class SymbolTableCreatorVisitor implements Visitor{
         for(Node idNode: node.getChildren()){
             idNames.add(((Token)idNode.getConcept()).getLexeme());
         }
+        String tableName = node.getTable().m_name;
+
+        if(idNames.size() != 0){
+            for(var id: idNames){
+                var iList = headNode.getTable().getInheritanceList(id);
+                if(iList != null && iList.size() != 0 && iList.contains(tableName)){
+                    try {
+                        outSemanticErrorsWriter.write("SEMANTIC ERRORS: circular dependency: " +((Token) node.getChildren().get(0).getConcept()).getLocation() + "\n");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+
         node.getTable().addEntry(new InheritEntry(idNames, null));
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -394,20 +412,26 @@ public class SymbolTableCreatorVisitor implements Visitor{
              // there are no params for the function
             }
 
-            SymbolTable localtable;
-            if(kind.equals("constructor")){
-                localtable = new SymbolTable(node.getTable().m_tablelevel+1,"function", node.getTable());
-            }
-            else{
-                localtable = new SymbolTable(node.getTable().m_tablelevel+1,fname, node.getTable());
-            }
 
             FuncEntry newFuncEntry;
             if(kind.equals("constructor")){
-                newFuncEntry = new MemberConstructorEntry(kind, type, fname, fParams, visibility, localtable);
+                newFuncEntry = new MemberFuncEntry(kind, type, fname, fParams, visibility, null,currentClass, false);
             }
             else{
-                newFuncEntry = new MemberFuncEntry(kind, type,fname, fParams, visibility, localtable);
+                newFuncEntry = new MemberFuncEntry(kind, type,fname, fParams, visibility, null, currentClass,false);
+            }
+
+            SymbolTable localtable = headNode.getTable().getTableEntry(newFuncEntry);
+            if(localtable == null){
+                try {
+                    outSemanticErrorsWriter.write("SEMANTIC ERROR: Use of undefined member function  " +((Token)node.getChildren().get(0).getConcept()).getLocation() + "\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else{
+                localtable.m_tablelevel = 2;
+                newFuncEntry.m_subtable = localtable;
             }
 
 
@@ -415,15 +439,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
             node.getTable().addEntry(node.getEntry());
             node.setTable(localtable);
 
-            for(var fparam: fParams){
-                node.getTable().addEntry(fparam);
-            }
-            if (kind.equals("constructor")){
-                node.getTable().addEntry(new VarEntry("local", "void", "result", null));
-            }
-            else {
-                node.getTable().addEntry(new VarEntry("local", type, "result", null));
-            }
+
         }
         else{
             //Data declaration

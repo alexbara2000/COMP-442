@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class MemberFuncEntry extends FuncEntry{
     public String m_visibility;
-    public MemberFuncEntry(String p_kind, String p_type, String p_name, ArrayList<VarEntry> p_params, String p_visibility, SymbolTable p_table){
-        super("member function",p_type, p_name, p_params, p_table, "");
+    boolean isImplemented;
+    public MemberFuncEntry(String p_kind, String p_type, String p_name, ArrayList<VarEntry> p_params, String p_visibility, SymbolTable p_table, String memberClass, boolean isImplemented){
+        super("member function",p_type, p_name, p_params, p_table, memberClass);
         this.m_visibility = p_visibility;
+        this.isImplemented = isImplemented;
         this.m_kind = p_kind;
     }
     public String toString(){

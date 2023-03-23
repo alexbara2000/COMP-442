@@ -166,37 +166,26 @@ start
 |  |  |  |  |  |  [integer, integer, 29]
 |  |  |  |  |  |  array size
 |  |  class definition
-|  |  |  [id, D, 32]
+|  |  |  [id, E, 32]
 |  |  |  inheritance
 |  |  |  |  [id, C, 32]
 |  |  |  recursive member declaration
 |  |  |  |  member declaration
 |  |  |  |  |  [private, private, 33]
 |  |  |  |  |  member variable declaration
-|  |  |  |  |  |  [id, e, 33]
+|  |  |  |  |  |  [id, f, 33]
 |  |  |  |  |  |  [integer, integer, 33]
 |  |  |  |  |  |  array size
-|  |  class definition
-|  |  |  [id, E, 36]
-|  |  |  inheritance
-|  |  |  |  [id, D, 36]
-|  |  |  recursive member declaration
-|  |  |  |  member declaration
-|  |  |  |  |  [private, private, 37]
-|  |  |  |  |  member variable declaration
-|  |  |  |  |  |  [id, f, 37]
-|  |  |  |  |  |  [integer, integer, 37]
-|  |  |  |  |  |  array size
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, POLYNOMIAL, 42]
-|  |  |  |  [id, evaluate, 42]
+|  |  |  |  [id, POLYNOMIAL, 38]
+|  |  |  |  [id, evaluate, 38]
 |  |  |  |  function params
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, x, 42]
-|  |  |  |  |  |  [float, float, 42]
+|  |  |  |  |  |  [id, x, 38]
+|  |  |  |  |  |  [float, float, 38]
 |  |  |  |  |  |  array size
-|  |  |  |  [float, float, 42]
+|  |  |  |  [float, float, 38]
 |  |  |  function body
 |  |  |  |  statement
 |  |  |  |  |  return
@@ -204,50 +193,50 @@ start
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 0, 44]
+|  |  |  |  |  |  |  |  |  |  [intnum, 0, 40]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, LINEAR, 47]
-|  |  |  |  [constructor, constructor, 47]
+|  |  |  |  [id, LINEAR, 43]
+|  |  |  |  [constructor, constructor, 43]
 |  |  |  |  function params
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, A, 47]
-|  |  |  |  |  |  [float, float, 47]
+|  |  |  |  |  |  [id, A, 43]
+|  |  |  |  |  |  [float, float, 43]
 |  |  |  |  |  |  array size
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, B, 47]
-|  |  |  |  |  |  [float, float, 47]
+|  |  |  |  |  |  [id, B, 43]
+|  |  |  |  |  |  [float, float, 43]
 |  |  |  |  |  |  array size
 |  |  |  function body
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 49]
-|  |  |  |  |  [id, new_function, 49]
-|  |  |  |  |  [id, LINEAR, 49]
+|  |  |  |  |  [localvar, localvar, 45]
+|  |  |  |  |  [id, new_function, 45]
+|  |  |  |  |  [id, LINEAR, 45]
 |  |  |  |  |  array size
 |  |  |  |  statement
-|  |  |  |  |  [id, new_function, 50]
-|  |  |  |  |  [dot, ., 50]
-|  |  |  |  |  [id, a, 50]
-|  |  |  |  |  [assign, =, 50]
+|  |  |  |  |  [id, new_function, 46]
+|  |  |  |  |  [dot, ., 46]
+|  |  |  |  |  [id, a, 46]
+|  |  |  |  |  [assign, =, 46]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, A, 50]
+|  |  |  |  |  |  |  |  |  [id, A, 46]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
-|  |  |  |  |  [id, new_function, 51]
-|  |  |  |  |  [dot, ., 51]
-|  |  |  |  |  [id, b, 51]
-|  |  |  |  |  [assign, =, 51]
+|  |  |  |  |  [id, new_function, 47]
+|  |  |  |  |  [dot, ., 47]
+|  |  |  |  |  [id, b, 47]
+|  |  |  |  |  [assign, =, 47]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, B, 51]
+|  |  |  |  |  |  |  |  |  [id, B, 47]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
@@ -256,52 +245,52 @@ start
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, new_function, 52]
+|  |  |  |  |  |  |  |  |  |  [id, new_function, 48]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, LINEAR, 55]
-|  |  |  |  [id, evaluate, 55]
+|  |  |  |  [id, LINEAR, 51]
+|  |  |  |  [id, evaluate, 51]
 |  |  |  |  function params
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, x, 55]
-|  |  |  |  |  |  [float, float, 55]
+|  |  |  |  |  |  [id, x, 51]
+|  |  |  |  |  |  [float, float, 51]
 |  |  |  |  |  |  array size
-|  |  |  |  [float, float, 55]
+|  |  |  |  [float, float, 51]
 |  |  |  function body
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 57]
-|  |  |  |  |  [id, result, 57]
-|  |  |  |  |  [float, float, 57]
+|  |  |  |  |  [localvar, localvar, 53]
+|  |  |  |  |  [id, result, 53]
+|  |  |  |  |  [float, float, 53]
 |  |  |  |  |  array size
 |  |  |  |  statement
-|  |  |  |  |  [id, result, 58]
-|  |  |  |  |  [assign, =, 58]
+|  |  |  |  |  [id, result, 54]
+|  |  |  |  |  [assign, =, 54]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [floatnum, 0.0, 58]
+|  |  |  |  |  |  |  |  |  [floatnum, 0.0, 54]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
-|  |  |  |  |  [id, result, 59]
-|  |  |  |  |  [assign, =, 59]
+|  |  |  |  |  [id, result, 55]
+|  |  |  |  |  [assign, =, 55]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, a, 59]
+|  |  |  |  |  |  |  |  |  [id, a, 55]
 |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  [mult, *, 59]
+|  |  |  |  |  |  |  |  |  [mult, *, 55]
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, x, 59]
+|  |  |  |  |  |  |  |  |  |  [id, x, 55]
 |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  |  [plus, +, 59]
+|  |  |  |  |  |  |  |  [plus, +, 55]
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, b, 59]
+|  |  |  |  |  |  |  |  |  |  [id, b, 55]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  statement
 |  |  |  |  |  return
@@ -309,154 +298,141 @@ start
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, result, 60]
+|  |  |  |  |  |  |  |  |  |  [id, result, 56]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, QUADRATIC, 63]
-|  |  |  |  [id, evaluate, 63]
+|  |  |  |  [id, QUADRATIC, 59]
+|  |  |  |  [id, evaluate, 59]
 |  |  |  |  function params
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, x, 63]
-|  |  |  |  |  |  [float, float, 63]
+|  |  |  |  |  |  [id, x, 59]
+|  |  |  |  |  |  [float, float, 59]
 |  |  |  |  |  |  array size
-|  |  |  |  [float, float, 63]
+|  |  |  |  [float, float, 59]
 |  |  |  function body
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 65]
+|  |  |  |  |  [localvar, localvar, 61]
+|  |  |  |  |  [id, result, 61]
+|  |  |  |  |  [float, float, 61]
+|  |  |  |  |  array size
+|  |  |  |  statement
+|  |  |  |  |  [id, result, 63]
+|  |  |  |  |  [assign, =, 63]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, a, 63]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, result, 64]
+|  |  |  |  |  [assign, =, 64]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, result, 64]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  [mult, *, 64]
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 64]
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  [plus, +, 64]
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, b, 64]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  statement
 |  |  |  |  |  [id, result, 65]
-|  |  |  |  |  [float, float, 65]
-|  |  |  |  |  array size
-|  |  |  |  statement
-|  |  |  |  |  [id, result, 67]
-|  |  |  |  |  [assign, =, 67]
+|  |  |  |  |  [assign, =, 65]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, a, 67]
+|  |  |  |  |  |  |  |  |  [id, result, 65]
 |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, result, 68]
-|  |  |  |  |  [assign, =, 68]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, result, 68]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  [mult, *, 68]
+|  |  |  |  |  |  |  |  |  [mult, *, 65]
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, x, 68]
+|  |  |  |  |  |  |  |  |  |  [id, x, 65]
 |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  |  [plus, +, 68]
+|  |  |  |  |  |  |  |  [plus, +, 65]
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, b, 68]
+|  |  |  |  |  |  |  |  |  |  [id, c, 65]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  statement
-|  |  |  |  |  [id, result, 69]
-|  |  |  |  |  [assign, =, 69]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, result, 69]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  [mult, *, 69]
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, x, 69]
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  |  [plus, +, 69]
+|  |  |  |  |  return
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, c, 69]
+|  |  |  |  |  |  |  |  |  |  [id, result, 67]
 |  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  statement
-|  |  |  |  |  [id, result, 71]
-|  |  |  |  |  [assign, =, 71]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, a, 71]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, result, 72]
-|  |  |  |  |  [assign, =, 72]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, a, 72]
-|  |  |  |  |  |  |  |  |  [dot, ., 72]
-|  |  |  |  |  |  |  |  |  [id, result, 73]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, QUADRATIC, 76]
-|  |  |  |  [constructor, constructor, 76]
+|  |  |  |  [id, QUADRATIC, 70]
+|  |  |  |  [constructor, constructor, 70]
 |  |  |  |  function params
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, B, 76]
-|  |  |  |  |  |  [float, float, 76]
+|  |  |  |  |  |  [id, B, 70]
+|  |  |  |  |  |  [float, float, 70]
 |  |  |  |  |  |  array size
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, C, 76]
-|  |  |  |  |  |  [float, float, 76]
+|  |  |  |  |  |  [id, C, 70]
+|  |  |  |  |  |  [float, float, 70]
 |  |  |  |  |  |  array size
 |  |  |  function body
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 78]
-|  |  |  |  |  [id, new_function, 78]
-|  |  |  |  |  [id, QUADRATIC, 78]
+|  |  |  |  |  [localvar, localvar, 72]
+|  |  |  |  |  [id, new_function, 72]
+|  |  |  |  |  [id, QUADRATIC, 72]
 |  |  |  |  |  array size
 |  |  |  |  statement
-|  |  |  |  |  [id, new_function, 79]
-|  |  |  |  |  [dot, ., 79]
-|  |  |  |  |  [id, a, 79]
-|  |  |  |  |  [assign, =, 79]
+|  |  |  |  |  [id, new_function, 73]
+|  |  |  |  |  [dot, ., 73]
+|  |  |  |  |  [id, a, 73]
+|  |  |  |  |  [assign, =, 73]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, A, 79]
+|  |  |  |  |  |  |  |  |  [id, A, 73]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  |  [plus, +, 79]
+|  |  |  |  |  |  |  |  [plus, +, 73]
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, B, 79]
+|  |  |  |  |  |  |  |  |  |  [id, B, 73]
 |  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  |  |  [mult, *, 79]
+|  |  |  |  |  |  |  |  |  |  [mult, *, 73]
 |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  [intnum, 3, 79]
+|  |  |  |  |  |  |  |  |  |  |  [intnum, 3, 73]
 |  |  |  |  statement
-|  |  |  |  |  [id, new_function, 80]
-|  |  |  |  |  [dot, ., 80]
-|  |  |  |  |  [id, b, 80]
-|  |  |  |  |  [assign, =, 80]
+|  |  |  |  |  [id, new_function, 74]
+|  |  |  |  |  [dot, ., 74]
+|  |  |  |  |  [id, b, 74]
+|  |  |  |  |  [assign, =, 74]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, B, 80]
+|  |  |  |  |  |  |  |  |  [id, B, 74]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
-|  |  |  |  |  [id, new_function, 81]
-|  |  |  |  |  [dot, ., 81]
-|  |  |  |  |  [id, c, 81]
-|  |  |  |  |  [assign, =, 81]
+|  |  |  |  |  [id, new_function, 75]
+|  |  |  |  |  [dot, ., 75]
+|  |  |  |  |  [id, c, 75]
+|  |  |  |  |  [assign, =, 75]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 1, 81]
+|  |  |  |  |  |  |  |  |  [intnum, 1, 75]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
@@ -465,67 +441,67 @@ start
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 1, 82]
+|  |  |  |  |  |  |  |  |  |  [intnum, 1, 76]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, QUADRATIC, 85]
-|  |  |  |  [id, build2, 85]
+|  |  |  |  [id, QUADRATIC, 79]
+|  |  |  |  [id, build2, 79]
 |  |  |  |  function params
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, A, 85]
-|  |  |  |  |  |  [float, float, 85]
+|  |  |  |  |  |  [id, A, 79]
+|  |  |  |  |  |  [float, float, 79]
 |  |  |  |  |  |  array size
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, B, 85]
-|  |  |  |  |  |  [float, float, 85]
+|  |  |  |  |  |  [id, B, 79]
+|  |  |  |  |  |  [float, float, 79]
 |  |  |  |  |  |  array size
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, C, 85]
-|  |  |  |  |  |  [float, float, 85]
+|  |  |  |  |  |  [id, C, 79]
+|  |  |  |  |  |  [float, float, 79]
 |  |  |  |  |  |  array size
-|  |  |  |  [id, QUADRATIC, 85]
+|  |  |  |  [id, QUADRATIC, 79]
 |  |  |  function body
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 87]
-|  |  |  |  |  [id, new_function, 87]
-|  |  |  |  |  [id, QUADRATIC, 87]
+|  |  |  |  |  [localvar, localvar, 81]
+|  |  |  |  |  [id, new_function, 81]
+|  |  |  |  |  [id, QUADRATIC, 81]
 |  |  |  |  |  array size
 |  |  |  |  statement
-|  |  |  |  |  [id, new_function, 88]
-|  |  |  |  |  [dot, ., 88]
-|  |  |  |  |  [id, a, 88]
-|  |  |  |  |  [assign, =, 88]
+|  |  |  |  |  [id, new_function, 82]
+|  |  |  |  |  [dot, ., 82]
+|  |  |  |  |  [id, a, 82]
+|  |  |  |  |  [assign, =, 82]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, A, 88]
+|  |  |  |  |  |  |  |  |  [id, A, 82]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
-|  |  |  |  |  [id, new_function, 89]
-|  |  |  |  |  [dot, ., 89]
-|  |  |  |  |  [id, b, 89]
-|  |  |  |  |  [assign, =, 89]
+|  |  |  |  |  [id, new_function, 83]
+|  |  |  |  |  [dot, ., 83]
+|  |  |  |  |  [id, b, 83]
+|  |  |  |  |  [assign, =, 83]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, B, 89]
+|  |  |  |  |  |  |  |  |  [id, B, 83]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
-|  |  |  |  |  [id, new_function, 90]
-|  |  |  |  |  [dot, ., 90]
-|  |  |  |  |  [id, c, 90]
-|  |  |  |  |  [assign, =, 90]
+|  |  |  |  |  [id, new_function, 84]
+|  |  |  |  |  [dot, ., 84]
+|  |  |  |  |  [id, c, 84]
+|  |  |  |  |  [assign, =, 84]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, C, 90]
+|  |  |  |  |  |  |  |  |  [id, C, 84]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
@@ -534,311 +510,114 @@ start
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, new_function, 91]
+|  |  |  |  |  |  |  |  |  |  [id, new_function, 85]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, f, 94]
+|  |  |  |  [id, f, 88]
 |  |  |  |  function params
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, i, 94]
+|  |  |  |  |  |  [id, i, 88]
+|  |  |  |  |  |  [integer, integer, 88]
+|  |  |  |  |  |  array size
+|  |  |  |  [void, void, 88]
+|  |  |  function body
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, f, 89]
+|  |  |  |  function params
+|  |  |  |  |  function params tail
+|  |  |  |  |  |  [id, i, 89]
+|  |  |  |  |  |  [integer, integer, 89]
+|  |  |  |  |  |  array size
+|  |  |  |  [void, void, 89]
+|  |  |  function body
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, f, 90]
+|  |  |  |  function params
+|  |  |  |  |  function params tail
+|  |  |  |  |  |  [id, i, 90]
+|  |  |  |  |  |  [integer, integer, 90]
+|  |  |  |  |  |  array size
+|  |  |  |  |  function params tail
+|  |  |  |  |  |  [id, j, 90]
+|  |  |  |  |  |  [integer, integer, 90]
+|  |  |  |  |  |  array size
+|  |  |  |  [integer, integer, 90]
+|  |  |  function body
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, f3, 92]
+|  |  |  |  function params
+|  |  |  |  |  function params tail
+|  |  |  |  |  |  [id, p1, 92]
+|  |  |  |  |  |  [integer, integer, 92]
+|  |  |  |  |  |  array size
+|  |  |  |  |  |  |  [intnum, 2, 92]
+|  |  |  |  |  |  |  [intnum, 3, 92]
+|  |  |  |  [integer, integer, 92]
+|  |  |  function body
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, printArray, 94]
+|  |  |  |  function params
+|  |  |  |  |  function params tail
+|  |  |  |  |  |  [id, arr, 94]
+|  |  |  |  |  |  [integer, integer, 94]
+|  |  |  |  |  |  array size
+|  |  |  |  |  |  |  [empty, epsilon, 94]
+|  |  |  |  |  function params tail
+|  |  |  |  |  |  [id, size, 94]
 |  |  |  |  |  |  [integer, integer, 94]
 |  |  |  |  |  |  array size
 |  |  |  |  [void, void, 94]
 |  |  |  function body
-|  |  function definition
-|  |  |  function head
-|  |  |  |  [id, f, 95]
-|  |  |  |  function params
-|  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, i, 95]
-|  |  |  |  |  |  [integer, integer, 95]
-|  |  |  |  |  |  array size
-|  |  |  |  [void, void, 95]
-|  |  |  function body
-|  |  function definition
-|  |  |  function head
-|  |  |  |  [id, f, 96]
-|  |  |  |  function params
-|  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, i, 96]
-|  |  |  |  |  |  [integer, integer, 96]
-|  |  |  |  |  |  array size
-|  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, j, 96]
-|  |  |  |  |  |  [integer, integer, 96]
-|  |  |  |  |  |  array size
-|  |  |  |  [integer, integer, 96]
-|  |  |  function body
-|  |  function definition
-|  |  |  function head
-|  |  |  |  [id, f3, 98]
-|  |  |  |  function params
-|  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, p1, 98]
-|  |  |  |  |  |  [integer, integer, 98]
-|  |  |  |  |  |  array size
-|  |  |  |  |  |  |  [intnum, 2, 98]
-|  |  |  |  |  |  |  [intnum, 3, 98]
-|  |  |  |  [integer, integer, 98]
-|  |  |  function body
-|  |  function definition
-|  |  |  function head
-|  |  |  |  [id, main, 102]
-|  |  |  |  [void, void, 102]
-|  |  |  function body
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 104]
-|  |  |  |  |  [id, a, 104]
-|  |  |  |  |  [id, a, 104]
+|  |  |  |  |  [localvar, localvar, 96]
+|  |  |  |  |  [id, n, 96]
+|  |  |  |  |  [integer, integer, 96]
 |  |  |  |  |  array size
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 105]
-|  |  |  |  |  [id, c, 105]
-|  |  |  |  |  [id, C, 105]
+|  |  |  |  |  [localvar, localvar, 97]
+|  |  |  |  |  [id, i, 97]
+|  |  |  |  |  [integer, integer, 97]
 |  |  |  |  |  array size
-|  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 106]
-|  |  |  |  |  [id, f1, 106]
-|  |  |  |  |  [id, LINEAR, 106]
-|  |  |  |  |  array size
-|  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 107]
-|  |  |  |  |  [id, f2, 107]
-|  |  |  |  |  [id, QUADRATIC, 107]
-|  |  |  |  |  array size
-|  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 108]
-|  |  |  |  |  [id, counter, 108]
-|  |  |  |  |  [integer, integer, 108]
-|  |  |  |  |  array size
-|  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 109]
-|  |  |  |  |  [id, counter, 109]
-|  |  |  |  |  [float, float, 109]
-|  |  |  |  |  array size
-|  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 110]
-|  |  |  |  |  [id, i, 110]
-|  |  |  |  |  [integer, integer, 110]
-|  |  |  |  |  array size
-|  |  |  |  |  |  [intnum, 2, 110]
-|  |  |  |  |  |  [intnum, 3, 110]
-|  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 111]
-|  |  |  |  |  [id, j, 111]
-|  |  |  |  |  [integer, integer, 111]
-|  |  |  |  |  array size
-|  |  |  |  |  |  [intnum, 1, 111]
-|  |  |  |  |  |  [intnum, 2, 111]
-|  |  |  |  |  |  [intnum, 3, 111]
 |  |  |  |  statement
-|  |  |  |  |  [id, f1, 112]
-|  |  |  |  |  [dot, ., 112]
-|  |  |  |  |  [id, build, 112]
-|  |  |  |  |  argument params
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 2, 112]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [floatnum, 3.5, 112]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, f2, 113]
-|  |  |  |  |  [dot, ., 113]
-|  |  |  |  |  [id, build, 113]
-|  |  |  |  |  argument params
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [minus, -, 113]
-|  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  [floatnum, 2.0, 113]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [floatnum, 1.0, 113]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [floatnum, 0.0, 113]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, c, 114]
-|  |  |  |  |  [dot, ., 114]
-|  |  |  |  |  [id, b, 114]
-|  |  |  |  |  [assign, =, 114]
+|  |  |  |  |  [id, n, 98]
+|  |  |  |  |  [assign, =, 98]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 1, 114]
+|  |  |  |  |  |  |  |  |  [id, size, 98]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  statement
-|  |  |  |  |  [id, counter, 115]
-|  |  |  |  |  [assign, =, 115]
+|  |  |  |  |  [id, i, 99]
+|  |  |  |  |  [assign, =, 99]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, c, 115]
-|  |  |  |  |  |  |  |  |  [dot, ., 115]
-|  |  |  |  |  |  |  |  |  [id, f, 115]
-|  |  |  |  |  |  |  |  |  argument params
+|  |  |  |  |  |  |  |  |  [intnum, 0, 99]
 |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, undefined, 116]
-|  |  |  |  |  argument params
-|  |  |  |  statement
-|  |  |  |  |  [id, counter, 117]
-|  |  |  |  |  [assign, =, 117]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, a, 117]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, f, 118]
-|  |  |  |  |  argument params
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 1, 118]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 1, 118]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 1, 118]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, f, 119]
-|  |  |  |  |  argument params
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [floatnum, 1.2, 119]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 1, 119]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, i, 120]
-|  |  |  |  |  indice
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 2, 120]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  [assign, =, 120]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 1, 120]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, i, 121]
-|  |  |  |  |  indice
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 2, 121]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  indice
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [floatnum, 1.3, 121]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  [assign, =, 121]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 2, 121]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, f3, 122]
-|  |  |  |  |  argument params
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, j, 122]
-|  |  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, counter, 123]
-|  |  |  |  |  [dot, ., 123]
-|  |  |  |  |  [id, x, 123]
-|  |  |  |  |  [assign, =, 123]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 1, 123]
-|  |  |  |  |  |  |  |  recursive term
-|  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  statement
-|  |  |  |  |  [id, counter, 124]
-|  |  |  |  |  [assign, =, 124]
 |  |  |  |  statement
 |  |  |  |  |  while loop
 |  |  |  |  |  |  rel expression
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, counter, 125]
+|  |  |  |  |  |  |  |  |  |  [id, i, 100]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  recursive arithmetic expression
-|  |  |  |  |  |  |  [leq, <=, 125]
+|  |  |  |  |  |  |  [lt, <, 100]
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 10, 125]
+|  |  |  |  |  |  |  |  |  |  [id, n, 100]
 |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  |  |  statement
@@ -847,7 +626,283 @@ start
 |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 127]
+|  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 101]
+|  |  |  |  |  |  |  |  |  |  |  |  indice
+|  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, i, 101]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  statement
+|  |  |  |  |  |  |  [id, i, 102]
+|  |  |  |  |  |  |  [assign, =, 102]
+|  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  [id, i, 102]
+|  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  [plus, +, 102]
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 102]
+|  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, main, 107]
+|  |  |  |  [void, void, 107]
+|  |  |  function body
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 109]
+|  |  |  |  |  [id, a, 109]
+|  |  |  |  |  [id, a, 109]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 110]
+|  |  |  |  |  [id, c, 110]
+|  |  |  |  |  [id, C, 110]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 111]
+|  |  |  |  |  [id, f1, 111]
+|  |  |  |  |  [id, LINEAR, 111]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 112]
+|  |  |  |  |  [id, f2, 112]
+|  |  |  |  |  [id, QUADRATIC, 112]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 113]
+|  |  |  |  |  [id, counter, 113]
+|  |  |  |  |  [integer, integer, 113]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 114]
+|  |  |  |  |  [id, counter, 114]
+|  |  |  |  |  [integer, integer, 114]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 115]
+|  |  |  |  |  [id, i, 115]
+|  |  |  |  |  [integer, integer, 115]
+|  |  |  |  |  array size
+|  |  |  |  |  |  [intnum, 2, 115]
+|  |  |  |  |  |  [intnum, 3, 115]
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 116]
+|  |  |  |  |  [id, j, 116]
+|  |  |  |  |  [integer, integer, 116]
+|  |  |  |  |  array size
+|  |  |  |  |  |  [intnum, 1, 116]
+|  |  |  |  |  |  [intnum, 2, 116]
+|  |  |  |  |  |  [intnum, 3, 116]
+|  |  |  |  statement
+|  |  |  |  |  [id, f1, 117]
+|  |  |  |  |  [dot, ., 117]
+|  |  |  |  |  [id, build, 117]
+|  |  |  |  |  argument params
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 2, 117]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [floatnum, 3.5, 117]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, f2, 118]
+|  |  |  |  |  [dot, ., 118]
+|  |  |  |  |  [id, build, 118]
+|  |  |  |  |  argument params
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [minus, -, 118]
+|  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  [floatnum, 2.0, 118]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [floatnum, 1.0, 118]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [floatnum, 0.0, 118]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, c, 119]
+|  |  |  |  |  [dot, ., 119]
+|  |  |  |  |  [id, b, 119]
+|  |  |  |  |  [assign, =, 119]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 1, 119]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, counter, 120]
+|  |  |  |  |  [assign, =, 120]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, c, 120]
+|  |  |  |  |  |  |  |  |  [dot, ., 120]
+|  |  |  |  |  |  |  |  |  [id, f, 120]
+|  |  |  |  |  |  |  |  |  argument params
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, undefined, 121]
+|  |  |  |  |  argument params
+|  |  |  |  statement
+|  |  |  |  |  [id, counter, 122]
+|  |  |  |  |  [assign, =, 122]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, a, 122]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, printArray, 123]
+|  |  |  |  |  argument params
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 1, 123]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 1, 123]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 1, 123]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 1, 123]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 1, 123]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, f, 124]
+|  |  |  |  |  argument params
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [floatnum, 1.2, 124]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 1, 124]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, i, 125]
+|  |  |  |  |  indice
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 2, 125]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  [assign, =, 125]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 1, 125]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, f3, 126]
+|  |  |  |  |  argument params
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, j, 126]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  [id, counter, 127]
+|  |  |  |  |  [dot, ., 127]
+|  |  |  |  |  [id, x, 127]
+|  |  |  |  |  [assign, =, 127]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 1, 127]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  statement
+|  |  |  |  |  while loop
+|  |  |  |  |  |  rel expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, counter, 128]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  [leq, <=, 128]
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 10, 128]
+|  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  statement
+|  |  |  |  |  |  |  write
+|  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 130]
 |  |  |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  |  |  statement
@@ -856,15 +911,15 @@ start
 |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  [id, f1, 128]
-|  |  |  |  |  |  |  |  |  |  |  |  [dot, ., 128]
-|  |  |  |  |  |  |  |  |  |  |  |  [id, evaluate, 128]
+|  |  |  |  |  |  |  |  |  |  |  |  [id, f1, 131]
+|  |  |  |  |  |  |  |  |  |  |  |  [dot, ., 131]
+|  |  |  |  |  |  |  |  |  |  |  |  [id, evaluate, 131]
 |  |  |  |  |  |  |  |  |  |  |  |  argument params
 |  |  |  |  |  |  |  |  |  |  |  |  |  expression
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 128]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 131]
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  |  |  |  |  |  |  |  recursive term
@@ -875,15 +930,15 @@ start
 |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  [id, f2, 129]
-|  |  |  |  |  |  |  |  |  |  |  |  [dot, ., 129]
-|  |  |  |  |  |  |  |  |  |  |  |  [id, evaluate, 129]
+|  |  |  |  |  |  |  |  |  |  |  |  [id, f2, 132]
+|  |  |  |  |  |  |  |  |  |  |  |  [dot, ., 132]
+|  |  |  |  |  |  |  |  |  |  |  |  [id, evaluate, 132]
 |  |  |  |  |  |  |  |  |  |  |  |  argument params
 |  |  |  |  |  |  |  |  |  |  |  |  |  expression
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 129]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, counter, 132]
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive term
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  |  |  |  |  |  |  |  recursive term

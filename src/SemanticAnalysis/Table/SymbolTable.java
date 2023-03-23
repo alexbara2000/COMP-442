@@ -160,4 +160,29 @@ public class SymbolTable {
         }
         return false;
     }
+
+    public SymbolTable getTableEntry(FuncEntry newFuncEntry) {
+        for(var entry: m_symlist){
+            if(entry instanceof FuncEntry){
+                var fEntry = (FuncEntry) entry;
+                if(fEntry.m_params.equals(newFuncEntry.m_params) && fEntry.m_name.equals(newFuncEntry.m_name) && fEntry.m_memberClass.equals(newFuncEntry.m_memberClass)){
+                    return fEntry.m_subtable;
+                }
+            }
+
+        }
+        return null;
+    }
+
+    public ArrayList<String> getInheritanceList(String className) {
+        for(var entry: m_symlist){
+            if(entry instanceof ClassEntry){
+                ClassEntry cEntry = (ClassEntry) entry;
+                if(cEntry.m_name.equals(className)){
+                    return ((InheritEntry)cEntry.m_subtable.m_symlist.get(0)).m_inherList;
+                }
+            }
+        }
+        return null;
+    }
 }

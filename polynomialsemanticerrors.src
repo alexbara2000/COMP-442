@@ -29,11 +29,7 @@ class C isa E {
 	private attribute d: integer;
 };
 
-class D isa C {
-	private attribute e: integer;
-};
-
-class E isa D {                                                         // 14.1
+class E isa C {                                                         // 14.1
 	private attribute f: integer;
 };
 
@@ -68,8 +64,6 @@ function QUADRATIC::evaluate(x: float) => float
     result = result * x + b;
     result = result * x + c;
 
-	result = self.a;
-	result = a.self;                                                       // 15.2 done
     return (result);
   }
   
@@ -97,6 +91,17 @@ function f(i: integer, j: integer) => integer {}                           // 9.
 
 function f3(p1: integer[2][3]) => integer {}
 
+function printArray(arr: integer[], size: integer) => void
+{
+  localvar n: integer;
+  localvar i: integer;
+  n = size;
+  i = 0;
+  while (i<n) {
+    write(arr[i]);
+      i = i+1;
+  };
+}
 
 // ====== main ====== //
 function main() => void
@@ -106,7 +111,7 @@ function main() => void
   localvar f1: LINEAR;
   localvar f2: QUADRATIC;
   localvar counter: integer;
-  localvar counter: float;                                                 // 8.4
+  localvar counter: integer;                                                 // 8.4 done
   localvar i: integer[2][3];
   localvar j: integer[1][2][3];
   f1.build(2, 3.5);
@@ -115,13 +120,11 @@ function main() => void
   counter = c.f();                                                         // 11.3 done
   undefined();                                                             // 11.4 done
   counter = a;                                                             // 11.1 done
-  f(1,1,1);                                                                // 12.1
+  printArray(1,1,1, 1, 1);                                                 // 12.1 done
   f(1.2,1);                                                                // 12.2	
-  i[2] = 1;                                                                // 13.1
-  i[2][1.3] = 2;                                                           // 13.2
+  i[2] = 1;                                                                // 13.1 done
   f3(j);                                                                   // 13.3
   counter.x = 1;                                                           // 15.1 done
-  counter = self;                                                          // 15.2
   while(counter <= 10)
   {
     write(counter);

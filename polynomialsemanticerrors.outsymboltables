@@ -7,41 +7,16 @@
 |    | table: POLYNOMIAL      
 |    =====================================================
 |    | inherit   | none
-|    | function  | evaluate    | (float): float  | public| 
-|    |    =====================================================
-|    |    | table: evaluate        
-|    |    =====================================================
-|    |    | param     | x         | float     |
-|    |    | local     | result    | float     |
-|    |    =====================================================
-|    | function  | evaluate2    | (float): float  | public| 
-|    |    =====================================================
-|    |    | table: evaluate2       
-|    |    =====================================================
-|    |    | param     | x         | float     |
-|    |    | local     | result    | float     |
-|    |    =====================================================
+|    | function  | evaluate    | (float): float  | public| null
+|    | function  | evaluate2    | (float): float  | public| null
 |    =====================================================
 | class     | POLYNOMIAL                            |
 |    =====================================================
 |    | table: POLYNOMIAL      
 |    =====================================================
 |    | inherit   | none
-|    | function  | evaluate    | (float): float  | public| 
-|    |    =====================================================
-|    |    | table: evaluate        
-|    |    =====================================================
-|    |    | param     | x         | float     |
-|    |    | local     | result    | float     |
-|    |    =====================================================
-|    | function  | evaluate    | (integer, float): integer  | public| 
-|    |    =====================================================
-|    |    | table: evaluate        
-|    |    =====================================================
-|    |    | param     | x         | integer   |
-|    |    | param     | y         | float     |
-|    |    | local     | result    | integer   |
-|    |    =====================================================
+|    | function  | evaluate    | (float): float  | public| null
+|    | function  | evaluate    | (integer, float): integer  | public| null
 |    =====================================================
 | class     | LINEAR                                |
 |    =====================================================
@@ -50,21 +25,8 @@
 |    | inherit  |  [POLYNOMIAL]
 |    | data      | a         | float     | private   |
 |    | data      | b         | float     | private   |
-|    | constructor  | build    | (float, float): LINEAR  | public| 
-|    |    =====================================================
-|    |    | table: function        
-|    |    =====================================================
-|    |    | param     | A         | float     |
-|    |    | param     | B         | float     |
-|    |    | local     | result    | void      |
-|    |    =====================================================
-|    | function  | evaluate    | (float): float  | public| 
-|    |    =====================================================
-|    |    | table: evaluate        
-|    |    =====================================================
-|    |    | param     | x         | float     |
-|    |    | local     | result    | float     |
-|    |    =====================================================
+|    | constructor  | build    | (float, float): LINEAR  | public| null
+|    | function  | evaluate    | (float): float  | public| null
 |    =====================================================
 | class     | QUADRATIC                             |
 |    =====================================================
@@ -74,22 +36,8 @@
 |    | data      | a         | float     | private   |
 |    | data      | b         | float     | private   |
 |    | data      | c         | float     | private   |
-|    | constructor  | build    | (float, float, float): QUADRATIC  | public| 
-|    |    =====================================================
-|    |    | table: function        
-|    |    =====================================================
-|    |    | param     | A         | float     |
-|    |    | param     | B         | float     |
-|    |    | param     | C         | float     |
-|    |    | local     | result    | void      |
-|    |    =====================================================
-|    | function  | evaluate    | (float): float  | public| 
-|    |    =====================================================
-|    |    | table: evaluate        
-|    |    =====================================================
-|    |    | param     | x         | float     |
-|    |    | local     | result    | float     |
-|    |    =====================================================
+|    | constructor  | build    | (float, float, float): QUADRATIC  | public| null
+|    | function  | evaluate    | (float): float  | public| null
 |    =====================================================
 | class     | C                                     |
 |    =====================================================
@@ -98,18 +46,11 @@
 |    | inherit  |  [E]
 |    | data      | d         | integer   | private   |
 |    =====================================================
-| class     | D                                     |
-|    =====================================================
-|    | table: D               
-|    =====================================================
-|    | inherit  |  [C]
-|    | data      | e         | integer   | private   |
-|    =====================================================
 | class     | E                                     |
 |    =====================================================
 |    | table: E               
 |    =====================================================
-|    | inherit  |  [D]
+|    | inherit  |  [C]
 |    | data      | f         | integer   | private   |
 |    =====================================================
 | Function  | POLYNOMIAL::evaluate| (float): float            |
@@ -182,6 +123,15 @@
 |    =====================================================
 |    | param     | p1        | integer[2][3]|
 |    =====================================================
+| Function  | printArray| (integer[], integer): void|
+|    =====================================================
+|    | table: printArray      
+|    =====================================================
+|    | param     | arr       | integer[] |
+|    | param     | size      | integer   |
+|    | local     | n         | integer   |
+|    | local     | i         | integer   |
+|    =====================================================
 | Function  | main      | : void                    |
 |    =====================================================
 |    | table: main            
@@ -191,7 +141,6 @@
 |    | local     | f1        | LINEAR    |
 |    | local     | f2        | QUADRATIC |
 |    | local     | counter   | integer   |
-|    | local     | counter   | float     |
 |    | local     | i         | integer[2][3]|
 |    | local     | j         | integer[1][2][3]|
 |    =====================================================

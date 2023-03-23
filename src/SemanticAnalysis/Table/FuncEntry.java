@@ -37,12 +37,12 @@ public class FuncEntry extends SymbolTableEntry {
 		if(m_memberClass.length() != 0){
 			nameToDisplay = m_memberClass+"::"+m_name;
 		}
-
 		return 	String.format("%-12s" , "| " + m_kind) +
 				String.format("%-12s" , "| " + nameToDisplay) +
 				String.format("%-28s"  , "| " + paramsToDisplay+ ": " +m_type) +
-				"|" + 
+				"|" +
 				m_subtable;
+
 	}
 
 	@Override
