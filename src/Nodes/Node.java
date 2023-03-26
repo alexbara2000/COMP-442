@@ -14,8 +14,7 @@ public class Node {
     ArrayList<Node> childrens;
     Object concept;
     int depth;
-
-
+    String moonVarName = "";
     public Object getConcept() {
         return concept;
     }
@@ -32,6 +31,13 @@ public class Node {
     }
 
 
+    public String getMoonVarName() {
+        return moonVarName;
+    }
+
+    public void setMoonVarName(String moonVarName) {
+        this.moonVarName = moonVarName;
+    }
 
     public void setParent(Node parent) {
         this.parent = parent;

@@ -3,13 +3,14 @@ package SemanticAnalysis;
 import Common.AST;
 import Nodes.Node;
 import SemanticAnalysis.Table.SymbolTable;
+import SemanticAnalysis.Visitor.MemorySizeVisitor;
 import SemanticAnalysis.Visitor.SymbolTableCreatorVisitor;
 import SemanticAnalysis.Visitor.TypeCheckingVisitor;
 import SyntaticAnalysis.Parser;
 
 public class SemanticAnalyzer {
     public static void main(String[] args) throws Exception {
-        String fileToParse = "polynomialsemanticerrors.src";
+        String fileToParse = "example-main.src";
         Parser parser=new Parser(fileToParse);
         Node headNode = parser.parse();
         System.out.println(headNode);
@@ -19,6 +20,9 @@ public class SemanticAnalyzer {
 
         TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor(fileToParse);
         headNode.accept(typeCheckingVisitor);
+
+        MemorySizeVisitor memorySizeVisitor = new MemorySizeVisitor(fileToParse);
+        headNode.accept(memorySizeVisitor);
     }
 
     private static void firstPass(Node headNode) {
