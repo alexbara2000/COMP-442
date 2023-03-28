@@ -1,0 +1,13 @@
+function main() => void
+{
+  localvar x: integer;
+  localvar y: integer;
+  localvar z: integer;
+
+  x = 132;
+  y = x / 12;
+
+  z = (1 + y) * (3 + 2);
+
+  write(z);
+}
