@@ -4,6 +4,7 @@ import Common.Token;
 import Common.TokenType;
 import Nodes.*;
 import SemanticAnalysis.Table.LitValEntry;
+import SemanticAnalysis.Table.SymbolTable;
 import SemanticAnalysis.Table.TempVarEntry;
 
 import java.io.FileWriter;
@@ -29,11 +30,11 @@ public class MemorySizeVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
-        var currType = node.getChildren().get(0).getEntry().m_type;
-        for(var childs: node.getChildren()){
-            if(childs.getConcept() instanceof Token)
-                node.getTable().addEntry(new TempVarEntry(currType));
-        }
+//        var currType = node.getChildren().get(0).getEntry().m_type;
+//        for(var childs: node.getChildren()){
+//            if(childs.getConcept() instanceof Token)
+//                node.getTable().addEntry(new TempVarEntry(currType));
+//        }
     }
 
     @Override
@@ -100,6 +101,11 @@ public class MemorySizeVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        int size = 0;
+        for(var entries: node.getTable().m_symlist){
+            size+= entries.m_size;
+        }
+        node.getEntry().m_size = size;
     }
 
     @Override
@@ -174,14 +180,28 @@ public class MemorySizeVisitor implements Visitor{
         var name = entry.m_name;
         System.out.println(type);
         System.out.println(dimsList);
+        int size = 0;
         if(type.equals("integer")){
-            try {
-                outMoonCode.write("% space for variable "+name+"\n");
-                outMoonCode.write(String.format("%-7s" ,name) + " res 4\n");
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            size=4;
+            int totalarray = 1;
+            if(dimsList != null && dimsList.size() != 0){
+                for(var dim: dimsList){
+                    totalarray*=dim;
+                }
             }
+            size = totalarray*size;
+            node.getEntry().m_size = size;
+        }
+        else{
+            size=8;
+            int totalarray = 1;
+            if(dimsList != null && dimsList.size() != 0){
+                for(var dim: dimsList){
+                    totalarray*=dim;
+                }
+            }
+            size = totalarray*size;
+            node.getEntry().m_size = size;
         }
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -283,11 +303,24 @@ public class MemorySizeVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        populateSize(node.getTable());
         System.out.println(node.getTable());
         try {
             outMoonCode.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void populateSize(SymbolTable table) {
+        for(var functionEntries: table.m_symlist){
+            int totalSize = 0;
+            if(functionEntries.m_subtable != null){
+                for(var entries: functionEntries.m_subtable.m_symlist){
+                    int localsize = 0;
+                    var type = entries.m_type;
+                }
+            }
         }
     }
 
@@ -313,16 +346,16 @@ public class MemorySizeVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
-        if(node.getChildren().size() ==1){
-            node.setEntry(node.getChildren().get(0).getEntry());
-        }
-        else{
-            var currType = node.getChildren().get(0).getEntry().m_type;
-            for(var childs: node.getChildren()){
-                if(childs.getConcept() instanceof Token)
-                    node.getTable().addEntry(new TempVarEntry(currType));
-            }
-        }
+//        if(node.getChildren().size() ==1){
+//            node.setEntry(node.getChildren().get(0).getEntry());
+//        }
+//        else{
+//            var currType = node.getChildren().get(0).getEntry().m_type;
+//            for(var childs: node.getChildren()){
+//                if(childs.getConcept() instanceof Token)
+//                    node.getTable().addEntry(new TempVarEntry(currType));
+//            }
+//        }
     }
 
     @Override

@@ -25,7 +25,8 @@ public class VarEntry extends SymbolTableEntry {
 		return 	String.format("%-12s" , "| " + m_kind) +
 				String.format("%-12s" , "| " + m_name) + 
 				String.format("%-12s"  , "| " + m_type+dimsToDisplay) +
-		        "|";
+				String.format("%-12s" , "| " + m_size) +
+				"|";
 	}
 	public boolean equalsName(Object obj) {
 		VarEntry varEntry = (VarEntry) obj;

@@ -39,7 +39,8 @@ public class FuncEntry extends SymbolTableEntry {
 		}
 		return 	String.format("%-12s" , "| " + m_kind) +
 				String.format("%-12s" , "| " + nameToDisplay) +
-				String.format("%-28s"  , "| " + paramsToDisplay+ ": " +m_type) +
+				String.format("%-12s"  , "| " + paramsToDisplay+ ": " +m_type) +
+				String.format("%-12s"  , "| " + m_size) +
 				"|" +
 				m_subtable;
 

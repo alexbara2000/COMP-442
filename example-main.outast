@@ -15,52 +15,51 @@ start
 |  |  |  |  |  [id, y, 4]
 |  |  |  |  |  [integer, integer, 4]
 |  |  |  |  |  array size
-|  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 5]
-|  |  |  |  |  [id, z, 5]
-|  |  |  |  |  [integer, integer, 5]
-|  |  |  |  |  array size
 |  |  |  |  statement
-|  |  |  |  |  [id, x, 6]
+|  |  |  |  |  [id, x, 5]
+|  |  |  |  |  [assign, =, 5]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 5, 5]
+|  |  |  |  |  |  |  [plus, +, 5]
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 6, 5]
+|  |  |  |  |  |  |  |  [plus, +, 5]
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  [intnum, 7, 5]
+|  |  |  |  |  |  |  |  |  [minus, -, 5]
+|  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [intnum, 10, 5]
+|  |  |  |  statement
+|  |  |  |  |  [id, y, 6]
 |  |  |  |  |  [assign, =, 6]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 5, 6]
-|  |  |  |  statement
-|  |  |  |  |  [id, y, 7]
-|  |  |  |  |  [assign, =, 7]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 10, 7]
-|  |  |  |  statement
-|  |  |  |  |  [id, x, 8]
-|  |  |  |  |  [assign, =, 8]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, x, 8]
-|  |  |  |  |  |  |  [plus, +, 8]
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, y, 8]
-|  |  |  |  |  |  |  |  [mult, *, 8]
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, x, 8]
-|  |  |  |  |  |  |  |  [mult, *, 8]
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 5, 8]
-|  |  |  |  |  |  |  |  [div, /, 8]
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 3, 8]
+|  |  |  |  |  |  |  |  |  [id, x, 6]
+|  |  |  |  |  |  |  [plus, +, 6]
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 6]
+|  |  |  |  |  |  |  |  [minus, -, 6]
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  [intnum, 6, 6]
 |  |  |  |  statement
 |  |  |  |  |  write
 |  |  |  |  |  |  expression
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, x, 9]
+|  |  |  |  |  |  |  |  |  |  [id, y, 7]

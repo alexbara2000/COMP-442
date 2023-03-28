@@ -3,6 +3,7 @@ package SemanticAnalysis;
 import Common.AST;
 import Nodes.Node;
 import SemanticAnalysis.Table.SymbolTable;
+import SemanticAnalysis.Visitor.CodeGenVisitor;
 import SemanticAnalysis.Visitor.MemorySizeVisitor;
 import SemanticAnalysis.Visitor.SymbolTableCreatorVisitor;
 import SemanticAnalysis.Visitor.TypeCheckingVisitor;
@@ -23,11 +24,8 @@ public class SemanticAnalyzer {
 
         MemorySizeVisitor memorySizeVisitor = new MemorySizeVisitor(fileToParse);
         headNode.accept(memorySizeVisitor);
-    }
 
-    private static void firstPass(Node headNode) {
-        SymbolTable sm = new SymbolTable(0, "global", null);
-        System.out.println(sm);
+        CodeGenVisitor codeGenVisitor = new CodeGenVisitor(fileToParse);
+        headNode.accept(codeGenVisitor);
     }
-
 }
