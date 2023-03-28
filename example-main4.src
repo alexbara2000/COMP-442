@@ -1,14 +1,21 @@
 function main() => void
 {
   localvar x: integer;
-  localvar arr: integer[2];
-  arr[0] = 64;
-  arr[1] = 34;
-  arr[2] = 25;
-  arr[3] = 12;
-  arr[4] = 22;
-  arr[5] = 11;
-  arr[6] = 90;
-  x = arr[0] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6];
-  write(x * 5);
+  localvar y: integer;
+  localvar z: integer;
+  x = 5;
+  if (x == 5)
+    then {
+      x = 6;
+    } else ;
+  x = 1;
+  y = 0;
+  z = 0;
+  y = x and y;
+  x = x and x;
+  z = x and x;
+
+  write(x);
+  write(y);
+  write(z);
 }

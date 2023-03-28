@@ -15,7 +15,7 @@ start
 |  |  |  |  |  [id, arr, 4]
 |  |  |  |  |  [integer, integer, 4]
 |  |  |  |  |  array size
-|  |  |  |  |  |  [intnum, 2, 4]
+|  |  |  |  |  |  [intnum, 7, 4]
 |  |  |  |  statement
 |  |  |  |  |  [id, arr, 5]
 |  |  |  |  |  indice
@@ -119,7 +119,12 @@ start
 |  |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 0, 12]
+|  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 2, 12]
+|  |  |  |  |  |  |  |  |  |  |  [minus, -, 12]
+|  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 2, 12]
 |  |  |  |  |  |  |  [plus, +, 12]
 |  |  |  |  |  |  |  recursive arithmetic expression
 |  |  |  |  |  |  |  |  term

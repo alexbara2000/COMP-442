@@ -1,0 +1,131 @@
+start
+|  Program
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, main, 1]
+|  |  |  |  [void, void, 1]
+|  |  |  function body
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 3]
+|  |  |  |  |  [id, x, 3]
+|  |  |  |  |  [integer, integer, 3]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 4]
+|  |  |  |  |  [id, y, 4]
+|  |  |  |  |  [integer, integer, 4]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 5]
+|  |  |  |  |  [id, z, 5]
+|  |  |  |  |  [integer, integer, 5]
+|  |  |  |  |  array size
+|  |  |  |  statement
+|  |  |  |  |  [id, x, 6]
+|  |  |  |  |  [assign, =, 6]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 5, 6]
+|  |  |  |  statement
+|  |  |  |  |  if statement
+|  |  |  |  |  |  rel expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 7]
+|  |  |  |  |  |  |  [eq, ==, 7]
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 5, 7]
+|  |  |  |  |  |  statement
+|  |  |  |  |  |  |  [id, x, 9]
+|  |  |  |  |  |  |  [assign, =, 9]
+|  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  [intnum, 6, 9]
+|  |  |  |  statement
+|  |  |  |  |  [id, x, 11]
+|  |  |  |  |  [assign, =, 11]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 1, 11]
+|  |  |  |  statement
+|  |  |  |  |  [id, y, 12]
+|  |  |  |  |  [assign, =, 12]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 0, 12]
+|  |  |  |  statement
+|  |  |  |  |  [id, z, 13]
+|  |  |  |  |  [assign, =, 13]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 0, 13]
+|  |  |  |  statement
+|  |  |  |  |  [id, y, 14]
+|  |  |  |  |  [assign, =, 14]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, x, 14]
+|  |  |  |  |  |  |  |  [and, and, 14]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, y, 14]
+|  |  |  |  statement
+|  |  |  |  |  [id, x, 15]
+|  |  |  |  |  [assign, =, 15]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, x, 15]
+|  |  |  |  |  |  |  |  [and, and, 15]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 15]
+|  |  |  |  statement
+|  |  |  |  |  [id, z, 16]
+|  |  |  |  |  [assign, =, 16]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, x, 16]
+|  |  |  |  |  |  |  |  [and, and, 16]
+|  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 16]
+|  |  |  |  statement
+|  |  |  |  |  write
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 18]
+|  |  |  |  statement
+|  |  |  |  |  write
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, y, 19]
+|  |  |  |  statement
+|  |  |  |  |  write
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, z, 20]

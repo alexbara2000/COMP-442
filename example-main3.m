@@ -4,7 +4,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,2
+           addi r9,r9,7
            sw t1(r0),r9
 
 
@@ -143,22 +143,21 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,0
+           addi r9,r9,2
            sw t16(r0),r9
-
-
-           %assigning values in factor
-           lw r1,t16(r0)
-           muli r2,r1,4
-           lw r9,arr(r2)
-           sw t17(r0),r9
-
 
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,1
-           sw t18(r0),r9
+           addi r9,r9,2
+           sw t17(r0),r9
+
+
+           % processing: t18 := t16 - t17
+           lw r1,t16(r0)
+           lw r2,t17(r0)
+           sub r3,r1,r2
+           sw t18(r0),r3
 
 
            %assigning values in factor
@@ -171,7 +170,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,2
+           addi r9,r9,1
            sw t20(r0),r9
 
 
@@ -185,7 +184,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,3
+           addi r9,r9,2
            sw t22(r0),r9
 
 
@@ -199,7 +198,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,4
+           addi r9,r9,3
            sw t24(r0),r9
 
 
@@ -213,7 +212,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,5
+           addi r9,r9,4
            sw t26(r0),r9
 
 
@@ -227,7 +226,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,6
+           addi r9,r9,5
            sw t28(r0),r9
 
 
@@ -239,68 +238,82 @@
 
 
 
-           % processing: t30 := t27 + t29
-           lw r1,t27(r0)
-           lw r2,t29(r0)
-           add r3,r1,r2
-           sw t30(r0),r3
+           %assigning values
+           sub r9,r9,r9
+           addi r9,r9,6
+           sw t30(r0),r9
 
 
-           % processing: t31 := t25 + t30
-           lw r1,t25(r0)
-           lw r2,t30(r0)
-           add r3,r1,r2
-           sw t31(r0),r3
+           %assigning values in factor
+           lw r1,t30(r0)
+           muli r2,r1,4
+           lw r9,arr(r2)
+           sw t31(r0),r9
 
 
-           % processing: t32 := t23 + t31
-           lw r1,t23(r0)
+
+           % processing: t32 := t29 + t31
+           lw r1,t29(r0)
            lw r2,t31(r0)
            add r3,r1,r2
            sw t32(r0),r3
 
 
-           % processing: t33 := t21 + t32
-           lw r1,t21(r0)
+           % processing: t33 := t27 + t32
+           lw r1,t27(r0)
            lw r2,t32(r0)
            add r3,r1,r2
            sw t33(r0),r3
 
 
-           % processing: t34 := t19 + t33
-           lw r1,t19(r0)
+           % processing: t34 := t25 + t33
+           lw r1,t25(r0)
            lw r2,t33(r0)
            add r3,r1,r2
            sw t34(r0),r3
 
 
-           % processing: t35 := t17 + t34
-           lw r1,t17(r0)
+           % processing: t35 := t23 + t34
+           lw r1,t23(r0)
            lw r2,t34(r0)
            add r3,r1,r2
            sw t35(r0),r3
 
 
+           % processing: t36 := t21 + t35
+           lw r1,t21(r0)
+           lw r2,t35(r0)
+           add r3,r1,r2
+           sw t36(r0),r3
+
+
+           % processing: t37 := t19 + t36
+           lw r1,t19(r0)
+           lw r2,t36(r0)
+           add r3,r1,r2
+           sw t37(r0),r3
+
+
            %assigning values
-           lw r9,t35(r0)
+           lw r9,t37(r0)
            sw x(r0),r9
 
 
            %assigning values
            sub r9,r9,r9
            addi r9,r9,5
-           sw t36(r0),r9
+           sw t38(r0),r9
 
 
-           % processing: t37 := x * t36
+           % processing: t39 := x * t38
            lw r1,x(r0)
-           lw r2,t36(r0)
+           lw r2,t38(r0)
            mul r3,r1,r2
-           sw t37(r0),r3
+           sw t39(r0),r3
 
 
-           % processing: put(t37)
-           lw r1,t37(r0)
+           % processing: put(t39)
+           lw r1,t39(r0)
            % put value on stack
            sw -8(r14),r1
            % link buffer to stack
@@ -318,7 +331,7 @@ buf     res 20
 % space for variable x
 x       res 4
 % space for variable arr
-arr     res 4
+arr     res 28
 % space for variable t1
 t1      res 4
 % space for variable t2
@@ -351,10 +364,10 @@ t14     res 4
 t15     res 4
 % space for variable t16
 t16     res 4
-% space for array value
-t17        res 4
-% space for variable t18
-t18     res 4
+% space for variable t17
+t17     res 4
+% space for t16 - t17
+t18        res 4
 % space for array value
 t19        res 4
 % space for variable t20
@@ -377,19 +390,23 @@ t27        res 4
 t28     res 4
 % space for array value
 t29        res 4
-% space for t27 + t29
-t30        res 4
-% space for t25 + t30
+% space for variable t30
+t30     res 4
+% space for array value
 t31        res 4
-% space for t23 + t31
+% space for t29 + t31
 t32        res 4
-% space for t21 + t32
+% space for t27 + t32
 t33        res 4
-% space for t19 + t33
+% space for t25 + t33
 t34        res 4
-% space for t17 + t34
+% space for t23 + t34
 t35        res 4
-% space for variable t36
-t36     res 4
-% space for x * t36
+% space for t21 + t35
+t36        res 4
+% space for t19 + t36
 t37        res 4
+% space for variable t38
+t38     res 4
+% space for x * t38
+t39        res 4
