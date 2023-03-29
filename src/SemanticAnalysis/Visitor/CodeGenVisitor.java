@@ -14,7 +14,7 @@ public class CodeGenVisitor implements Visitor{
     String m_mooncodeindent = "           ";
     int currTempVar = 1;
     int currZeroVal = 1;
-    int currEndAnd = 1;
+    int currEndRel = 1;
 
     Node currNode = null;
     public CodeGenVisitor(String path) throws IOException {
@@ -71,6 +71,35 @@ public class CodeGenVisitor implements Visitor{
                 dataCode += "% space for " + firstName + " - " + secondName + "\n";
                 dataCode += String.format("%-10s", tempvar) + " res 4\n";
                 execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
+            else if (operatorType == TokenType.OR) {
+                String tempZero = "zero" + currZeroVal;
+                currZeroVal++;
+
+                String tempEnd = "endRel" + currEndRel;
+                currEndRel++;
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " := " + firstName + " and " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "bnz r1," + tempZero + "\n";
+                execCode += m_mooncodeindent + "bnz r2," + tempZero + "\n";
+                execCode += m_mooncodeindent + "add r3,r0,r0\n";
+                execCode += m_mooncodeindent + "j " + tempEnd;
+                execCode += "\n";
+
+                execCode += "\n";
+                execCode += String.format("%-10s", tempZero) + " addi r3,r0,1\n";
+                execCode += String.format("%-10s", tempEnd) + "sw " + tempvar + "(r0),r3\n";
+                execCode += "\n";
+
+                dataCode += "% space for " + firstName + " and " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
 
                 node.setMoonVarName(tempvar);
             }
@@ -380,6 +409,35 @@ public class CodeGenVisitor implements Visitor{
 
                 node.setMoonVarName(tempvar);
             }
+            else if (operatorType == TokenType.OR) {
+                String tempZero = "zero" + currZeroVal;
+                currZeroVal++;
+
+                String tempEnd = "endRel" + currEndRel;
+                currEndRel++;
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " := " + firstName + " and " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "bnz r1," + tempZero + "\n";
+                execCode += m_mooncodeindent + "bnz r2," + tempZero + "\n";
+                execCode += m_mooncodeindent + "add r3,r0,r0\n";
+                execCode += m_mooncodeindent + "j " + tempEnd;
+                execCode += "\n";
+
+                execCode += "\n";
+                execCode += String.format("%-10s", tempZero) + " addi r3,r0,1\n";
+                execCode += String.format("%-10s", tempEnd) + "sw " + tempvar + "(r0),r3\n";
+                execCode += "\n";
+
+                dataCode += "% space for " + firstName + " and " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+
+                node.setMoonVarName(tempvar);
+            }
         }
     }
 
@@ -425,6 +483,35 @@ public class CodeGenVisitor implements Visitor{
                 dataCode += "% space for " + firstName + " / " + secondName + "\n";
                 dataCode += String.format("%-10s", tempvar) + " res 4\n";
                 execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
+            else if (operatorType == TokenType.AND) {
+                String tempZero = "zero" + currZeroVal;
+                currZeroVal++;
+
+                String tempEnd = "endrel" + currEndRel;
+                currEndRel++;
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " := " + firstName + " and " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "bz r1," + tempZero + "\n";
+                execCode += m_mooncodeindent + "bz r2," + tempZero + "\n";
+                execCode += m_mooncodeindent + "addi r3,r0,1\n";
+                execCode += m_mooncodeindent + "j " + tempEnd;
+                execCode += "\n";
+
+                execCode += "\n";
+                execCode += String.format("%-10s", tempZero) + " addi r3,r0,0\n";
+                execCode += String.format("%-10s", tempEnd) + "sw " + tempvar + "(r0),r3\n";
+                execCode += "\n";
+
+                dataCode += "% space for " + firstName + " and " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
 
                 node.setMoonVarName(tempvar);
             }
@@ -592,8 +679,8 @@ public class CodeGenVisitor implements Visitor{
                 String tempZero = "zero" + currZeroVal;
                 currZeroVal++;
 
-                String tempEnd = "endand" + currEndAnd;
-                currEndAnd++;
+                String tempEnd = "endrel" + currEndRel;
+                currEndRel++;
 
                 execCode += "\n";
                 execCode += m_mooncodeindent + "% processing: " + tempvar + " := " + firstName + " and " + secondName + "\n";

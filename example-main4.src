@@ -8,12 +8,22 @@ function main() => void
     then {
       x = 6;
     } else ;
+
   x = 1;
   y = 0;
   z = 0;
-  y = x and y;
+
   x = x and x;
+  y = x and y;
   z = x and x;
+
+  write(x);
+  write(y);
+  write(z);
+
+  x = x or 0;
+  y = x or 1;
+  z = 0 or 0;
 
   write(x);
   write(y);
