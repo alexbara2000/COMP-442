@@ -68,24 +68,25 @@ public class MemorySizeVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
-        if(node.getChildren().get(0).getConcept() instanceof Token){
-            var factorType = ((Token)node.getChildren().get(0).getConcept()).getType();
-            var factorname = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
-            if(factorType == TokenType.ID){
-                node.setEntry(node.getTable().lookupName(factorname));
-                node.setMoonVarName(factorname);
+        if(node.getChildren() != null && node.getChildren().size() >= 1)
+            if(node.getChildren().get(0).getConcept() instanceof Token){
+                var factorType = ((Token)node.getChildren().get(0).getConcept()).getType();
+                var factorname = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
+                if(factorType == TokenType.ID){
+                    node.setEntry(node.getTable().lookupName(factorname));
+                    node.setMoonVarName(factorname);
+                }
+                if(factorType == TokenType.INTNUM){
+                    var newEntry = new LitValEntry("integer", factorname);
+                    node.setEntry(newEntry);
+                    node.getTable().addEntry(newEntry);
+                }
+                if(factorType == TokenType.FLOATNUM){
+                    var newEntry = new LitValEntry("float", factorname);
+                    node.setEntry(newEntry);
+                    node.getTable().addEntry(newEntry);
+                }
             }
-            if(factorType == TokenType.INTNUM){
-                var newEntry = new LitValEntry("integer", factorname);
-                node.setEntry(newEntry);
-                node.getTable().addEntry(newEntry);
-            }
-            if(factorType == TokenType.FLOATNUM){
-                var newEntry = new LitValEntry("float", factorname);
-                node.setEntry(newEntry);
-                node.getTable().addEntry(newEntry);
-            }
-        }
     }
 
     @Override

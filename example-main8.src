@@ -1,6 +1,8 @@
 function func() => integer
 {
-    return(5);
+    localvar y: integer;
+    y = 5 * 10 + 2;
+    return(y+y+y);
 }
 
 function main() => void
