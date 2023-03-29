@@ -1,0 +1,11 @@
+function func() => integer
+{
+    return(5);
+}
+
+function main() => void
+{
+    localvar x: integer;
+    x = func();
+    write(x);
+}

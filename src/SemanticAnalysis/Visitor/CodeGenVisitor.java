@@ -17,6 +17,8 @@ public class CodeGenVisitor implements Visitor{
     int currStatBlock = 1;
     int currEndRel = 1;
     int currGoWhile = 1;
+    int currFuncReturn = 1;
+    int currFuncParam = 1;
 
     Node currNode = null;
     public CodeGenVisitor(String path) throws IOException {
@@ -169,6 +171,7 @@ public class CodeGenVisitor implements Visitor{
 
                 node.setMoonVarName(tempvar);
             }
+            //TODO add rest
         }
     }
 
@@ -228,8 +231,29 @@ public class CodeGenVisitor implements Visitor{
 
             dataCode += "% space for not " + name + "\n";
             dataCode += String.format("%-10s", tempvar) + " res 4\n";
+
+
+            node.setMoonVarName(tempvar);
+        }
+        else if(node.getChildren().size() == 2 && node.getChildren().get(1).getConcept().equals("argument params")){
+            //function call
+            var name = node.getChildren().get(0).getMoonVarName();
+
+            execCode += "\n";
+            execCode += m_mooncodeindent + "% calling function: " + name +"\n";
+            execCode += m_mooncodeindent + "jl r15," + name + "\n";
+
+            String tempvar = "t"+currTempVar;
+            currTempVar++;
+
+            execCode += "\n";
+            execCode += m_mooncodeindent + "% getting return value\n";
+            execCode += m_mooncodeindent + "lw r1,fnres(r0)\n";
+            execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r1 \n";
             execCode += "\n";
 
+            dataCode += "% space for return value of function: " + name + "\n";
+            dataCode += String.format("%-10s", tempvar) + " res 4\n";
 
             node.setMoonVarName(tempvar);
         }
@@ -245,16 +269,28 @@ public class CodeGenVisitor implements Visitor{
 
     @Override
     public void visit(FunctionDefinitionNode node) {
+        boolean isMain = false;
         if(node.getEntry().m_name.equals("main")){
+            isMain=true;
             execCode += "% start\n";
             execCode += m_mooncodeindent+ "entry\n";
             execCode += m_mooncodeindent + String.format("%-7s" ,"addi") + "r14,r0,topaddr  % Set stack pointer\n";
+        }
+        else{
+            execCode += "% start of function\n";
+            execCode += node.getEntry().m_name+"\n";
+
         }
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
         }
-        execCode+=m_mooncodeindent+"hlt";
+        if(isMain)
+            execCode+=m_mooncodeindent+"hlt\n";
+        else{
+            execCode+=m_mooncodeindent+"jr r15\n";
+
+        }
     }
 
     @Override
@@ -648,6 +684,7 @@ public class CodeGenVisitor implements Visitor{
 
                 node.setMoonVarName(tempvar);
             }
+            //TODO add rest
         }
     }
 
@@ -665,12 +702,23 @@ public class CodeGenVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        if(node.getChildren().size() == 1){
+            node.setMoonVarName(node.getChildren().get(0).getMoonVarName());
+
+            execCode += "\n";
+            execCode += m_mooncodeindent + "%putting return value of function\n";
+            execCode += m_mooncodeindent + "lw r1,"+node.getMoonVarName()+"(r0)\n";
+            execCode += m_mooncodeindent + "sw fnres(r0), r1\n";
+            execCode += m_mooncodeindent + "jr r15\n";
+
+        }
     }
 
     @Override
     public void visit(StartNode node) {
         dataCode += "% space for variable buffer\n";
         dataCode += String.format("%-7s" ,"buf") + " res 20\n";
+        dataCode += String.format("%-7s" ,"fnres") + " res 4\n";
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);

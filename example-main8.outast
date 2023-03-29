@@ -1,0 +1,40 @@
+start
+|  Program
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, func, 1]
+|  |  |  |  [integer, integer, 1]
+|  |  |  function body
+|  |  |  |  statement
+|  |  |  |  |  return
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 5, 3]
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, main, 6]
+|  |  |  |  [void, void, 6]
+|  |  |  function body
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 8]
+|  |  |  |  |  [id, x, 8]
+|  |  |  |  |  [integer, integer, 8]
+|  |  |  |  |  array size
+|  |  |  |  statement
+|  |  |  |  |  [id, x, 9]
+|  |  |  |  |  [assign, =, 9]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, func, 9]
+|  |  |  |  |  |  |  |  |  argument params
+|  |  |  |  statement
+|  |  |  |  |  write
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 10]
