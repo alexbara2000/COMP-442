@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class MemorySizeVisitor implements Visitor{
     FileWriter outMoonCode;
+    int currStatBlock =1;
     public MemorySizeVisitor(String path) throws IOException {
         String pathPrefix = path.split("\\.")[0];
         outMoonCode = new FileWriter(pathPrefix+".m");
@@ -334,10 +335,13 @@ public class MemorySizeVisitor implements Visitor{
 
     @Override
     public void visit(StatementIdnestNode node) {
+        String tempStatBlock = "statblock"+currStatBlock;
+        currStatBlock++;
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        node.setMoonVarName(tempStatBlock);
     }
 
     @Override

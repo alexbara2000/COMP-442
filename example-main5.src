@@ -1,0 +1,14 @@
+function main() => void
+{
+  localvar x: integer;
+
+  x = 5;
+  if (not x == 5)
+    then {
+      x = 6;
+    } else {
+      x = 7;
+    };
+
+  write(x);
+}

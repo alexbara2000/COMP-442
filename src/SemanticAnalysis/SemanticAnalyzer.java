@@ -11,7 +11,7 @@ import SyntaticAnalysis.Parser;
 
 public class SemanticAnalyzer {
     public static void main(String[] args) throws Exception {
-        String fileToParse = "example-main4.src";
+        String fileToParse = "example-main5.src";
         Parser parser=new Parser(fileToParse);
         Node headNode = parser.parse();
         System.out.println(headNode);

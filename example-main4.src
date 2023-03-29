@@ -28,4 +28,11 @@ function main() => void
   write(x);
   write(y);
   write(z);
+
+  x = not x;
+  y = not 0;
+
+  write(x);
+  write(y);
+
 }
