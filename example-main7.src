@@ -1,0 +1,6 @@
+function main() => void
+{
+    localvar x: integer;
+    read(x);
+    write(x+5*2);
+}

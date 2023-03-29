@@ -1,0 +1,32 @@
+start
+|  Program
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, main, 1]
+|  |  |  |  [void, void, 1]
+|  |  |  function body
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 3]
+|  |  |  |  |  [id, x, 3]
+|  |  |  |  |  [integer, integer, 3]
+|  |  |  |  |  array size
+|  |  |  |  statement
+|  |  |  |  |  read
+|  |  |  |  |  |  variable
+|  |  |  |  |  |  |  [id, x, 4]
+|  |  |  |  statement
+|  |  |  |  |  write
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 5]
+|  |  |  |  |  |  |  |  [plus, +, 5]
+|  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  [intnum, 5, 5]
+|  |  |  |  |  |  |  |  |  |  [mult, *, 5]
+|  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [intnum, 2, 5]

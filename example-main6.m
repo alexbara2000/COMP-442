@@ -196,7 +196,9 @@ statblock1
            sw -8(r14),r13
            % output to console
            jl r15, putstr
-
+           sub r6,r6,r6
+           addi r6,r6,10
+           putc r6
 
            %assigning values
            sub r9,r9,r9

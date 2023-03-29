@@ -435,6 +435,18 @@ public class CodeGenVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        if(node.getChildren().size() == 1){
+            node.setMoonVarName(node.getChildren().get(0).getMoonVarName());
+        }
+
+        execCode += "\n";
+        execCode += m_mooncodeindent+"%reading variable from the keyboard\n";
+        execCode += m_mooncodeindent+"addi r1, r0, buf\n";
+        execCode += m_mooncodeindent+"sw -8(r14),r1\n";
+        execCode += m_mooncodeindent+"jl r15,getstr\n";
+        execCode += m_mooncodeindent+"jl r15,strint\n";
+        execCode += m_mooncodeindent+"sw "+node.getMoonVarName()+"(r0),r13 \n";
+        execCode += "\n";
     }
 
     @Override
@@ -806,6 +818,9 @@ public class CodeGenVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        if(node.getChildren().size() == 1){
+            node.setMoonVarName(node.getChildren().get(0).getMoonVarName());
+        }
     }
 
     @Override
@@ -866,7 +881,9 @@ public class CodeGenVisitor implements Visitor{
             execCode += m_mooncodeindent + "sw -8(r14),r13\n";
             execCode += m_mooncodeindent + "% output to console\n";
             execCode += m_mooncodeindent + "jl r15, putstr\n";
-            execCode += "\n";
+            execCode += m_mooncodeindent + "sub r6,r6,r6\n";
+            execCode += m_mooncodeindent + "addi r6,r6,10\n";
+            execCode += m_mooncodeindent + "putc r6\n";
         }
     }
 }
