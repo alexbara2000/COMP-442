@@ -16,6 +16,7 @@ public class CodeGenVisitor implements Visitor{
     int currZeroVal = 1;
     int currStatBlock = 1;
     int currEndRel = 1;
+    int currGoWhile = 1;
 
     Node currNode = null;
     public CodeGenVisitor(String path) throws IOException {
@@ -153,6 +154,21 @@ public class CodeGenVisitor implements Visitor{
 
                 node.setMoonVarName(tempvar);
             }
+            else if (operatorType == TokenType.LT) {
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " = " + firstName + " < " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "clt r3,r1,r2\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r3\n";
+
+                dataCode += "% space for " + firstName + " < " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
         }
     }
 
@@ -284,16 +300,10 @@ public class CodeGenVisitor implements Visitor{
     @Override
     public void visit(IfStatementNode node) {
 
-//        for (Node child : node.getChildren() ) {
-//            //make all children use this scopes' symbol table
-//            child.accept(this);
-//        }
-
         String tempEnd = "endRel" + currEndRel;
         currEndRel++;
 
         var expr = node.getChildren().get(0);
-        var statBlock1 = node.getChildren().get(1);
         var statBlock2 = node.getChildren().get(2);
 
         node.getChildren().get(0).accept(this);
@@ -316,16 +326,6 @@ public class CodeGenVisitor implements Visitor{
 
         execCode += "\n";
         execCode += tempEnd+"\n";
-
-
-//        {code for expr yields tn as a result}	[1]
-//        lw r1,tn(r0)					[2]
-//        bz r1,else1					[2]
-//        {code for statblock1}			[3]
-//        j endif1					[4]
-//        else1 [4]  	{code for statblock2}			[5]
-//        endif1[6]  	{code continuation}
-
 
     }
 
@@ -621,6 +621,21 @@ public class CodeGenVisitor implements Visitor{
 
                 node.setMoonVarName(tempvar);
             }
+            else if (operatorType == TokenType.LT) {
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " = " + firstName + " < " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "clt r3,r1,r2\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r3\n";
+
+                dataCode += "% space for " + firstName + " < " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
         }
     }
 
@@ -803,10 +818,31 @@ public class CodeGenVisitor implements Visitor{
 
     @Override
     public void visit(WhileLoopNode node) {
-        for (Node child : node.getChildren() ) {
-            //make all children use this scopes' symbol table
-            child.accept(this);
-        }
+        String tempEnd = "endRel" + currEndRel;
+        currEndRel++;
+
+        String tempGoWhile = "gowhile" + currGoWhile;
+        currGoWhile++;
+
+        var expr = node.getChildren().get(0);
+
+        execCode += "\n";
+        execCode += "%checking while loop condition\n";
+        execCode += tempGoWhile+"\n";
+        node.getChildren().get(0).accept(this);
+        execCode += m_mooncodeindent + "lw r1, "+expr.getMoonVarName()+"(r0)\n";
+        execCode += m_mooncodeindent + "bz r1, "+tempEnd;
+        execCode += "\n";
+
+        node.getChildren().get(1).accept(this);
+
+        execCode += "\n";
+        execCode += "%finished doing stat block going back to top\n";
+        execCode += m_mooncodeindent + "j "+tempGoWhile;
+        execCode += "\n";
+
+        execCode += "\n";
+        execCode += tempEnd+"\n";
     }
 
     @Override

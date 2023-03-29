@@ -155,7 +155,7 @@ STATBLOCK ->  .
 
 STATEMENT -> id SA1 STATEMENTIDNEST semi  .
 STATEMENT -> SA3 if lpar RELEXPR rpar then SA3 STATBLOCK SA36 else SA1 SA3 STATBLOCK SA36 semi SA15 .
-STATEMENT -> SA3 while lpar RELEXPR rpar STATBLOCK semi SA16 .
+STATEMENT -> SA3 while lpar RELEXPR rpar SA3 STATBLOCK SA36 semi SA16 .
 STATEMENT -> SA3 read lpar VARIABLE rpar semi SA17 .
 STATEMENT -> SA3 write lpar EXPR rpar semi SA18 .
 STATEMENT -> SA3 return lpar EXPR rpar semi SA19 .
