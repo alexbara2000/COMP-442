@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CodeGenVisitor implements Visitor{
+    Node headNode = null;
     FileWriter outMoonCode;
     String dataCode = "";
     String execCode = "";
@@ -236,26 +237,7 @@ public class CodeGenVisitor implements Visitor{
             node.setMoonVarName(tempvar);
         }
         else if(node.getChildren().size() == 2 && node.getChildren().get(1).getConcept().equals("argument params")){
-            //function call
-            var name = node.getChildren().get(0).getMoonVarName();
-
-            execCode += "\n";
-            execCode += m_mooncodeindent + "% calling function: " + name +"\n";
-            execCode += m_mooncodeindent + "jl r15," + name + "\n";
-
-            String tempvar = "t"+currTempVar;
-            currTempVar++;
-
-            execCode += "\n";
-            execCode += m_mooncodeindent + "% getting return value\n";
-            execCode += m_mooncodeindent + "lw r1,fnres(r0)\n";
-            execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r1 \n";
-            execCode += "\n";
-
-            dataCode += "% space for return value of function: " + name + "\n";
-            dataCode += String.format("%-10s", tempvar) + " res 4\n";
-
-            node.setMoonVarName(tempvar);
+            handleFunctionCall(node);
         }
     }
 
@@ -280,6 +262,15 @@ public class CodeGenVisitor implements Visitor{
             execCode += "% start of function\n";
             execCode += node.getEntry().m_name+"\n";
 
+            for(var entry: node.getEntry().m_subtable.m_symlist){
+                if(entry.m_kind.equals("param")){
+                    var name = entry.m_name;
+                    var size = entry.m_size;
+                    size = 4; //TODO fix this
+                    dataCode += "% space for function parameter "+name+"\n";
+                    dataCode += String.format("%-7s" ,name) + " res "+size+"\n";
+                }
+            }
         }
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -288,7 +279,7 @@ public class CodeGenVisitor implements Visitor{
         if(isMain)
             execCode+=m_mooncodeindent+"hlt\n";
         else{
-            execCode+=m_mooncodeindent+"jr r15\n";
+            execCode+=m_mooncodeindent+"jr r12\n";
 
         }
     }
@@ -479,9 +470,9 @@ public class CodeGenVisitor implements Visitor{
         execCode += m_mooncodeindent+"%reading variable from the keyboard\n";
         execCode += m_mooncodeindent+"addi r1, r0, buf\n";
         execCode += m_mooncodeindent+"sw -8(r14),r1\n";
-        execCode += m_mooncodeindent+"jl r15,getstr\n";
-        execCode += m_mooncodeindent+"jl r15,strint\n";
-        execCode += m_mooncodeindent+"sw "+node.getMoonVarName()+"(r0),r13 \n";
+        execCode += m_mooncodeindent+"jl r3,getstr\n";
+        execCode += m_mooncodeindent+"jl r12,strint\n";
+        execCode += m_mooncodeindent+"sw "+node.getMoonVarName()+"(r0),r12 \n";
         execCode += "\n";
     }
 
@@ -709,13 +700,14 @@ public class CodeGenVisitor implements Visitor{
             execCode += m_mooncodeindent + "%putting return value of function\n";
             execCode += m_mooncodeindent + "lw r1,"+node.getMoonVarName()+"(r0)\n";
             execCode += m_mooncodeindent + "sw fnres(r0), r1\n";
-            execCode += m_mooncodeindent + "jr r15\n";
+            execCode += m_mooncodeindent + "jr r12\n";
 
         }
     }
 
     @Override
     public void visit(StartNode node) {
+        headNode = node;
         dataCode += "% space for variable buffer\n";
         dataCode += String.format("%-7s" ,"buf") + " res 20\n";
         dataCode += String.format("%-7s" ,"fnres") + " res 4\n";
@@ -748,6 +740,15 @@ public class CodeGenVisitor implements Visitor{
             }
             positionOfEqual++;
         }
+
+        boolean isFunction = false;
+        for(var childs: node.getChildren()){
+            if(childs.getConcept().equals("argument params")){
+                isFunction = true;
+                break;
+            }
+        }
+
         if(isEqualSign){
             var assignName = node.getChildren().get(0).getMoonVarName();
             var nameToAssign = node.getChildren().get(node.getChildren().size()-1).getMoonVarName();
@@ -767,6 +768,9 @@ public class CodeGenVisitor implements Visitor{
                 execCode += m_mooncodeindent + "sw "+assignName+"(r0),r9\n";
             }
             execCode += "\n";
+        }
+        if(isFunction) {
+            handleFunctionCall(node);
         }
     }
 
@@ -932,6 +936,55 @@ public class CodeGenVisitor implements Visitor{
             execCode += m_mooncodeindent + "sub r6,r6,r6\n";
             execCode += m_mooncodeindent + "addi r6,r6,10\n";
             execCode += m_mooncodeindent + "putc r6\n";
+        }
+    }
+
+
+    private void handleFunctionCall(Node node){
+        //function call
+        var name = node.getChildren().get(0).getMoonVarName();
+
+        execCode += "\n";
+        execCode += m_mooncodeindent + "% calling function: " + name +"\n";
+
+        var funcName = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
+        var funcEntry = headNode.getTable().isFuncCallReturnTables(funcName);
+
+        if(funcEntry != null && funcEntry.size() >= 1){
+            var params = funcEntry.get(0).m_params;
+            var paramsNodeList = node.getChildren().get(1).getChildren();
+            for(int i =0; i< params.size(); i++){
+                var funcParamName = params.get(i).m_name;
+                var localParamName = paramsNodeList.get(i).getMoonVarName();
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% defining params of function: " + funcParamName +"\n";
+                execCode += m_mooncodeindent + "lw r1,"+localParamName+"(r0)\n";
+                execCode += m_mooncodeindent + "sw " + funcParamName + "(r0),r1 \n";
+                execCode += "\n";
+
+            }
+        }
+
+        execCode += m_mooncodeindent + "jl r12," + name + "\n";
+
+
+
+        if(funcEntry != null && funcEntry.size() >= 1){
+            if(!funcEntry.get(0).m_type.equals("void")){
+                String tempvar = "t"+currTempVar;
+                currTempVar++;
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% getting return value\n";
+                execCode += m_mooncodeindent + "lw r1,fnres(r0)\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r1 \n";
+                execCode += "\n";
+
+                dataCode += "% space for return value of function: " + name + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                node.setMoonVarName(tempvar);
+            }
         }
     }
 }

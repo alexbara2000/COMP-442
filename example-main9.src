@@ -1,0 +1,27 @@
+function func() => void
+{
+    localvar x: integer;
+      localvar y: integer;
+      localvar z: integer;
+      localvar q: integer;
+      x = 132;
+      y = x / 12;
+      z = 9;
+      q = z;
+      if (z == z) then {
+        // swap temp and arr[i]
+        write(x);
+        if(2 == 1) then {
+          write(10000);
+        }else {
+          write(1);
+        };
+      } else {
+        write(y);
+      };
+      write(q);
+}
+function main() => void
+{
+    func();
+}
