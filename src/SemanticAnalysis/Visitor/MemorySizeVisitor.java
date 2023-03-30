@@ -140,6 +140,35 @@ public class MemorySizeVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        var entry = node.getEntry();
+        var dimsList = entry.m_dims;
+        var type = entry.m_type;
+        var name = entry.m_name;
+        System.out.println(type);
+        System.out.println(dimsList);
+        int size = 0;
+        if(type.equals("integer")){
+            size=4;
+            int totalarray = 1;
+            if(dimsList != null && dimsList.size() != 0){
+                for(var dim: dimsList){
+                    totalarray*=dim;
+                }
+            }
+            size = totalarray*size;
+            node.getEntry().m_size = size;
+        }
+        else{
+            size=8;
+            int totalarray = 1;
+            if(dimsList != null && dimsList.size() != 0){
+                for(var dim: dimsList){
+                    totalarray*=dim;
+                }
+            }
+            size = totalarray*size;
+            node.getEntry().m_size = size;
+        }
     }
 
     @Override

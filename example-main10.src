@@ -15,5 +15,5 @@ function main() => void
     localvar x: integer;
     x = func(2, 3);
 
-    write(x + func2(2 * 2, 4);
+    write(x + func2(2 * 2, 4));
 }

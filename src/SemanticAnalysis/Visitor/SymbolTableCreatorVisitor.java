@@ -250,6 +250,8 @@ public class SymbolTableCreatorVisitor implements Visitor{
             child.setTable(node.getTable());
             child.accept(this);
         }
+        var name = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
+        node.setEntry(node.getTable().lookupName(name));
     }
 
     @Override

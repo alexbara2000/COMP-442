@@ -172,7 +172,51 @@ public class CodeGenVisitor implements Visitor{
 
                 node.setMoonVarName(tempvar);
             }
-            //TODO add rest
+            else if (operatorType == TokenType.LEQ) {
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " = " + firstName + " <= " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "cle r3,r1,r2\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r3\n";
+
+                dataCode += "% space for " + firstName + " < " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
+            else if (operatorType == TokenType.GT) {
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " = " + firstName + " > " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "cgt r3,r1,r2\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r3\n";
+
+                dataCode += "% space for " + firstName + " < " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
+            else if (operatorType == TokenType.GEQ) {
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " = " + firstName + " > " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "cge r3,r1,r2\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r3\n";
+
+                dataCode += "% space for " + firstName + " < " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
         }
     }
 
@@ -266,9 +310,12 @@ public class CodeGenVisitor implements Visitor{
                 if(entry.m_kind.equals("param")){
                     var name = entry.m_name;
                     var size = entry.m_size;
-                    size = 4; //TODO fix this
-                    dataCode += "% space for function parameter "+name+"\n";
-                    dataCode += String.format("%-7s" ,name) + " res "+size+"\n";
+
+                    //TODO maybe remove the size thing
+                    if(size <=4){
+                        dataCode += "% space for function parameter "+name+"\n";
+                        dataCode += String.format("%-7s" ,name) + " res "+size+"\n";
+                    }
                 }
             }
         }
@@ -675,7 +722,51 @@ public class CodeGenVisitor implements Visitor{
 
                 node.setMoonVarName(tempvar);
             }
-            //TODO add rest
+            else if (operatorType == TokenType.LEQ) {
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " = " + firstName + " <= " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "cle r3,r1,r2\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r3\n";
+
+                dataCode += "% space for " + firstName + " < " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
+            else if (operatorType == TokenType.GT) {
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " = " + firstName + " > " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "cgt r3,r1,r2\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r3\n";
+
+                dataCode += "% space for " + firstName + " < " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
+            else if (operatorType == TokenType.GEQ) {
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% processing: " + tempvar + " = " + firstName + " > " + secondName + "\n";
+                execCode += m_mooncodeindent + "lw r1," + firstName + "(r0)\n";
+                execCode += m_mooncodeindent + "lw r2," + secondName + "(r0)\n";
+                execCode += m_mooncodeindent + "cge r3,r1,r2\n";
+                execCode += m_mooncodeindent + "sw " + tempvar + "(r0),r3\n";
+
+                dataCode += "% space for " + firstName + " < " + secondName + "\n";
+                dataCode += String.format("%-10s", tempvar) + " res 4\n";
+                execCode += "\n";
+
+                node.setMoonVarName(tempvar);
+            }
         }
     }
 
@@ -957,12 +1048,22 @@ public class CodeGenVisitor implements Visitor{
                 var funcParamName = params.get(i).m_name;
                 var localParamName = paramsNodeList.get(i).getMoonVarName();
 
-                execCode += "\n";
-                execCode += m_mooncodeindent + "% defining params of function: " + funcParamName +"\n";
-                execCode += m_mooncodeindent + "lw r1,"+localParamName+"(r0)\n";
-                execCode += m_mooncodeindent + "sw " + funcParamName + "(r0),r1 \n";
-                execCode += "\n";
+                int numberOfIterations = params.get(i).m_size/4;
 
+                execCode += "\n";
+                execCode += m_mooncodeindent + "% defining params of function and propagating it for the size: " + funcParamName +"\n";
+
+                //TODO figure out if this is needed
+                if(numberOfIterations >= 2){
+                    continue;
+                }
+
+                for(int j=0; j<numberOfIterations; j++){
+                    execCode += m_mooncodeindent + "addi r4, r0, "+j*4+"\n";
+                    execCode += m_mooncodeindent + "lw r1,"+localParamName+"(r4)\n";
+                    execCode += m_mooncodeindent + "sw " + funcParamName + "(r4),r1 \n";
+                    execCode += "\n";
+                }
             }
         }
 

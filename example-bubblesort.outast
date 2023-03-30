@@ -8,9 +8,9 @@ start
 |  |  |  |  |  |  [id, arr, 2]
 |  |  |  |  |  |  [integer, integer, 2]
 |  |  |  |  |  |  array size
-|  |  |  |  |  |  |  [empty, epsilon, 2]
+|  |  |  |  |  |  |  [intnum, 7, 2]
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, size, 2]
+|  |  |  |  |  |  [id, size2, 2]
 |  |  |  |  |  |  [integer, integer, 2]
 |  |  |  |  |  |  array size
 |  |  |  |  [void, void, 2]
@@ -27,7 +27,7 @@ start
 |  |  |  |  |  array size
 |  |  |  |  local variable
 |  |  |  |  |  [localvar, localvar, 6]
-|  |  |  |  |  [id, j, 6]
+|  |  |  |  |  [id, k, 6]
 |  |  |  |  |  [integer, integer, 6]
 |  |  |  |  |  array size
 |  |  |  |  local variable
@@ -42,7 +42,7 @@ start
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, size, 8]
+|  |  |  |  |  |  |  |  |  [id, size2, 8]
 |  |  |  |  statement
 |  |  |  |  |  [id, i, 9]
 |  |  |  |  |  [assign, =, 9]
@@ -52,7 +52,7 @@ start
 |  |  |  |  |  |  |  |  factor
 |  |  |  |  |  |  |  |  |  [intnum, 0, 9]
 |  |  |  |  statement
-|  |  |  |  |  [id, j, 10]
+|  |  |  |  |  [id, k, 10]
 |  |  |  |  |  [assign, =, 10]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
@@ -78,327 +78,345 @@ start
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, n, 12]
-|  |  |  |  |  |  |  |  [minus, -, 12]
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 1, 12]
-|  |  |  |  |  |  statement
-|  |  |  |  |  |  |  while loop
-|  |  |  |  |  |  |  |  rel expression
-|  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  [id, j, 13]
-|  |  |  |  |  |  |  |  |  [lt, <, 13]
-|  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  [id, n, 13]
-|  |  |  |  |  |  |  |  |  |  [minus, -, 13]
-|  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  [id, i, 13]
-|  |  |  |  |  |  |  |  |  |  [minus, -, 13]
-|  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 13]
-|  |  |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  |  |  if statement
-|  |  |  |  |  |  |  |  |  |  rel expression
-|  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 14]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, j, 14]
-|  |  |  |  |  |  |  |  |  |  |  [gt, >, 14]
-|  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 14]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, j, 14]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [plus, +, 14]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 14]
-|  |  |  |  |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  |  |  |  |  [id, temp, 17]
-|  |  |  |  |  |  |  |  |  |  |  [assign, =, 17]
-|  |  |  |  |  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 17]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, j, 17]
-|  |  |  |  |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  |  |  |  |  [id, arr, 18]
-|  |  |  |  |  |  |  |  |  |  |  indice
-|  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, j, 18]
-|  |  |  |  |  |  |  |  |  |  |  [assign, =, 18]
-|  |  |  |  |  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 18]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, j, 18]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [plus, +, 18]
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 18]
-|  |  |  |  |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  |  |  |  |  [id, arr, 19]
-|  |  |  |  |  |  |  |  |  |  |  indice
-|  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, j, 19]
-|  |  |  |  |  |  |  |  |  |  |  |  |  [plus, +, 19]
-|  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 19]
-|  |  |  |  |  |  |  |  |  |  |  [assign, =, 19]
-|  |  |  |  |  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, temp, 19]
-|  |  |  |  |  |  |  |  statement
-|  |  |  |  |  |  |  |  |  [id, j, 21]
-|  |  |  |  |  |  |  |  |  [assign, =, 21]
-|  |  |  |  |  |  |  |  |  expression
 |  |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  [id, j, 21]
-|  |  |  |  |  |  |  |  |  |  |  [plus, +, 21]
+|  |  |  |  |  |  |  |  |  |  |  |  |  [id, n, 12]
+|  |  |  |  |  |  |  |  |  |  |  [minus, -, 12]
+|  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 12]
+|  |  |  |  |  |  statement idnest
+|  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  while loop
+|  |  |  |  |  |  |  |  |  rel expression
+|  |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 21]
-|  |  |  |  |  |  statement
-|  |  |  |  |  |  |  [id, i, 23]
-|  |  |  |  |  |  |  [assign, =, 23]
-|  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  [id, i, 23]
-|  |  |  |  |  |  |  |  |  [plus, +, 23]
-|  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 23]
+|  |  |  |  |  |  |  |  |  |  |  |  |  [id, k, 13]
+|  |  |  |  |  |  |  |  |  |  [lt, <, 13]
+|  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, n, 13]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [minus, -, 13]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, i, 13]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [plus, +, 13]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 13]
+|  |  |  |  |  |  |  |  |  statement idnest
+|  |  |  |  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  |  |  |  if statement
+|  |  |  |  |  |  |  |  |  |  |  |  rel expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 14]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, k, 14]
+|  |  |  |  |  |  |  |  |  |  |  |  |  [gt, >, 14]
+|  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 14]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, k, 14]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [plus, +, 14]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 14]
+|  |  |  |  |  |  |  |  |  |  |  |  statement idnest
+|  |  |  |  |  |  |  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, temp, 17]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [assign, =, 17]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 17]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, k, 17]
+|  |  |  |  |  |  |  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 18]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, k, 18]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [assign, =, 18]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 18]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, k, 18]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [plus, +, 18]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 18]
+|  |  |  |  |  |  |  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 19]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  indice
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, k, 19]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [plus, +, 19]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 19]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [assign, =, 19]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, temp, 19]
+|  |  |  |  |  |  |  |  |  |  |  |  statement idnest
+|  |  |  |  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  |  |  |  [id, k, 21]
+|  |  |  |  |  |  |  |  |  |  |  [assign, =, 21]
+|  |  |  |  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, k, 21]
+|  |  |  |  |  |  |  |  |  |  |  |  |  [plus, +, 21]
+|  |  |  |  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 21]
+|  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  [id, i, 23]
+|  |  |  |  |  |  |  |  [assign, =, 23]
+|  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [id, i, 23]
+|  |  |  |  |  |  |  |  |  |  [plus, +, 23]
+|  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 23]
+|  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  [id, k, 24]
+|  |  |  |  |  |  |  |  [assign, =, 24]
+|  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [intnum, 0, 24]
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, printArray, 28]
+|  |  |  |  [id, printArray, 29]
 |  |  |  |  function params
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, arr, 28]
-|  |  |  |  |  |  [integer, integer, 28]
+|  |  |  |  |  |  [id, arr, 29]
+|  |  |  |  |  |  [integer, integer, 29]
 |  |  |  |  |  |  array size
-|  |  |  |  |  |  |  [empty, epsilon, 28]
+|  |  |  |  |  |  |  [intnum, 7, 29]
 |  |  |  |  |  function params tail
-|  |  |  |  |  |  [id, size, 28]
-|  |  |  |  |  |  [integer, integer, 28]
+|  |  |  |  |  |  [id, size1, 29]
+|  |  |  |  |  |  [integer, integer, 29]
 |  |  |  |  |  |  array size
-|  |  |  |  [void, void, 28]
+|  |  |  |  [void, void, 29]
 |  |  |  function body
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 30]
-|  |  |  |  |  [id, n, 30]
-|  |  |  |  |  [integer, integer, 30]
-|  |  |  |  |  array size
-|  |  |  |  local variable
 |  |  |  |  |  [localvar, localvar, 31]
-|  |  |  |  |  [id, i, 31]
+|  |  |  |  |  [id, x, 31]
 |  |  |  |  |  [integer, integer, 31]
 |  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 32]
+|  |  |  |  |  [id, y, 32]
+|  |  |  |  |  [integer, integer, 32]
+|  |  |  |  |  array size
 |  |  |  |  statement
-|  |  |  |  |  [id, n, 32]
-|  |  |  |  |  [assign, =, 32]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [id, size, 32]
-|  |  |  |  statement
-|  |  |  |  |  [id, i, 33]
+|  |  |  |  |  [id, x, 33]
 |  |  |  |  |  [assign, =, 33]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 0, 33]
+|  |  |  |  |  |  |  |  |  [id, size1, 33]
+|  |  |  |  statement
+|  |  |  |  |  [id, y, 34]
+|  |  |  |  |  [assign, =, 34]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 0, 34]
 |  |  |  |  statement
 |  |  |  |  |  while loop
 |  |  |  |  |  |  rel expression
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, i, 34]
-|  |  |  |  |  |  |  [lt, <, 34]
+|  |  |  |  |  |  |  |  |  |  [id, y, 35]
+|  |  |  |  |  |  |  [lt, <, 35]
 |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, n, 34]
-|  |  |  |  |  |  statement
-|  |  |  |  |  |  |  write
+|  |  |  |  |  |  |  |  |  |  [id, x, 35]
+|  |  |  |  |  |  statement idnest
+|  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  write
+|  |  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 36]
+|  |  |  |  |  |  |  |  |  |  |  |  |  indice
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, y, 36]
+|  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  [id, y, 37]
+|  |  |  |  |  |  |  |  [assign, =, 37]
 |  |  |  |  |  |  |  |  expression
 |  |  |  |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  [id, arr, 35]
-|  |  |  |  |  |  |  |  |  |  |  |  indice
-|  |  |  |  |  |  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, i, 35]
-|  |  |  |  |  |  statement
-|  |  |  |  |  |  |  [id, i, 36]
-|  |  |  |  |  |  |  [assign, =, 36]
-|  |  |  |  |  |  |  expression
-|  |  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  [id, i, 36]
-|  |  |  |  |  |  |  |  |  [plus, +, 36]
-|  |  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 36]
+|  |  |  |  |  |  |  |  |  |  |  |  [id, y, 37]
+|  |  |  |  |  |  |  |  |  |  [plus, +, 37]
+|  |  |  |  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  [intnum, 1, 37]
 |  |  function definition
 |  |  |  function head
-|  |  |  |  [id, main, 41]
-|  |  |  |  [void, void, 41]
+|  |  |  |  [id, main, 42]
+|  |  |  |  [void, void, 42]
 |  |  |  function body
 |  |  |  |  local variable
-|  |  |  |  |  [localvar, localvar, 43]
-|  |  |  |  |  [id, arr, 43]
-|  |  |  |  |  [integer, integer, 43]
-|  |  |  |  |  array size
-|  |  |  |  |  |  [intnum, 7, 43]
-|  |  |  |  statement
+|  |  |  |  |  [localvar, localvar, 44]
 |  |  |  |  |  [id, arr, 44]
-|  |  |  |  |  indice
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 0, 44]
-|  |  |  |  |  [assign, =, 44]
-|  |  |  |  |  expression
-|  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 64, 44]
+|  |  |  |  |  [integer, integer, 44]
+|  |  |  |  |  array size
+|  |  |  |  |  |  [intnum, 7, 44]
 |  |  |  |  statement
 |  |  |  |  |  [id, arr, 45]
 |  |  |  |  |  indice
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 1, 45]
+|  |  |  |  |  |  |  |  |  [intnum, 0, 45]
 |  |  |  |  |  [assign, =, 45]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 34, 45]
+|  |  |  |  |  |  |  |  |  [intnum, 64, 45]
 |  |  |  |  statement
 |  |  |  |  |  [id, arr, 46]
 |  |  |  |  |  indice
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 2, 46]
+|  |  |  |  |  |  |  |  |  [intnum, 1, 46]
 |  |  |  |  |  [assign, =, 46]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 25, 46]
+|  |  |  |  |  |  |  |  |  [intnum, 34, 46]
 |  |  |  |  statement
 |  |  |  |  |  [id, arr, 47]
 |  |  |  |  |  indice
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 3, 47]
+|  |  |  |  |  |  |  |  |  [intnum, 2, 47]
 |  |  |  |  |  [assign, =, 47]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 12, 47]
+|  |  |  |  |  |  |  |  |  [intnum, 25, 47]
 |  |  |  |  statement
 |  |  |  |  |  [id, arr, 48]
 |  |  |  |  |  indice
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 4, 48]
+|  |  |  |  |  |  |  |  |  [intnum, 3, 48]
 |  |  |  |  |  [assign, =, 48]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 22, 48]
+|  |  |  |  |  |  |  |  |  [intnum, 12, 48]
 |  |  |  |  statement
 |  |  |  |  |  [id, arr, 49]
 |  |  |  |  |  indice
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 5, 49]
+|  |  |  |  |  |  |  |  |  [intnum, 4, 49]
 |  |  |  |  |  [assign, =, 49]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 11, 49]
+|  |  |  |  |  |  |  |  |  [intnum, 22, 49]
 |  |  |  |  statement
 |  |  |  |  |  [id, arr, 50]
 |  |  |  |  |  indice
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 6, 50]
+|  |  |  |  |  |  |  |  |  [intnum, 5, 50]
 |  |  |  |  |  [assign, =, 50]
 |  |  |  |  |  expression
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 90, 50]
+|  |  |  |  |  |  |  |  |  [intnum, 11, 50]
 |  |  |  |  statement
-|  |  |  |  |  [id, printArray, 51]
-|  |  |  |  |  argument params
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [id, arr, 51]
-|  |  |  |  |  |  expression
-|  |  |  |  |  |  |  arithmetic expression
-|  |  |  |  |  |  |  |  term
-|  |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  |  [intnum, 7, 51]
+|  |  |  |  |  [id, arr, 51]
+|  |  |  |  |  indice
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 6, 51]
+|  |  |  |  |  [assign, =, 51]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 90, 51]
 |  |  |  |  statement
-|  |  |  |  |  [id, bubbleSort, 52]
+|  |  |  |  |  [id, printArray, 52]
 |  |  |  |  |  argument params
 |  |  |  |  |  |  expression
 |  |  |  |  |  |  |  arithmetic expression
@@ -411,7 +429,7 @@ start
 |  |  |  |  |  |  |  |  |  factor
 |  |  |  |  |  |  |  |  |  |  [intnum, 7, 52]
 |  |  |  |  statement
-|  |  |  |  |  [id, printArray, 53]
+|  |  |  |  |  [id, bubbleSort, 53]
 |  |  |  |  |  argument params
 |  |  |  |  |  |  expression
 |  |  |  |  |  |  |  arithmetic expression
@@ -423,3 +441,23 @@ start
 |  |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  |  factor
 |  |  |  |  |  |  |  |  |  |  [intnum, 7, 53]
+|  |  |  |  statement
+|  |  |  |  |  write
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 10000, 54]
+|  |  |  |  statement
+|  |  |  |  |  [id, printArray, 55]
+|  |  |  |  |  argument params
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, arr, 55]
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 7, 55]

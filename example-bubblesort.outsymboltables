@@ -2,30 +2,30 @@
 =====================================================
 | table: global          
 =====================================================
-| Function  | bubbleSort| (integer[], integer): void|
+| Function  | bubbleSort| (integer[7], integer): void| 0         |
 |    =====================================================
 |    | table: bubbleSort      
 |    =====================================================
-|    | param     | arr       | integer[] |
-|    | param     | size      | integer   |
-|    | local     | n         | integer   |
-|    | local     | i         | integer   |
-|    | local     | j         | integer   |
-|    | local     | temp      | integer   |
+|    | param     | arr       | integer[7]| 0         |
+|    | param     | size2     | integer   | 0         |
+|    | local     | n         | integer   | 0         |
+|    | local     | i         | integer   | 0         |
+|    | local     | k         | integer   | 0         |
+|    | local     | temp      | integer   | 0         |
 |    =====================================================
-| Function  | printArray| (integer[], integer): void|
+| Function  | printArray| (integer[7], integer): void| 0         |
 |    =====================================================
 |    | table: printArray      
 |    =====================================================
-|    | param     | arr       | integer[] |
-|    | param     | size      | integer   |
-|    | local     | n         | integer   |
-|    | local     | i         | integer   |
+|    | param     | arr       | integer[7]| 0         |
+|    | param     | size1     | integer   | 0         |
+|    | local     | x         | integer   | 0         |
+|    | local     | y         | integer   | 0         |
 |    =====================================================
-| Function  | main      | : void                    |
+| Function  | main      | : void    | 0         |
 |    =====================================================
 |    | table: main            
 |    =====================================================
-|    | local     | arr       | integer[7]|
+|    | local     | arr       | integer[7]| 0         |
 |    =====================================================
 =====================================================

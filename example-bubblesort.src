@@ -1,39 +1,40 @@
 /* sort the array */
-function bubbleSort(arr: integer[], size: integer) => void
+function bubbleSort(arr: integer[7], size2: integer) => void
 {
   localvar n    : integer;
   localvar i    : integer;
-  localvar j    : integer;
+  localvar k    : integer;
   localvar temp : integer;
-  n = size;
+  n = size2;
   i = 0;
-  j = 0;
+  k = 0;
   temp = 0;
-  while (i < n-1) {
-    while (j < n-i-1) {
-      if (arr[j] > arr[j+1])
+  while (i < (n-1) ) {
+    while (k < (n - (i + 1))) {
+      if (arr[k] > arr[k+1])
         then {
           // swap temp and arr[i]
-          temp = arr[j];
-          arr[j] = arr[j+1];
-          arr[j+1] = temp;
+          temp = arr[k];
+          arr[k] = arr[k+1];
+          arr[k+1] = temp;
         } else ;
-        j = j+1;
+        k = k+1;
       };
     i = i+1;
+    k = 0;
   };
 }
 
 /* print the array */
-function printArray(arr: integer[], size: integer) => void
+function printArray(arr: integer[7], size1: integer) => void
 {
-  localvar n: integer;
-  localvar i: integer;
-  n = size;
-  i = 0;
-  while (i<n) {
-    write(arr[i]);
-      i = i+1;
+  localvar x: integer;
+  localvar y: integer;
+  x = size1;
+  y = 0;
+  while (y<x) {
+    write(arr[y]);
+      y = y+1;
   };
 }
 
@@ -50,6 +51,7 @@ function main() => void
   arr[6] = 90;
   printArray(arr, 7);
   bubbleSort(arr, 7);
+  write(10000);
   printArray(arr, 7);
 }
 

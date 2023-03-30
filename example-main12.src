@@ -1,0 +1,21 @@
+function main() => void
+{
+    localvar x: integer;
+    localvar y: integer;
+    localvar jvalue: integer;
+
+    x = 5;
+    y = 0;
+    jvalue = 0;
+    while (y < (x-1) ) {
+        while (jvalue < 5) {
+
+            write(jvalue);
+            jvalue = jvalue + 1;
+        };
+        write(1000);
+        write(y);
+        y = y + 1;
+    };
+
+}
