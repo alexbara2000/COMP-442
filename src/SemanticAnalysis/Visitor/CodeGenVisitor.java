@@ -308,6 +308,42 @@ public class CodeGenVisitor implements Visitor{
             node.setMoonVarName(tempvar);
 
         }
+        else if(node.getChildren().size() == 4){
+            int rPostion = 0;
+            var name = node.getChildren().get(0).getMoonVarName();
+            var memberName = node.getChildren().get(3).getMoonVarName();
+            var entry = headNode.getTable().GetDataMember(memberName);
+            rPostion = entry.m_offset;
+
+            String tempvar = "t"+currTempVar;
+            currTempVar++;
+
+            var arrayplaceName = node.getChildren().get(1).getMoonVarName();
+            var objectType = node.getTable().lookupName(((Token)node.getChildren().get(0).getConcept()).getLexeme()).m_type;
+            int objectSize = 0;
+            for(var classEntries: headNode.getTable().m_symlist){
+                if(classEntries.m_name.equals(objectType)){
+                    objectSize = classEntries.m_size;
+                    break;
+                }
+            }
+
+            execCode += "\n";
+            execCode += m_mooncodeindent + "%assigning values in factor for members\n";
+            execCode += m_mooncodeindent + "lw r3,"+arrayplaceName+"(r0)\n";
+            execCode += m_mooncodeindent + "muli r2,r3,"+objectSize+"\n";
+            execCode += m_mooncodeindent + "sub r8,r8,r8\n";
+            execCode += m_mooncodeindent + "addi r8,r2,"+rPostion+"\n";
+            execCode += m_mooncodeindent + "lw r1,"+name+"(r8)\n";
+            execCode += m_mooncodeindent + "sw "+tempvar+"(r0),r1\n";
+            execCode += "\n";
+
+            dataCode +=  "% space for array value\n";
+            dataCode += String.format("%-10s",tempvar) + " res 4\n";
+            execCode += "\n";
+            node.setMoonVarName(tempvar);
+
+        }
     }
 
     @Override
@@ -880,13 +916,36 @@ public class CodeGenVisitor implements Visitor{
                 var entry = headNode.getTable().GetDataMember(memberName);
                 rPostion = entry.m_offset;
 
-                execCode += "\n";
-                execCode += m_mooncodeindent + "%assigning values to member\n";
-                execCode += m_mooncodeindent + "sub r8,r8,r8\n";
-                execCode += m_mooncodeindent + "addi r8,r8,"+rPostion+"\n";
-                execCode += m_mooncodeindent + "lw r9,"+nameToAssign+"(r0)\n";
-                execCode += m_mooncodeindent + "sw "+assignName+"(r8),r9\n";
-                execCode += "\n";
+                if(node.getChildren().get(1).getConcept().equals("indice")){
+                    var arrayplaceName = node.getChildren().get(1).getMoonVarName();
+                    var objectType = node.getTable().lookupName(((Token)node.getChildren().get(0).getConcept()).getLexeme()).m_type;
+                    int objectSize = 0;
+                    for(var classEntries: headNode.getTable().m_symlist){
+                        if(classEntries.m_name.equals(objectType)){
+                            objectSize = classEntries.m_size;
+                            break;
+                        }
+                    }
+                    execCode += "\n";
+                    execCode += m_mooncodeindent + "%assigning values to member\n";
+                    execCode += m_mooncodeindent + "lw r1,"+arrayplaceName+"(r0)\n";
+                    execCode += m_mooncodeindent + "muli r2,r1,"+objectSize+"\n";
+                    execCode += m_mooncodeindent + "sub r8,r8,r8\n";
+                    execCode += m_mooncodeindent + "addi r8,r2,"+rPostion+"\n";
+                    execCode += m_mooncodeindent + "lw r9,"+nameToAssign+"(r0)\n";
+                    execCode += m_mooncodeindent + "sw "+assignName+"(r8),r9\n";
+                    execCode += "\n";
+                }
+                else{
+                    execCode += "\n";
+                    execCode += m_mooncodeindent + "%assigning values to member\n";
+                    execCode += m_mooncodeindent + "sub r8,r8,r8\n";
+                    execCode += m_mooncodeindent + "addi r8,r8,"+rPostion+"\n";
+                    execCode += m_mooncodeindent + "lw r9,"+nameToAssign+"(r0)\n";
+                    execCode += m_mooncodeindent + "sw "+assignName+"(r8),r9\n";
+                    execCode += "\n";
+                }
+
             }
             else{
                 execCode += "\n";

@@ -12,4 +12,15 @@ function main() => void
     x.b = 4;
     x.c = x.a + (x.b * x.b);
     write(x.c);
+
+    y[0].c = 5;
+    y[1].b = 7;
+    y[2].a = y[0].c + y[1].b;
+    y[3].c = y[2].a * y[2].a;
+    y[3].a = y[3].c;
+    y[3].b = y[3].a;
+
+    write(y[0].c);
+    write(y[2].a);
+    write(y[3].b);
 }
