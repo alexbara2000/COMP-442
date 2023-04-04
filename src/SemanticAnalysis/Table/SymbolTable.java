@@ -143,6 +143,21 @@ public class SymbolTable {
         }
         return found;
     }
+    public DataEntry GetDataMember(String id){
+        DataEntry entry = null;
+        for( SymbolTableEntry rec : m_symlist) {
+            if(rec.m_subtable != null){
+                entry = rec.m_subtable.GetDataMember(id);
+                if(entry != null){
+                    return entry;
+                }
+            }
+            if (id.equals(rec.m_name) && rec.m_kind.equals("data")) {
+                return (DataEntry) rec;
+            }
+        }
+        return entry;
+    }
 
     public boolean idExists(String id){
         String rep = this.toString();

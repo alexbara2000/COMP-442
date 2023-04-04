@@ -1,0 +1,97 @@
+start
+|  Program
+|  |  class definition
+|  |  |  [id, LINEAR, 1]
+|  |  |  inheritance
+|  |  |  recursive member declaration
+|  |  |  |  member declaration
+|  |  |  |  |  [public, public, 2]
+|  |  |  |  |  member variable declaration
+|  |  |  |  |  |  [id, a, 2]
+|  |  |  |  |  |  [integer, integer, 2]
+|  |  |  |  |  |  array size
+|  |  |  |  member declaration
+|  |  |  |  |  [public, public, 3]
+|  |  |  |  |  member variable declaration
+|  |  |  |  |  |  [id, b, 3]
+|  |  |  |  |  |  [integer, integer, 3]
+|  |  |  |  |  |  array size
+|  |  |  |  member declaration
+|  |  |  |  |  [public, public, 4]
+|  |  |  |  |  member variable declaration
+|  |  |  |  |  |  [id, c, 4]
+|  |  |  |  |  |  [integer, integer, 4]
+|  |  |  |  |  |  array size
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, main, 7]
+|  |  |  |  [void, void, 7]
+|  |  |  function body
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 9]
+|  |  |  |  |  [id, x, 9]
+|  |  |  |  |  [id, LINEAR, 9]
+|  |  |  |  |  array size
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 10]
+|  |  |  |  |  [id, y, 10]
+|  |  |  |  |  [id, LINEAR, 10]
+|  |  |  |  |  array size
+|  |  |  |  |  |  [intnum, 5, 10]
+|  |  |  |  statement
+|  |  |  |  |  [id, x, 11]
+|  |  |  |  |  [dot, ., 11]
+|  |  |  |  |  [id, a, 11]
+|  |  |  |  |  [assign, =, 11]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 5, 11]
+|  |  |  |  statement
+|  |  |  |  |  [id, x, 12]
+|  |  |  |  |  [dot, ., 12]
+|  |  |  |  |  [id, b, 12]
+|  |  |  |  |  [assign, =, 12]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 4, 12]
+|  |  |  |  statement
+|  |  |  |  |  [id, x, 13]
+|  |  |  |  |  [dot, ., 13]
+|  |  |  |  |  [id, c, 13]
+|  |  |  |  |  [assign, =, 13]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [id, x, 13]
+|  |  |  |  |  |  |  |  |  [dot, ., 13]
+|  |  |  |  |  |  |  |  |  [id, a, 13]
+|  |  |  |  |  |  |  [plus, +, 13]
+|  |  |  |  |  |  |  recursive arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  [id, x, 13]
+|  |  |  |  |  |  |  |  |  |  |  |  |  [dot, ., 13]
+|  |  |  |  |  |  |  |  |  |  |  |  |  [id, b, 13]
+|  |  |  |  |  |  |  |  |  |  |  |  [mult, *, 13]
+|  |  |  |  |  |  |  |  |  |  |  |  recursive term
+|  |  |  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, x, 13]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [dot, ., 13]
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  [id, b, 13]
+|  |  |  |  statement
+|  |  |  |  |  write
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 14]
+|  |  |  |  |  |  |  |  |  |  [dot, ., 14]
+|  |  |  |  |  |  |  |  |  |  [id, c, 14]

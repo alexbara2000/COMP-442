@@ -27,8 +27,8 @@ public class DataEntry extends SymbolTableEntry {
 				String.format("%-12s" , "| " + m_name) + 
 				String.format("%-12s"  , "| " + m_type+dimsToDisplay) +
 				String.format("%-12s"  , "| " + m_visibility) +
-//				String.format("%-8s"  , "| " + m_size) +
-//				String.format("%-8s"  , "| " + m_offset) +
+				String.format("%-8s"  , "| " + m_size) +
+				String.format("%-8s"  , "| " + m_offset) +
 		        "|";
 	}
 

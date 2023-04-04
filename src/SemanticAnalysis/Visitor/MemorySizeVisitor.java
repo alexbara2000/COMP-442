@@ -11,6 +11,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MemorySizeVisitor implements Visitor{
+    Node headNode = null;
+    int offset = 0;
     FileWriter outMoonCode;
     int currStatBlock =1;
     public MemorySizeVisitor(String path) throws IOException {
@@ -52,6 +54,12 @@ public class MemorySizeVisitor implements Visitor{
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        var table = node.getEntry().m_subtable;
+        var size = 0;
+        for(var entry: table.m_symlist){
+            size+=entry.m_size;
+        }
+        node.getEntry().m_size = size;
     }
 
     @Override
@@ -209,8 +217,6 @@ public class MemorySizeVisitor implements Visitor{
         var dimsList = entry.m_dims;
         var type = entry.m_type;
         var name = entry.m_name;
-        System.out.println(type);
-        System.out.println(dimsList);
         int size = 0;
         if(type.equals("integer")){
             size=4;
@@ -223,6 +229,58 @@ public class MemorySizeVisitor implements Visitor{
             size = totalarray*size;
             node.getEntry().m_size = size;
         }
+        else if(type.equals("float")){
+            size=8;
+            int totalarray = 1;
+            if(dimsList != null && dimsList.size() != 0){
+                for(var dim: dimsList){
+                    totalarray*=dim;
+                }
+            }
+            size = totalarray*size;
+            node.getEntry().m_size = size;
+        }
+        else{
+            for(var mainEntry: headNode.getTable().m_symlist){
+                if(mainEntry.m_name.equals(type)){
+                    size = mainEntry.m_size;
+                }
+            }
+            int totalarray = 1;
+            if(dimsList != null && dimsList.size() != 0){
+                for(var dim: dimsList){
+                    totalarray*=dim;
+                }
+            }
+            size = totalarray*size;
+            node.getEntry().m_size = size;
+
+        }
+        for (Node child : node.getChildren() ) {
+            //make all children use this scopes' symbol table
+            child.accept(this);
+        }
+
+    }
+    @Override
+    public void visit(MemberDeclarationNode node) {
+        var entry = node.getEntry();
+        var dimsList = entry.m_dims;
+        var type = entry.m_type;
+        var name = entry.m_name;
+        int size = 0;
+        if(type.equals("integer")){
+            size=4;
+            int totalarray = 1;
+            if(dimsList != null && dimsList.size() != 0){
+                for(var dim: dimsList){
+                    totalarray*=dim;
+                }
+            }
+            size = totalarray*size;
+            node.getEntry().m_size = size;
+
+        }
         else{
             size=8;
             int totalarray = 1;
@@ -234,14 +292,8 @@ public class MemorySizeVisitor implements Visitor{
             size = totalarray*size;
             node.getEntry().m_size = size;
         }
-        for (Node child : node.getChildren() ) {
-            //make all children use this scopes' symbol table
-            child.accept(this);
-        }
-
-    }
-    @Override
-    public void visit(MemberDeclarationNode node) {
+        node.getEntry().m_offset = offset;
+        offset += size;
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
@@ -314,10 +366,12 @@ public class MemorySizeVisitor implements Visitor{
 
     @Override
     public void visit(RecursiveMemberDeclarationNode node) {
+        offset = 0;
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
         }
+        offset = 0;
     }
 
     @Override
@@ -330,6 +384,7 @@ public class MemorySizeVisitor implements Visitor{
 
     @Override
     public void visit(StartNode node) {
+        headNode = node;
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);

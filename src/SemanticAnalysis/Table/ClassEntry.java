@@ -8,7 +8,8 @@ public class ClassEntry extends SymbolTableEntry {
 		
 	public String toString(){
 		return 	String.format("%-12s" , "| " + m_kind) +
-				String.format("%-40s" , "| " + m_name) + 
+				String.format("%-40s" , "| " + m_name) +
+				String.format("%-12s"  , "| " + m_size) +
 				"|" + 
 				m_subtable;
 	}

@@ -3,6 +3,7 @@ package SemanticAnalysis.Visitor;
 import Common.Token;
 import Common.TokenType;
 import Nodes.*;
+import SemanticAnalysis.Table.DataEntry;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -283,6 +284,30 @@ public class CodeGenVisitor implements Visitor{
         else if(node.getChildren().size() == 2 && node.getChildren().get(1).getConcept().equals("argument params")){
             handleFunctionCall(node);
         }
+        else if(node.getChildren().size() == 3){
+            int rPostion = 0;
+            var name = node.getChildren().get(0).getMoonVarName();
+            var memberName = node.getChildren().get(2).getMoonVarName();
+            var entry = headNode.getTable().GetDataMember(memberName);
+            rPostion = entry.m_offset;
+
+            String tempvar = "t"+currTempVar;
+            currTempVar++;
+
+            execCode += "\n";
+            execCode += m_mooncodeindent + "%assigning values in factor for members\n";
+            execCode += m_mooncodeindent + "sub r9,r9,r9\n";
+            execCode += m_mooncodeindent + "addi r9,r9,"+rPostion+"\n";
+            execCode += m_mooncodeindent + "lw r1,"+name+"(r9)\n";
+            execCode += m_mooncodeindent + "sw "+tempvar+"(r0),r1\n";
+            execCode += "\n";
+
+            dataCode +=  "% space for array value\n";
+            dataCode += String.format("%-10s",tempvar) + " res 4\n";
+            execCode += "\n";
+            node.setMoonVarName(tempvar);
+
+        }
     }
 
     @Override
@@ -428,12 +453,8 @@ public class CodeGenVisitor implements Visitor{
         var dimsList = entry.m_dims;
         var type = entry.m_type;
         var name = entry.m_name;
-        System.out.println(type);
-        System.out.println(dimsList);
-        if(type.equals("integer")){
-            dataCode += "% space for variable "+name+"\n";
-            dataCode += String.format("%-7s" ,name) + " res "+entry.m_size+"\n";
-        }
+        dataCode += "% space for variable "+name+"\n";
+        dataCode += String.format("%-7s" ,name) + " res "+entry.m_size+"\n";
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
@@ -832,6 +853,16 @@ public class CodeGenVisitor implements Visitor{
             positionOfEqual++;
         }
 
+        boolean isObject = false;
+        int positionOfObject = 0;
+        for(var childs: node.getChildren()){
+            if(childs.getConcept() instanceof Token && ((Token)childs.getConcept()).getType() == TokenType.DOT){
+                isObject = true;
+                break;
+            }
+            positionOfObject++;
+        }
+
         boolean isFunction = false;
         for(var childs: node.getChildren()){
             if(childs.getConcept().equals("argument params")){
@@ -843,22 +874,39 @@ public class CodeGenVisitor implements Visitor{
         if(isEqualSign){
             var assignName = node.getChildren().get(0).getMoonVarName();
             var nameToAssign = node.getChildren().get(node.getChildren().size()-1).getMoonVarName();
-            execCode += "\n";
-            if(node.getChildren().get(1).getConcept().equals("indice")){
-                var arrayplaceName = node.getChildren().get(1).getMoonVarName();
-                execCode += m_mooncodeindent + "%assigning values\n";
-                execCode += m_mooncodeindent + "lw r1,"+arrayplaceName+"(r0)\n";
-                //todo change 4 for size of
-                execCode += m_mooncodeindent + "muli r2,r1,4\n";
+            int rPostion = 0;
+            if(isObject){
+                var memberName = node.getChildren().get(positionOfObject+1).getMoonVarName();
+                var entry = headNode.getTable().GetDataMember(memberName);
+                rPostion = entry.m_offset;
+
+                execCode += "\n";
+                execCode += m_mooncodeindent + "%assigning values to member\n";
+                execCode += m_mooncodeindent + "sub r8,r8,r8\n";
+                execCode += m_mooncodeindent + "addi r8,r8,"+rPostion+"\n";
                 execCode += m_mooncodeindent + "lw r9,"+nameToAssign+"(r0)\n";
-                execCode += m_mooncodeindent + "sw "+assignName+"(r2),r9\n";
+                execCode += m_mooncodeindent + "sw "+assignName+"(r8),r9\n";
+                execCode += "\n";
             }
             else{
-                execCode += m_mooncodeindent + "%assigning values\n";
-                execCode += m_mooncodeindent + "lw r9,"+nameToAssign+"(r0)\n";
-                execCode += m_mooncodeindent + "sw "+assignName+"(r0),r9\n";
+                execCode += "\n";
+                if(node.getChildren().get(1).getConcept().equals("indice")){
+                    var arrayplaceName = node.getChildren().get(1).getMoonVarName();
+                    execCode += m_mooncodeindent + "%assigning values\n";
+                    execCode += m_mooncodeindent + "lw r1,"+arrayplaceName+"(r0)\n";
+                    //todo change 4 for size of
+                    execCode += m_mooncodeindent + "muli r2,r1,4\n";
+                    execCode += m_mooncodeindent + "lw r9,"+nameToAssign+"(r0)\n";
+                    execCode += m_mooncodeindent + "sw "+assignName+"(r2),r9\n";
+                }
+                else{
+                    execCode += m_mooncodeindent + "%assigning values\n";
+                    execCode += m_mooncodeindent + "lw r9,"+nameToAssign+"(r0)\n";
+                    execCode += m_mooncodeindent + "sw "+assignName+"(r0),r9\n";
+                }
+                execCode += "\n";
             }
-            execCode += "\n";
+
         }
         if(isFunction) {
             handleFunctionCall(node);
