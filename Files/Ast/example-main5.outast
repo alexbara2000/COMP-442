@@ -1,0 +1,59 @@
+start
+|  Program
+|  |  function definition
+|  |  |  function head
+|  |  |  |  [id, main, 1]
+|  |  |  |  [void, void, 1]
+|  |  |  function body
+|  |  |  |  local variable
+|  |  |  |  |  [localvar, localvar, 3]
+|  |  |  |  |  [id, x, 3]
+|  |  |  |  |  [integer, integer, 3]
+|  |  |  |  |  array size
+|  |  |  |  statement
+|  |  |  |  |  [id, x, 5]
+|  |  |  |  |  [assign, =, 5]
+|  |  |  |  |  expression
+|  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  [intnum, 5, 5]
+|  |  |  |  statement
+|  |  |  |  |  if statement
+|  |  |  |  |  |  rel expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [not, not, 6]
+|  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  [id, x, 6]
+|  |  |  |  |  |  |  [eq, ==, 6]
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [intnum, 5, 6]
+|  |  |  |  |  |  statement idnest
+|  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  [id, x, 8]
+|  |  |  |  |  |  |  |  [assign, =, 8]
+|  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [intnum, 6, 8]
+|  |  |  |  |  |  statement idnest
+|  |  |  |  |  |  |  statement
+|  |  |  |  |  |  |  |  [id, x, 10]
+|  |  |  |  |  |  |  |  [assign, =, 10]
+|  |  |  |  |  |  |  |  expression
+|  |  |  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  |  |  [intnum, 7, 10]
+|  |  |  |  statement
+|  |  |  |  |  write
+|  |  |  |  |  |  expression
+|  |  |  |  |  |  |  arithmetic expression
+|  |  |  |  |  |  |  |  term
+|  |  |  |  |  |  |  |  |  factor
+|  |  |  |  |  |  |  |  |  |  [id, x, 13]
