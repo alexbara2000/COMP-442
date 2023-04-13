@@ -1,9 +1,8 @@
 package SemanticAnalysis.Visitor;
 
-import Common.Token;
-import Common.TokenType;
-import Nodes.*;
-import SemanticAnalysis.Table.DataEntry;
+import Common.Token.Token;
+import Common.Token.TokenType;
+import Common.Nodes.*;
 
 import java.io.FileWriter;
 import java.io.IOException;

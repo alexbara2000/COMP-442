@@ -1,6 +1,6 @@
 package SemanticAnalysis.Visitor;
 
-import Nodes.*;
+import Common.Nodes.*;
 
 public abstract interface Visitor {
     public abstract void visit(ArgumentParamsNode node);

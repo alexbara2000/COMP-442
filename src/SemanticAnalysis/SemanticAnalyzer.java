@@ -1,8 +1,6 @@
 package SemanticAnalysis;
 
-import Common.AST;
-import Nodes.Node;
-import SemanticAnalysis.Table.SymbolTable;
+import Common.Nodes.Node;
 import SemanticAnalysis.Visitor.CodeGenVisitor;
 import SemanticAnalysis.Visitor.MemorySizeVisitor;
 import SemanticAnalysis.Visitor.SymbolTableCreatorVisitor;

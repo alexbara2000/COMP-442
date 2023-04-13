@@ -1,11 +1,10 @@
 package SemanticAnalysis.Visitor;
 
-import Common.Token;
-import Common.TokenType;
-import Nodes.*;
+import Common.Token.Token;
+import Common.Token.TokenType;
+import Common.Nodes.*;
 import SemanticAnalysis.Table.LitValEntry;
 import SemanticAnalysis.Table.SymbolTable;
-import SemanticAnalysis.Table.TempVarEntry;
 
 import java.io.FileWriter;
 import java.io.IOException;

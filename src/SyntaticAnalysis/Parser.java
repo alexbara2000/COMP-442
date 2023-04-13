@@ -1,10 +1,9 @@
 package SyntaticAnalysis;
 
-import Common.AST;
-import Common.Token;
-import Common.TokenType;
+import Common.Token.Token;
+import Common.Token.TokenType;
 import LexicalAnalysis.LexicalAnalyzer;
-import Nodes.*;
+import Common.Nodes.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,22 +27,23 @@ public class Parser {
     Map<String, String> data;
     ArrayList<TokenType> terminals = new ArrayList<>();
     ArrayList<String> nonTerminals = new ArrayList<>();
-    FileWriter outDerivationWriter;
-    FileWriter outSyntaxErrorsWriter;
-    FileWriter outASTWriter;
+
+    StringBuilder outDerivation = new StringBuilder();
+    StringBuilder outSyntaxErrors = new StringBuilder();
+    StringBuilder outAST = new StringBuilder();
 
 
     public Parser(String path) throws Exception {
 
-        String pathPrefix = path.split("\\.")[0];
-        outDerivationWriter = new FileWriter(pathPrefix+".outderivation");
-        outASTWriter = new FileWriter(pathPrefix+".outast");
-        outSyntaxErrorsWriter = new FileWriter(pathPrefix+".outsyntaxerrors");
+//        String pathPrefix = path.split("\\.")[0];
+//        outDerivationWriter = new FileWriter(pathPrefix+".outderivation");
+//        outASTWriter = new FileWriter(pathPrefix+".outast");
+//        outSyntaxErrorsWriter = new FileWriter(pathPrefix+".outsyntaxerrors");
         populateFirstAndFollowSet();
         
         this.input= new LexicalAnalyzer(path);
 
-        String csvFile = "src/Common/grammarTable.csv";
+        String csvFile = "src/Common/Grammar/grammarTable.csv";
         String line = "";
         String csvSplitBy = ",";
         data = new HashMap<>();
@@ -69,7 +69,7 @@ public class Parser {
     }
 
     private void populateFirstAndFollowSet() {
-        String firstSetFile = "src/Common/firstfollowSet.csv";
+        String firstSetFile = "src/Common/Grammar/firstfollowSet.csv";
         String line = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
@@ -192,7 +192,7 @@ public class Parser {
             }
             if (token == null && nullable.contains(stack.peek()) && !stack.peek().startsWith("SA")) {
                 derivations.remove(stack.peek());
-                outDerivationWriter.write(String.join(" ", derivations) + "\n");
+                outDerivation.append(String.join(" ", derivations) + "\n");
 
                 if (endable.contains(stack.peek())) {
                     break;
@@ -202,50 +202,6 @@ public class Parser {
             }
 
             top = stack.peek();
-//            if (top.startsWith("SA")) {
-//                String semanticAction = stack.pop();
-//                switch (top){
-//                    case "SA1" -> AST.makeNode(previousToken);
-//                    case "SA2" -> AST.makeNode(new Token(TokenType.EMPTY, "epsilon", token.getLocation()));
-//                    case "SA3" -> AST.makeNull();
-//                    case "SA4" -> AST.makeFamily(new ArraySizeAction(), -1);
-//                    case "SA5" -> AST.makeFamily(new VariableAction(), -1);
-//                    case "SA6" -> AST.makeFamily(new LocalVariableAction(), -1);
-//                    case "SA7" -> AST.makeFamily(new StatementAction(), -1);
-//                    case "SA8" -> AST.makeFamily(new ExpressionAction(), -1);
-//                    case "SA9" -> AST.makeFamily(new ArithmeticExpressionAction(), -1);
-//                    case "SA10" -> AST.makeFamily(new TermAction(), -1);
-//                    case "SA11" -> AST.makeFamily(new FactorAction(), -1);
-//                    case "SA12" -> AST.makeFamily(new RecursiveArithmeticExpressionAction(), -1);
-//                    case "SA13" -> AST.makeFamily(new RecursiveTermAction(), -1);
-//                    case "SA14" -> AST.makeFamily(new RelExpressionAction(), -1);
-//                    case "SA15" -> AST.makeFamily(new IfStatementAction(), -1);
-//                    case "SA16" -> AST.makeFamily(new WhileLoopAction(), -1);
-//                    case "SA17" -> AST.makeFamily(new ReadAction(), -1);
-//                    case "SA18" -> AST.makeFamily(new WriteAction(), -1);
-//                    case "SA19" -> AST.makeFamily(new ReturnAction(), -1);
-//                    case "SA20" -> AST.makeFamily(new FunctionBodyAction(), -1);
-//                    case "SA21" -> AST.makeFamily(new FunctionDefinitionAction(), -1);
-//                    case "SA22" -> AST.makeFamily(new ClassDefinitionAction(), -1);
-//                    case "SA23" -> AST.makeFamily(new StartAction(), -1);
-//                    case "SA24" -> AST.makeFamily(new ProgramAction(), -1);
-//                    case "SA25" -> AST.makeFamily(new InheritanceAction(), -1);
-//                    case "SA26" -> AST.makeFamily(new RepeatMemberDeclarationAction(), -1);
-//                    case "SA27" -> AST.makeFamily(new MemberDeclarationAction(), -1);
-//                    case "SA28" -> AST.makeFamily(new MemberFunctionDeclarationAction(), -1);
-//                    case "SA29" -> AST.makeFamily(new MemberVariableDeclarationAction(), -1);
-//                    case "SA30" -> AST.makeFamily(new FunctionParamsAction(), -1);
-//                    case "SA31" -> AST.makeFamily(new FunctionHeadAction(), -1);
-//                    case "SA32" -> AST.makeFamily(new FunctionHeadTailAction(), -1);
-//                    case "SA33" -> AST.makeFamily(new ArgumentParamsAction(), -1);
-//                    case "SA34" -> AST.makeFamily(new IndiceAction(), -1);
-//                    case "SA35" -> AST.makeFamily(new IdnestAction(), -1);
-//                    case "SA36" -> AST.makeFamily(new StatementIdnestAction(), -1);
-//                    case "SA37" -> AST.makeFamily(new VariableIdnestAction(), -1);
-//                    case "SA38" -> AST.makeFamily(new FunctionParamTailAction(), -1);
-//                }
-//            }
-
 
             if (top.startsWith("SA")) {
                 String semanticAction = stack.pop();
@@ -291,7 +247,7 @@ public class Parser {
                 }
             }
             else {
-                outDerivationWriter.write(String.join(" ", derivations) + "\n");
+                outDerivation.append(String.join(" ", derivations) + "\n");
                 try {
                     if (terminals.contains(getActualTop(top)) && getActualTop(top) == token.getType()) {
                         stack.pop();
@@ -329,16 +285,18 @@ public class Parser {
         }
 
 
-        outASTWriter.write(astStack.peek().toString());
-        outASTWriter.close();
-        outSyntaxErrorsWriter.close();
-        outDerivationWriter.close();
 
-        return astStack.peek();
+        try{
+            outAST.append(astStack.peek().toString());
+            return astStack.peek();
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 
     private Token skipError(Token token) throws IOException {
-        outSyntaxErrorsWriter.write("Syntax error for the following token" + token + "\n");
+        outSyntaxErrors.append("Syntax error for the following token" + token + "\n");
         String top = stack.peek();
         System.out.println(token);
         System.out.println(top);
@@ -428,7 +386,6 @@ public class Parser {
 
         for (int i = productions.length - 1; i>=2; i--){
             if(productions[i].equals("&epsilon")){
-                //stack.push("");
             }
             else{
                 stack.push(productions[i]);

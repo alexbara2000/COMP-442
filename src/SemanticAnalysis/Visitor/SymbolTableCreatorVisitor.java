@@ -1,15 +1,13 @@
 package SemanticAnalysis.Visitor;
 
-import Common.Token;
-import Common.TokenType;
-import Nodes.*;
+import Common.Token.Token;
+import Common.Token.TokenType;
+import Common.Nodes.*;
 import SemanticAnalysis.Table.*;
 
-import javax.xml.crypto.Data;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class SymbolTableCreatorVisitor implements Visitor{
     FileWriter outSemanticErrorsWriter;

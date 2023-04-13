@@ -1,7 +1,7 @@
 package LexicalAnalysis;
 
-import Common.Token;
-import Common.TokenType;
+import Common.Token.Token;
+import Common.Token.TokenType;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,9 +11,9 @@ public class LexicalAnalyzer {
     private final byte[] chars;
     private int currentIndex;
 
-    public LexicalAnalyzer(String pathName) throws Exception{
+    public LexicalAnalyzer(String fileName) throws Exception{
         this.lineNumber=1;
-        File file = new File(pathName);
+        File file = new File("Files/Source/"+fileName);
 
         FileInputStream fl = new FileInputStream(file);
         this.chars = new byte[(int)file.length()];

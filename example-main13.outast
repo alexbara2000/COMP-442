@@ -57,7 +57,7 @@ start
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 4, 12]
+|  |  |  |  |  |  |  |  |  [intnum, 6, 12]
 |  |  |  |  statement
 |  |  |  |  |  [id, x, 13]
 |  |  |  |  |  [dot, ., 13]
@@ -109,7 +109,7 @@ start
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 5, 16]
+|  |  |  |  |  |  |  |  |  [intnum, 2, 16]
 |  |  |  |  statement
 |  |  |  |  |  [id, y, 17]
 |  |  |  |  |  indice
@@ -124,7 +124,7 @@ start
 |  |  |  |  |  |  arithmetic expression
 |  |  |  |  |  |  |  term
 |  |  |  |  |  |  |  |  factor
-|  |  |  |  |  |  |  |  |  [intnum, 7, 17]
+|  |  |  |  |  |  |  |  |  [intnum, 3, 17]
 |  |  |  |  statement
 |  |  |  |  |  [id, y, 18]
 |  |  |  |  |  indice

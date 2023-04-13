@@ -1,6 +1,6 @@
 package Test;
-import Common.Token;
-import Common.TokenType;
+import Common.Token.Token;
+import Common.Token.TokenType;
 import LexicalAnalysis.LexicalAnalyzer;
 import org.junit.jupiter.api.Assertions;
 

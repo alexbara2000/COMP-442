@@ -23,7 +23,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,4
+           addi r9,r9,6
            sw t3(r0),r9
 
 
@@ -111,7 +111,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,5
+           addi r9,r9,2
            sw t11(r0),r9
 
 
@@ -132,7 +132,7 @@
 
            %assigning values
            sub r9,r9,r9
-           addi r9,r9,7
+           addi r9,r9,3
            sw t13(r0),r9
 
 

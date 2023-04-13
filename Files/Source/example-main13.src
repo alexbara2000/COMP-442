@@ -1,0 +1,26 @@
+class LINEAR{
+  public attribute a: integer;
+  public attribute b: integer;
+  public attribute c: integer[2];
+};
+
+function main() => void
+{
+    localvar x: LINEAR;
+    localvar y: LINEAR[5];
+    x.a = 5;
+    x.b = 6;
+    x.c = x.a + (x.b * x.b);
+    write(x.c);
+
+    y[0].c = 2;
+    y[1].b = 3;
+    y[2].a = y[0].c + y[1].b;
+    y[3].c = y[2].a * y[2].a;
+    y[3].a = y[3].c;
+    y[3].b = y[3].a;
+
+    write(y[0].c);
+    write(y[2].a);
+    write(y[3].b);
+}
