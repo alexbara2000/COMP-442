@@ -14,6 +14,9 @@ public class ParserDriver {
                 .map(File::getName)
                 .collect(Collectors.toList());
 
+        if(args != null && args.length >= 1){
+            files = List.of(args);
+        }
         for(var file : files){
             Parser parser = new Parser(file);
             parser.parse();

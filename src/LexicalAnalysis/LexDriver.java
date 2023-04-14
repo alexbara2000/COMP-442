@@ -16,7 +16,9 @@ public class LexDriver {
                 .filter(file -> !file.isDirectory())
                 .map(File::getName)
                 .collect(Collectors.toList());
-
+        if(args != null && args.length >= 1){
+            files = List.of(args);
+        }
         for(var file : files){
             LexicalAnalyzer la = new LexicalAnalysis.LexicalAnalyzer(file);
             createOutFiles(la, file.substring(0, file.length()-4));
