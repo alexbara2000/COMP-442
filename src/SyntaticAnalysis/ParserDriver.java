@@ -1,5 +1,8 @@
 package SyntaticAnalysis;
 
+import Common.Errors.ErrorLogger;
+import Common.Nodes.Node;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ParserDriver {
+    public static Node headNode = null;
     public static void main(String[] args) throws Exception {
         List<String> files = Stream.of(Objects.requireNonNull(new File("Files/Source").listFiles()))
                 .filter(file -> !file.isDirectory())
@@ -18,8 +22,9 @@ public class ParserDriver {
             files = List.of(args);
         }
         for(var file : files){
+
             Parser parser = new Parser(file);
-            parser.parse();
+            headNode = parser.parse();
             String fileName = file.substring(0, file.length() - 4);
 
             FileWriter outDerivationWriter = new FileWriter("Files/Derivation/"+ fileName +".outderivation");
@@ -27,7 +32,7 @@ public class ParserDriver {
             outDerivationWriter.close();
 
             FileWriter outSyntaxErrorsWriter = new FileWriter("Files/SyntaxErrors/"+ fileName +".outsyntaxerrors");
-            outSyntaxErrorsWriter.write(parser.outSyntaxErrors.toString());
+            outSyntaxErrorsWriter.write(ErrorLogger.getInstance().getSyntaxErrors());
             outSyntaxErrorsWriter.close();
 
             FileWriter outASTWriter = new FileWriter("Files/Ast/"+ fileName +".outast");

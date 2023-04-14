@@ -1,7 +1,11 @@
 package SyntaticAnalysis;
 
+import Common.Errors.CompilerError;
+import Common.Errors.ErrorLogger;
+import Common.Errors.ErrorType;
 import Common.Token.Token;
 import Common.Token.TokenType;
+import LexicalAnalysis.LexDriver;
 import LexicalAnalysis.LexicalAnalyzer;
 import Common.Nodes.*;
 
@@ -29,14 +33,14 @@ public class Parser {
     ArrayList<String> nonTerminals = new ArrayList<>();
 
     StringBuilder outDerivation = new StringBuilder();
-    StringBuilder outSyntaxErrors = new StringBuilder();
     StringBuilder outAST = new StringBuilder();
 
 
-    public Parser(String path) throws Exception {
+    public Parser(String fileToParse) throws Exception {
+        LexDriver.main(new String[]{fileToParse});
         populateFirstAndFollowSet();
         
-        this.input= new LexicalAnalyzer(path);
+        this.input= LexDriver.lexicalAnalyzer;
 
         String csvFile = "src/Common/Grammar/grammarTable.csv";
         String line = "";
@@ -267,7 +271,6 @@ public class Parser {
                         }
                     } catch (Exception b) {
                         top = stack.pop();
-                        System.out.println(top);
                     }
                 }
             }
@@ -291,10 +294,8 @@ public class Parser {
     }
 
     private Token skipError(Token token) throws IOException {
-        outSyntaxErrors.append("Syntax error for the following token" + token + "\n");
+        ErrorLogger.getInstance().add(new CompilerError(ErrorType.SyntaxError, "[Token Type: "+token.getType()+", Lexeme: "+token.getLexeme()+"].", token.getLocation() ));
         String top = stack.peek();
-        System.out.println(token);
-        System.out.println(top);
         Stack<String> tempStack = (Stack<String>)stack.clone();
         if(!followSet.containsKey(tempStack.peek())){
             return input.getNextToken();
@@ -306,13 +307,11 @@ public class Parser {
         if(token == null || followSet.get(top).contains(token.getType())){
             stack = tempStack;
             stack.pop();
-            System.out.println(stack.peek());
         }
         else {
             while ( (!firstSet.get(top).contains(token.getType()) || nullable.contains(top)) && !followSet.get(top).contains(token.getType())){
 
                 token = input.getNextToken();
-                System.out.println(token);
                 if(token == null){
                     return null;
                 }

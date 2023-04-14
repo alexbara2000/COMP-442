@@ -1,5 +1,8 @@
 package SemanticAnalysis.Visitor;
 
+import Common.Errors.CompilerError;
+import Common.Errors.ErrorLogger;
+import Common.Errors.ErrorType;
 import Common.Token.Token;
 import Common.Token.TokenType;
 import Common.Nodes.*;
@@ -11,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SymbolTableCreatorVisitor implements Visitor {
-    public StringBuilder outSemanticErrors = new StringBuilder();
     Node headNode = null;
     String currentClass = "";
 
@@ -51,7 +53,7 @@ public class SymbolTableCreatorVisitor implements Visitor {
         SymbolTable localtable = new SymbolTable(1,classname, node.getTable());
         ClassEntry tempClassEntry = new ClassEntry(classname, localtable);
         if(node.getTable().lookupLocalEntry(tempClassEntry)){
-            outSemanticErrors.append("SEMANTIC ERRORS: multiply declared classes at line: ").append(location).append("\n");
+            ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Multiple declared classes.", location));
         }
         node.setEntry(tempClassEntry);
         node.getTable().addEntry(node.getEntry());
@@ -171,10 +173,10 @@ public class SymbolTableCreatorVisitor implements Visitor {
 
         if(node.getTable().lookupLocalEntry(newFuncEntry)){
             if(headNode.getTable().hasSameParams(newFuncEntry)){
-                outSemanticErrors.append("SEMANTIC ERRORS: multiple declared functions at line: ").append(location).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Multiple declared functions.", location));
             }
             else {
-                outSemanticErrors.append("SEMANTIC WARNING: two functions with the same name but with different parameter lists: ").append(location).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticWarning, "Two functions with the same name but different parameters", location));
             }
 
         }
@@ -274,7 +276,7 @@ public class SymbolTableCreatorVisitor implements Visitor {
             for(var id: idNames){
                 var iList = headNode.getTable().getInheritanceList(id);
                 if(iList != null && iList.size() != 0 && iList.contains(tableName)){
-                    outSemanticErrors.append("SEMANTIC ERRORS: circular dependency: ").append(((Token) node.getChildren().get(0).getConcept()).getLocation()).append("\n");
+                    ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Circular dependency.", ((Token) node.getChildren().get(0).getConcept()).getLocation()));
                 }
             }
         }
@@ -318,7 +320,7 @@ public class SymbolTableCreatorVisitor implements Visitor {
         }
         VarEntry tempVarEntry = new VarEntry("local", vartype, varid, dimlist);
         if(node.getTable().lookupLocalEntryName(tempVarEntry)){
-            outSemanticErrors.append("SEMANTIC ERRORS: multiply declared local variables at line: ").append(location).append("\n");
+            ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Multiple declared local variables.", location));
         }
         else {
             node.setEntry(tempVarEntry);
@@ -398,7 +400,7 @@ public class SymbolTableCreatorVisitor implements Visitor {
 
             SymbolTable localtable = headNode.getTable().getTableEntry(newFuncEntry);
             if(localtable == null){
-                outSemanticErrors.append("SEMANTIC ERROR: Use of undefined member function  ").append(((Token) node.getChildren().get(0).getConcept()).getLocation()).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Use of undefined member function.", ((Token) node.getChildren().get(0).getConcept()).getLocation()));
             }
             else{
                 localtable.m_tablelevel = 2;
@@ -432,10 +434,10 @@ public class SymbolTableCreatorVisitor implements Visitor {
 
             DataEntry tempDataEntry = new DataEntry(dkind, dtype, dname, dims, visibility);
             if(headNode.getTable().isDataMember(dname)){
-                outSemanticErrors.append("SEMANTIC Warning: Shadow inheritance of data members: " +location + "\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticWarning, "Shadow inheritance of data members.", location));
             }
             if(node.getTable().lookupInheritedEntry(tempDataEntry)){
-                outSemanticErrors.append("SEMANTIC ERRORS: multiply declared data member at line: " +location + "\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Multiple declared data member.", location));
             }
             else {
                 node.setEntry(tempDataEntry);

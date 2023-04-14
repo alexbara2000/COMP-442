@@ -1,17 +1,17 @@
 package SemanticAnalysis.Visitor;
 
+import Common.Errors.CompilerError;
+import Common.Errors.ErrorLogger;
+import Common.Errors.ErrorType;
 import Common.Token.Token;
 import Common.Token.TokenType;
 import Common.Nodes.*;
 import Common.Table.FuncEntry;
 import Common.Visitor.Visitor;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class TypeCheckingVisitor implements Visitor {
-    public StringBuilder outSemanticErrors;
     Node headNode = null;
 
     String currentType = "";
@@ -19,12 +19,6 @@ public class TypeCheckingVisitor implements Visitor {
     Token previousId = null;
     Token previousToken = null;
     int numberOfDims = 0;
-
-    public TypeCheckingVisitor(StringBuilder currentErrors) throws IOException {
-        outSemanticErrors = new StringBuilder(currentErrors);
-        outSemanticErrors.append("\n");
-    }
-
 
     @Override
     public void visit(ArgumentParamsNode node) {
@@ -160,7 +154,7 @@ public class TypeCheckingVisitor implements Visitor {
         String type = ((Token)node.getChildren().get(2).getConcept()).getLexeme();
         int location = ((Token)node.getChildren().get(2).getConcept()).getLocation();
         if(id.equals(type)){
-            outSemanticErrors.append("Cannot assign a variable to itself: ").append(location).append("\n");
+            ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Assigning variable to itself.", location));
         }
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -198,12 +192,12 @@ public class TypeCheckingVisitor implements Visitor {
         if(currToken.getType() == TokenType.ID){
             boolean doesIdExist = headNode.getTable().idExists(currToken.getLexeme());
             if(!doesIdExist){
-                    outSemanticErrors.append("Variable ").append(currToken.getLexeme()).append(" has not been declared: ").append(currToken.getLocation()).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Variable "+ currToken.getLexeme()+" has not been declared.", currToken.getLocation()));
             }
             if(currentType.length() != 0){
                 String localType = node.getTable().lookupName(currToken.getLexeme()).m_type;
                 if(localType != null && !localType.equals(currentType)){
-                        outSemanticErrors.append("the type of the left and right hand side of the assignment operator must be the same at location: ").append(currToken.getLocation()).append("\n");
+                    ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Assignment of wrong type.", currToken.getLocation()));
                 }
             }
             else{
@@ -221,7 +215,7 @@ public class TypeCheckingVisitor implements Visitor {
                                         validNumbOfArgs = true;
                                 }
                                 if(!validNumbOfArgs){
-                                    outSemanticErrors.append("Invalid number of params: ").append(currToken.getLocation()).append("\n");
+                                    ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Invalid number or parameters.", currToken.getLocation()));
                                 }
                             }
                         }
@@ -236,17 +230,17 @@ public class TypeCheckingVisitor implements Visitor {
 
         if(currToken.getType() == TokenType.DOT){
             if(previousId == null){
-                    outSemanticErrors.append("undeclared member function").append(currToken.getLocation()).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Undeclared member function.", currToken.getLocation()));
             }
             try{
                 String callerKind = node.getTable().lookupName(previousId.getLexeme()).m_kind;
                 String callertType = node.getTable().lookupName(previousId.getLexeme()).m_type;
                 if(!(callerKind.equals("data") || (!callertType.equals("integer") && !callertType.equals("float")))){
-                    outSemanticErrors.append("Cannot call a function without a member of the class: ").append(currToken.getLocation()).append("\n");
+                    ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Calling a function without a class member.", currToken.getLocation()));
                 }
             }
             catch (Exception e){
-                outSemanticErrors.append("undeclared member function ").append(currToken.getLocation()).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Undeclared member function.", currToken.getLocation()));
             }
         }
 
@@ -255,7 +249,7 @@ public class TypeCheckingVisitor implements Visitor {
         }
         if(currToken.getType() == TokenType.SELF )
             if( previousToken != null && previousToken.getType() == TokenType.DOT){
-                outSemanticErrors.append("Wrong use of the self operator").append(currToken.getLocation()).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Wrong use of the self operator.", currToken.getLocation()));
         }
         previousToken = currToken;
 
@@ -323,7 +317,7 @@ public class TypeCheckingVisitor implements Visitor {
         }
         if(tableName.equals("Constructor")){
             if(previousToken.getType() == TokenType.INTNUM || previousToken.getType() == TokenType.FLOATNUM){
-                outSemanticErrors.append("wrong return type ").append(previousToken.getLocation()).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Wrong return type.", previousToken.getLocation()));
             }
         }
     }
@@ -356,14 +350,14 @@ public class TypeCheckingVisitor implements Visitor {
             funcsWithName = headNode.getTable().isFuncCallReturnTables(id);
             if(funcsWithName.size() == 0){
                 //function not declared
-                outSemanticErrors.append("function ").append(id).append(" has not been declared: ").append(location).append("\n");
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Function: "+id+" has not been declared.", location));
             }
 
         }
         else{
             if(isFirstChildId && !node.getTable().lookupNameReturnsBool(id)){
                 if(!headNode.getTable().isDataMember(id)){
-                    outSemanticErrors.append("Variable ").append(id).append(" has not been declared: ").append(location).append("\n");
+                    ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Variable: "+id+" has not been declared.", location));
                 }
             }
 
@@ -383,7 +377,7 @@ public class TypeCheckingVisitor implements Visitor {
         if(numberOfDims!=0){
             for(var entries: node.getTable().m_symlist) {
                 if (entries.m_name.equals(id) && entries.m_dims.size() != numberOfDims) {
-                    outSemanticErrors.append("wrong number of dimensions used: "+ location + "\n");
+                    ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Wrong number of dimensions used.", location));
                 }
             }
         }

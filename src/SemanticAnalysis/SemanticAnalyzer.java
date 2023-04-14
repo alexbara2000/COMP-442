@@ -5,29 +5,26 @@ import SemanticAnalysis.Visitor.MemorySizeVisitor;
 import SemanticAnalysis.Visitor.SymbolTableCreatorVisitor;
 import SemanticAnalysis.Visitor.TypeCheckingVisitor;
 import SyntaticAnalysis.Parser;
+import SyntaticAnalysis.ParserDriver;
 
 public class SemanticAnalyzer {
 
     String symbolTable = "";
-    String semanticErrors = "";
-    public Node headNode = null;
     public SemanticAnalyzer(String fileToParse) throws Exception {
-        Parser parser = new Parser(fileToParse);
-        headNode = parser.parse();
-        if(headNode == null)
+        ParserDriver.main(new String[]{fileToParse});
+        SemanticDriver.headNode = ParserDriver.headNode;
+        if(ParserDriver.headNode == null)
             return;
 
         SymbolTableCreatorVisitor tableCreatorVisitor = new SymbolTableCreatorVisitor();
-        headNode.accept(tableCreatorVisitor);
+        ParserDriver.headNode.accept(tableCreatorVisitor);
 
-        TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor(tableCreatorVisitor.outSemanticErrors);
-        headNode.accept(typeCheckingVisitor);
+        TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor();
+        ParserDriver.headNode.accept(typeCheckingVisitor);
 
         MemorySizeVisitor memorySizeVisitor = new MemorySizeVisitor();
-        headNode.accept(memorySizeVisitor);
+        ParserDriver.headNode.accept(memorySizeVisitor);
 
         symbolTable = memorySizeVisitor.outSymbolTables;
-        semanticErrors = typeCheckingVisitor.outSemanticErrors.toString();
-
     }
 }

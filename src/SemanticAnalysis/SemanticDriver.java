@@ -1,5 +1,6 @@
 package SemanticAnalysis;
 
+import Common.Errors.ErrorLogger;
 import Common.Nodes.Node;
 import Common.Token.Token;
 import Common.Token.TokenType;
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SemanticDriver {
+
+    public static Node headNode = null;
     public static void main(String[] args) throws Exception {
         List<String> files = Stream.of(Objects.requireNonNull(new File("Files/Source").listFiles()))
                 .filter(file -> !file.isDirectory())
@@ -35,7 +38,7 @@ public class SemanticDriver {
             outSymbolTablesWriter.close();
 
             FileWriter outSemanticErrorsWriter = new FileWriter("Files/SemanticErrors/"+ fileName +".outsemanticerrors");
-            outSemanticErrorsWriter.write(sa.semanticErrors);
+            outSemanticErrorsWriter.write(ErrorLogger.getInstance().getSemanticErrors());
             outSemanticErrorsWriter.close();
 
         }

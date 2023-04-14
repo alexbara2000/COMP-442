@@ -43,7 +43,7 @@ public class Token {
     }
 
     public String getErrorMessage() {
-        StringBuilder errorMessage = new StringBuilder("Lexical error: Invalid ");
+        StringBuilder errorMessage = new StringBuilder("Invalid ");
         if(type == TokenType.INVALIDID){
             errorMessage.append("identifier");
         }
@@ -56,7 +56,7 @@ public class Token {
         else if(type == TokenType.INVALIDNUM){
             errorMessage.append("number");
         }
-        errorMessage.append(": \""+lexeme+"\": line "+location+".");
+        errorMessage.append(": \"").append(lexeme).append("\".");
         return errorMessage.toString();
     }
 }
