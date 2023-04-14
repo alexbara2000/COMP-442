@@ -34,11 +34,6 @@ public class Parser {
 
 
     public Parser(String path) throws Exception {
-
-//        String pathPrefix = path.split("\\.")[0];
-//        outDerivationWriter = new FileWriter(pathPrefix+".outderivation");
-//        outASTWriter = new FileWriter(pathPrefix+".outast");
-//        outSyntaxErrorsWriter = new FileWriter(pathPrefix+".outsyntaxerrors");
         populateFirstAndFollowSet();
         
         this.input= new LexicalAnalyzer(path);

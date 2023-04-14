@@ -1,9 +1,9 @@
 package Common.Nodes;
 
 import Common.Token.Token;
-import SemanticAnalysis.Table.SymbolTable;
-import SemanticAnalysis.Table.SymbolTableEntry;
-import SemanticAnalysis.Visitor.Visitor;
+import Common.Table.SymbolTable;
+import Common.Table.SymbolTableEntry;
+import Common.Visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.Collections;

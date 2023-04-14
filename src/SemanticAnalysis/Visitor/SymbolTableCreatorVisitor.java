@@ -3,24 +3,18 @@ package SemanticAnalysis.Visitor;
 import Common.Token.Token;
 import Common.Token.TokenType;
 import Common.Nodes.*;
-import SemanticAnalysis.Table.*;
+import Common.Table.*;
+import Common.Visitor.Visitor;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SymbolTableCreatorVisitor implements Visitor{
-    FileWriter outSemanticErrorsWriter;
-    FileWriter outSymbolTablesWriter;
+public class SymbolTableCreatorVisitor implements Visitor {
+    public StringBuilder outSemanticErrors = new StringBuilder();
     Node headNode = null;
-
     String currentClass = "";
 
-    public SymbolTableCreatorVisitor(String path) throws IOException {
-        String pathPrefix = path.split("\\.")[0];
-        outSemanticErrorsWriter = new FileWriter(pathPrefix+".outsemanticerrors");
-        outSymbolTablesWriter = new FileWriter(pathPrefix+".outsymboltables");
-    }
 
     @Override
     public void visit(ArgumentParamsNode node) {
@@ -57,11 +51,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
         SymbolTable localtable = new SymbolTable(1,classname, node.getTable());
         ClassEntry tempClassEntry = new ClassEntry(classname, localtable);
         if(node.getTable().lookupLocalEntry(tempClassEntry)){
-            try {
-                outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared classes at line: " +location+"\n");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            outSemanticErrors.append("SEMANTIC ERRORS: multiply declared classes at line: ").append(location).append("\n");
         }
         node.setEntry(tempClassEntry);
         node.getTable().addEntry(node.getEntry());
@@ -128,7 +118,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
                 location = ((Token)fundHead.getChildren().get(0).getConcept()).getLocation();
             }
         }
-        catch (Exception e){
+        catch (Exception ignored){
         }
         if(!isMemberFunction && !isConstructor){
             location = ((Token)fundHead.getChildren().get(0).getConcept()).getLocation();
@@ -181,18 +171,10 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
         if(node.getTable().lookupLocalEntry(newFuncEntry)){
             if(headNode.getTable().hasSameParams(newFuncEntry)){
-                try {
-                    outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiple declared functions at line: " +location +"\n");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                outSemanticErrors.append("SEMANTIC ERRORS: multiple declared functions at line: ").append(location).append("\n");
             }
             else {
-                try {
-                    outSemanticErrorsWriter.write("SEMANTIC WARNING: two functions with the same name but with different parameter lists: " +location + "\n");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                outSemanticErrors.append("SEMANTIC WARNING: two functions with the same name but with different parameter lists: ").append(location).append("\n");
             }
 
         }
@@ -249,7 +231,8 @@ public class SymbolTableCreatorVisitor implements Visitor{
             child.accept(this);
         }
         var name = ((Token)node.getChildren().get(0).getConcept()).getLexeme();
-        node.setEntry(node.getTable().lookupName(name));
+        if(node.getTable() != null)
+            node.setEntry(node.getTable().lookupName(name));
     }
 
     @Override
@@ -291,11 +274,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
             for(var id: idNames){
                 var iList = headNode.getTable().getInheritanceList(id);
                 if(iList != null && iList.size() != 0 && iList.contains(tableName)){
-                    try {
-                        outSemanticErrorsWriter.write("SEMANTIC ERRORS: circular dependency: " +((Token) node.getChildren().get(0).getConcept()).getLocation() + "\n");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    outSemanticErrors.append("SEMANTIC ERRORS: circular dependency: ").append(((Token) node.getChildren().get(0).getConcept()).getLocation()).append("\n");
                 }
             }
         }
@@ -339,11 +318,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
         }
         VarEntry tempVarEntry = new VarEntry("local", vartype, varid, dimlist);
         if(node.getTable().lookupLocalEntryName(tempVarEntry)){
-            try {
-                outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared local variables at line: " +location + "\n");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            outSemanticErrors.append("SEMANTIC ERRORS: multiply declared local variables at line: ").append(location).append("\n");
         }
         else {
             node.setEntry(tempVarEntry);
@@ -423,11 +398,7 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
             SymbolTable localtable = headNode.getTable().getTableEntry(newFuncEntry);
             if(localtable == null){
-                try {
-                    outSemanticErrorsWriter.write("SEMANTIC ERROR: Use of undefined member function  " +((Token)node.getChildren().get(0).getConcept()).getLocation() + "\n");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                outSemanticErrors.append("SEMANTIC ERROR: Use of undefined member function  ").append(((Token) node.getChildren().get(0).getConcept()).getLocation()).append("\n");
             }
             else{
                 localtable.m_tablelevel = 2;
@@ -461,18 +432,10 @@ public class SymbolTableCreatorVisitor implements Visitor{
 
             DataEntry tempDataEntry = new DataEntry(dkind, dtype, dname, dims, visibility);
             if(headNode.getTable().isDataMember(dname)){
-                try {
-                    outSemanticErrorsWriter.write("SEMANTIC Warning: Shadow inheritance of data members: " +location + "\n");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                outSemanticErrors.append("SEMANTIC Warning: Shadow inheritance of data members: " +location + "\n");
             }
             if(node.getTable().lookupInheritedEntry(tempDataEntry)){
-                try {
-                    outSemanticErrorsWriter.write("SEMANTIC ERRORS: multiply declared data member at line: " +location + "\n");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                outSemanticErrors.append("SEMANTIC ERRORS: multiply declared data member at line: " +location + "\n");
             }
             else {
                 node.setEntry(tempDataEntry);
@@ -589,14 +552,6 @@ public class SymbolTableCreatorVisitor implements Visitor{
             child.accept(this);
         }
         System.out.println(node.getTable());
-        try {
-            outSymbolTablesWriter.write(node.getTable().toString());
-            outSymbolTablesWriter.close();
-            outSemanticErrorsWriter.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override

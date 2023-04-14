@@ -3,20 +3,19 @@ package SemanticAnalysis.Visitor;
 import Common.Token.Token;
 import Common.Token.TokenType;
 import Common.Nodes.*;
-import SemanticAnalysis.Table.LitValEntry;
-import SemanticAnalysis.Table.SymbolTable;
+import Common.Table.LitValEntry;
+import Common.Table.SymbolTable;
+import Common.Visitor.Visitor;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class MemorySizeVisitor implements Visitor{
+public class MemorySizeVisitor implements Visitor {
+    public String outSymbolTables = "";
     Node headNode = null;
     int offset = 0;
-    FileWriter outMoonCode;
     int currStatBlock =1;
-    public MemorySizeVisitor(String path) throws IOException {
-        String pathPrefix = path.split("\\.")[0];
-        outMoonCode = new FileWriter(pathPrefix+".m");
+    public MemorySizeVisitor() throws IOException {
     }
     @Override
     public void visit(ArgumentParamsNode node) {
@@ -148,33 +147,35 @@ public class MemorySizeVisitor implements Visitor{
             child.accept(this);
         }
         var entry = node.getEntry();
-        var dimsList = entry.m_dims;
-        var type = entry.m_type;
-        var name = entry.m_name;
-        System.out.println(type);
-        System.out.println(dimsList);
-        int size = 0;
-        if(type.equals("integer")){
-            size=4;
-            int totalarray = 1;
-            if(dimsList != null && dimsList.size() != 0){
-                for(var dim: dimsList){
-                    totalarray*=dim;
+        if(entry != null){
+            var dimsList = entry.m_dims;
+            var type = entry.m_type;
+            var name = entry.m_name;
+            int size = 0;
+            if(type.equals("integer")){
+                size=4;
+                int totalarray = 1;
+                if(dimsList != null && dimsList.size() != 0){
+                    for(var dim: dimsList){
+                        if(dim != null)
+                            totalarray*=dim;
+                    }
                 }
+                size = totalarray*size;
+                node.getEntry().m_size = size;
             }
-            size = totalarray*size;
-            node.getEntry().m_size = size;
-        }
-        else{
-            size=8;
-            int totalarray = 1;
-            if(dimsList != null && dimsList.size() != 0){
-                for(var dim: dimsList){
-                    totalarray*=dim;
+            else{
+                size=8;
+                int totalarray = 1;
+                if(dimsList != null && dimsList.size() != 0){
+                    for(var dim: dimsList){
+                        if(dim != null)
+                            totalarray*=dim;
+                    }
                 }
+                size = totalarray*size;
+                node.getEntry().m_size = size;
             }
-            size = totalarray*size;
-            node.getEntry().m_size = size;
         }
     }
 
@@ -213,47 +214,50 @@ public class MemorySizeVisitor implements Visitor{
     @Override
     public void visit(LocalVariableNode node) {
         var entry = node.getEntry();
-        var dimsList = entry.m_dims;
-        var type = entry.m_type;
-        var name = entry.m_name;
-        int size = 0;
-        if(type.equals("integer")){
-            size=4;
-            int totalarray = 1;
-            if(dimsList != null && dimsList.size() != 0){
-                for(var dim: dimsList){
-                    totalarray*=dim;
+        if(entry != null){
+            var dimsList = entry.m_dims;
+            var type = entry.m_type;
+            var name = entry.m_name;
+            int size = 0;
+            if(type.equals("integer")){
+                size=4;
+                int totalarray = 1;
+                if(dimsList != null && dimsList.size() != 0){
+                    for(var dim: dimsList){
+                        if(dim != null)
+                            totalarray*=dim;
+                    }
                 }
+                size = totalarray*size;
+                node.getEntry().m_size = size;
             }
-            size = totalarray*size;
-            node.getEntry().m_size = size;
-        }
-        else if(type.equals("float")){
-            size=8;
-            int totalarray = 1;
-            if(dimsList != null && dimsList.size() != 0){
-                for(var dim: dimsList){
-                    totalarray*=dim;
+            else if(type.equals("float")){
+                size=8;
+                int totalarray = 1;
+                if(dimsList != null && dimsList.size() != 0){
+                    for(var dim: dimsList){
+                        totalarray*=dim;
+                    }
                 }
+                size = totalarray*size;
+                node.getEntry().m_size = size;
             }
-            size = totalarray*size;
-            node.getEntry().m_size = size;
-        }
-        else{
-            for(var mainEntry: headNode.getTable().m_symlist){
-                if(mainEntry.m_name.equals(type)){
-                    size = mainEntry.m_size;
+            else{
+                for(var mainEntry: headNode.getTable().m_symlist){
+                    if(mainEntry.m_name.equals(type)){
+                        size = mainEntry.m_size;
+                    }
                 }
-            }
-            int totalarray = 1;
-            if(dimsList != null && dimsList.size() != 0){
-                for(var dim: dimsList){
-                    totalarray*=dim;
+                int totalarray = 1;
+                if(dimsList != null && dimsList.size() != 0){
+                    for(var dim: dimsList){
+                        totalarray*=dim;
+                    }
                 }
-            }
-            size = totalarray*size;
-            node.getEntry().m_size = size;
+                size = totalarray*size;
+                node.getEntry().m_size = size;
 
+            }
         }
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -264,35 +268,37 @@ public class MemorySizeVisitor implements Visitor{
     @Override
     public void visit(MemberDeclarationNode node) {
         var entry = node.getEntry();
-        var dimsList = entry.m_dims;
-        var type = entry.m_type;
-        var name = entry.m_name;
-        int size = 0;
-        if(type.equals("integer")){
-            size=4;
-            int totalarray = 1;
-            if(dimsList != null && dimsList.size() != 0){
-                for(var dim: dimsList){
-                    totalarray*=dim;
+        if(entry != null){
+            var dimsList = entry.m_dims;
+            var type = entry.m_type;
+            var name = entry.m_name;
+            int size = 0;
+            if(type.equals("integer")){
+                size=4;
+                int totalarray = 1;
+                if(dimsList != null && dimsList.size() != 0){
+                    for(var dim: dimsList){
+                        totalarray*=dim;
+                    }
                 }
-            }
-            size = totalarray*size;
-            node.getEntry().m_size = size;
+                size = totalarray*size;
+                node.getEntry().m_size = size;
 
-        }
-        else{
-            size=8;
-            int totalarray = 1;
-            if(dimsList != null && dimsList.size() != 0){
-                for(var dim: dimsList){
-                    totalarray*=dim;
-                }
             }
-            size = totalarray*size;
-            node.getEntry().m_size = size;
+            else{
+                size=8;
+                int totalarray = 1;
+                if(dimsList != null && dimsList.size() != 0){
+                    for(var dim: dimsList){
+                        totalarray*=dim;
+                    }
+                }
+                size = totalarray*size;
+                node.getEntry().m_size = size;
+            }
+            node.getEntry().m_offset = offset;
+            offset += size;
         }
-        node.getEntry().m_offset = offset;
-        offset += size;
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
@@ -389,12 +395,7 @@ public class MemorySizeVisitor implements Visitor{
             child.accept(this);
         }
         populateSize(node.getTable());
-        System.out.println(node.getTable());
-        try {
-            outMoonCode.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        outSymbolTables = node.getTable().toString();
     }
 
     private void populateSize(SymbolTable table) {

@@ -3,14 +3,15 @@ package SemanticAnalysis.Visitor;
 import Common.Token.Token;
 import Common.Token.TokenType;
 import Common.Nodes.*;
-import SemanticAnalysis.Table.FuncEntry;
+import Common.Table.FuncEntry;
+import Common.Visitor.Visitor;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TypeCheckingVisitor implements Visitor{
-    FileWriter outSemanticErrorsWriter;
+public class TypeCheckingVisitor implements Visitor {
+    public StringBuilder outSemanticErrors;
     Node headNode = null;
 
     String currentType = "";
@@ -19,9 +20,9 @@ public class TypeCheckingVisitor implements Visitor{
     Token previousToken = null;
     int numberOfDims = 0;
 
-    public TypeCheckingVisitor(String path) throws IOException {
-        String pathPrefix = path.split("\\.")[0];
-        outSemanticErrorsWriter = new FileWriter(pathPrefix+".outsemanticerrors", true);
+    public TypeCheckingVisitor(StringBuilder currentErrors) throws IOException {
+        outSemanticErrors = new StringBuilder(currentErrors);
+        outSemanticErrors.append("\n");
     }
 
 
@@ -159,11 +160,7 @@ public class TypeCheckingVisitor implements Visitor{
         String type = ((Token)node.getChildren().get(2).getConcept()).getLexeme();
         int location = ((Token)node.getChildren().get(2).getConcept()).getLocation();
         if(id.equals(type)){
-            try {
-                outSemanticErrorsWriter.write("Cannot assign a variable to itself: "+ location + "\n");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            outSemanticErrors.append("Cannot assign a variable to itself: ").append(location).append("\n");
         }
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
@@ -201,20 +198,12 @@ public class TypeCheckingVisitor implements Visitor{
         if(currToken.getType() == TokenType.ID){
             boolean doesIdExist = headNode.getTable().idExists(currToken.getLexeme());
             if(!doesIdExist){
-                try {
-                    outSemanticErrorsWriter.write("Variable "+currToken.getLexeme()+" has not been declared: "+ currToken.getLocation() + "\n");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                    outSemanticErrors.append("Variable ").append(currToken.getLexeme()).append(" has not been declared: ").append(currToken.getLocation()).append("\n");
             }
             if(currentType.length() != 0){
                 String localType = node.getTable().lookupName(currToken.getLexeme()).m_type;
                 if(localType != null && !localType.equals(currentType)){
-                    try {
-                        outSemanticErrorsWriter.write("the type of the left and right hand side of the assignment operator must be the same at location: "+ currToken.getLocation() + "\n");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                        outSemanticErrors.append("the type of the left and right hand side of the assignment operator must be the same at location: ").append(currToken.getLocation()).append("\n");
                 }
             }
             else{
@@ -232,13 +221,13 @@ public class TypeCheckingVisitor implements Visitor{
                                         validNumbOfArgs = true;
                                 }
                                 if(!validNumbOfArgs){
-                                    outSemanticErrorsWriter.write("Invalid number of params: "+ currToken.getLocation() + "\n");
+                                    outSemanticErrors.append("Invalid number of params: ").append(currToken.getLocation()).append("\n");
                                 }
                             }
                         }
                     }
                 }
-                catch(Exception e){
+                catch(Exception ignored){
 
                 }
             }
@@ -247,25 +236,17 @@ public class TypeCheckingVisitor implements Visitor{
 
         if(currToken.getType() == TokenType.DOT){
             if(previousId == null){
-                try {
-                    outSemanticErrorsWriter.write("undeclared member function"+ currToken.getLocation() + "\n");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                    outSemanticErrors.append("undeclared member function").append(currToken.getLocation()).append("\n");
             }
             try{
                 String callerKind = node.getTable().lookupName(previousId.getLexeme()).m_kind;
                 String callertType = node.getTable().lookupName(previousId.getLexeme()).m_type;
                 if(!(callerKind.equals("data") || (!callertType.equals("integer") && !callertType.equals("float")))){
-                    outSemanticErrorsWriter.write("Cannot call a function without a member of the class: "+ currToken.getLocation() + "\n");
+                    outSemanticErrors.append("Cannot call a function without a member of the class: ").append(currToken.getLocation()).append("\n");
                 }
             }
             catch (Exception e){
-                try {
-                    outSemanticErrorsWriter.write("undeclared member function "+ currToken.getLocation() + "\n");
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                outSemanticErrors.append("undeclared member function ").append(currToken.getLocation()).append("\n");
             }
         }
 
@@ -273,12 +254,8 @@ public class TypeCheckingVisitor implements Visitor{
             previousId = currToken;
         }
         if(currToken.getType() == TokenType.SELF )
-                if( previousToken != null && previousToken.getType() == TokenType.DOT){
-            try {
-                outSemanticErrorsWriter.write("Wrong use of the self operator"+ currToken.getLocation() + "\n");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            if( previousToken != null && previousToken.getType() == TokenType.DOT){
+                outSemanticErrors.append("Wrong use of the self operator").append(currToken.getLocation()).append("\n");
         }
         previousToken = currToken;
 
@@ -346,11 +323,7 @@ public class TypeCheckingVisitor implements Visitor{
         }
         if(tableName.equals("Constructor")){
             if(previousToken.getType() == TokenType.INTNUM || previousToken.getType() == TokenType.FLOATNUM){
-                try {
-                    outSemanticErrorsWriter.write("wrong return type "+ previousToken.getLocation() + "\n");
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                outSemanticErrors.append("wrong return type ").append(previousToken.getLocation()).append("\n");
             }
         }
     }
@@ -361,12 +334,6 @@ public class TypeCheckingVisitor implements Visitor{
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
-        }
-
-        try {
-            outSemanticErrorsWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -389,22 +356,14 @@ public class TypeCheckingVisitor implements Visitor{
             funcsWithName = headNode.getTable().isFuncCallReturnTables(id);
             if(funcsWithName.size() == 0){
                 //function not declared
-                try {
-                    outSemanticErrorsWriter.write("function "+id+" has not been declared: "+ location + "\n");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                outSemanticErrors.append("function ").append(id).append(" has not been declared: ").append(location).append("\n");
             }
 
         }
         else{
             if(isFirstChildId && !node.getTable().lookupNameReturnsBool(id)){
-                try {
-                    if(!headNode.getTable().isDataMember(id)){
-                        outSemanticErrorsWriter.write("Variable "+id+" has not been declared: "+ location + "\n");
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                if(!headNode.getTable().isDataMember(id)){
+                    outSemanticErrors.append("Variable ").append(id).append(" has not been declared: ").append(location).append("\n");
                 }
             }
 
@@ -424,11 +383,7 @@ public class TypeCheckingVisitor implements Visitor{
         if(numberOfDims!=0){
             for(var entries: node.getTable().m_symlist) {
                 if (entries.m_name.equals(id) && entries.m_dims.size() != numberOfDims) {
-                    try {
-                        outSemanticErrorsWriter.write("wrong number of dimensions used: "+ location + "\n");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    outSemanticErrors.append("wrong number of dimensions used: "+ location + "\n");
                 }
             }
         }

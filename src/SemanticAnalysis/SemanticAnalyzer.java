@@ -1,29 +1,33 @@
 package SemanticAnalysis;
 
 import Common.Nodes.Node;
-import SemanticAnalysis.Visitor.CodeGenVisitor;
 import SemanticAnalysis.Visitor.MemorySizeVisitor;
 import SemanticAnalysis.Visitor.SymbolTableCreatorVisitor;
 import SemanticAnalysis.Visitor.TypeCheckingVisitor;
 import SyntaticAnalysis.Parser;
 
 public class SemanticAnalyzer {
-    public static void main(String[] args) throws Exception {
-        String fileToParse = "example-main13.src";
-        Parser parser=new Parser(fileToParse);
-        Node headNode = parser.parse();
-        System.out.println(headNode);
 
-        SymbolTableCreatorVisitor tableCreatorVisitor = new SymbolTableCreatorVisitor(fileToParse);
+    String symbolTable = "";
+    String semanticErrors = "";
+    public Node headNode = null;
+    public SemanticAnalyzer(String fileToParse) throws Exception {
+        Parser parser = new Parser(fileToParse);
+        headNode = parser.parse();
+        if(headNode == null)
+            return;
+
+        SymbolTableCreatorVisitor tableCreatorVisitor = new SymbolTableCreatorVisitor();
         headNode.accept(tableCreatorVisitor);
 
-        TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor(fileToParse);
+        TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor(tableCreatorVisitor.outSemanticErrors);
         headNode.accept(typeCheckingVisitor);
 
-        MemorySizeVisitor memorySizeVisitor = new MemorySizeVisitor(fileToParse);
+        MemorySizeVisitor memorySizeVisitor = new MemorySizeVisitor();
         headNode.accept(memorySizeVisitor);
 
-        CodeGenVisitor codeGenVisitor = new CodeGenVisitor(fileToParse);
-        headNode.accept(codeGenVisitor);
+        symbolTable = memorySizeVisitor.outSymbolTables;
+        semanticErrors = typeCheckingVisitor.outSemanticErrors.toString();
+
     }
 }

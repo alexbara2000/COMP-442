@@ -45,7 +45,7 @@
 // 5.3: |     |  X  |
 //      -------------
 
-func main() => void  
+function main() => void
 {
   localvar x: integer;                             // 1.1
   localvar y: integer;                             // 1.1

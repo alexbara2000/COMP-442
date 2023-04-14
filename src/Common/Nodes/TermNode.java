@@ -1,6 +1,6 @@
 package Common.Nodes;
 
-import SemanticAnalysis.Visitor.Visitor;
+import Common.Visitor.Visitor;
 
 import java.util.ArrayList;
 
