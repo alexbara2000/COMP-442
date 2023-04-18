@@ -1,5 +1,5 @@
 class POLYNOMIAL {
-	public function evaluate: (x: float) => float;                          //6.1
+	public function evaluate: (x: float) => float;                          //6.2
 };
 class POLYNOMIAL {
    public function evaluate2: (x: float) => float;                           //6.3
@@ -40,6 +40,6 @@ function main() => void
 
 
 // not done
-// 6.2
+// 6.1
 // 6.7
 // 6.9

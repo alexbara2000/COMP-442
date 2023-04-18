@@ -1,5 +1,8 @@
 package CodeGeneration.Visitor;
 
+import Common.Errors.CompilerError;
+import Common.Errors.ErrorLogger;
+import Common.Errors.ErrorType;
 import Common.Token.Token;
 import Common.Token.TokenType;
 import Common.Nodes.*;
@@ -473,6 +476,12 @@ public class CodeGenVisitor implements Visitor {
         if(node.getChildren().size() == 1){
             node.setMoonVarName(node.getChildren().get(0).getMoonVarName());
         }
+        try{
+            if(((Token)node.getChildren().get(0).getChildren().get(0).getChildren().get(0).getChildren().get(0).getConcept()).getType() == TokenType.FLOATNUM){
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError,"Integer type was not used as the index of the array",((Token)node.getChildren().get(0).getChildren().get(0).getChildren().get(0).getChildren().get(0).getConcept()).getLocation()));
+            }
+        }
+        catch (Exception e){}
     }
 
     @Override
