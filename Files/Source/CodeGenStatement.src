@@ -1,0 +1,66 @@
+class LINEAR{
+  public attribute a: integer;
+  public attribute b: integer;
+  public attribute c: integer[2];
+};
+
+class LINEAR2{
+  public attribute d: LINEAR;
+  public attribute e: LINEAR;
+};
+
+function main() => void
+{
+    // complex expressions
+    localvar x: integer;
+    localvar y: integer;
+    localvar z: integer;
+
+    //read(x); no jump back
+    x = 2;
+    y = 3;
+    z = 5;
+    // result: 23 if x = 2
+    x = x + x * (y + z) + (z + (z - z ) );
+    write(x);
+
+
+    // if statements
+    localvar q: integer;
+    x = 132;
+    y = x / 12;
+    z = 9;
+    q = z;
+    // result 132 then 1 then 9
+    if (z == z) then {
+      write(x);
+      if(2 == 1) then {
+        write(10000);
+      }else {
+        write(1);
+      };
+    } else {
+      write(y);
+    };
+    write(q);
+
+
+    // loops
+    localvar jvalue: integer;
+
+    x = 5;
+    y = 0;
+    jvalue = 0;
+    //double loop with counter increasing and printing of counter. similar to bubble sort
+    while (y < (x-1) ) {
+        while (jvalue < 5) {
+
+            write(jvalue);
+            jvalue = jvalue + 1;
+        };
+        write(1000);
+        write(y);
+        y = y + 1;
+        jvalue = y;
+    };
+}

@@ -1,0 +1,10 @@
+function main2() => void                                                     //6.33
+{
+    localvar x: float;
+    localvar counter: integer;
+    counter.x = 1;                                                           // 6.32
+}
+
+
+// not done
+// 6.31

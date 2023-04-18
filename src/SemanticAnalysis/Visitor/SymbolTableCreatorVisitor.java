@@ -173,7 +173,7 @@ public class SymbolTableCreatorVisitor implements Visitor {
 
         if(node.getTable().lookupLocalEntry(newFuncEntry)){
             if(headNode.getTable().hasSameParams(newFuncEntry)){
-                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Multiple declared functions.", location));
+                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Multiple declared functions "+newFuncEntry.m_name+".", location));
             }
             else {
                 ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticWarning, "Two functions with the same name but different parameters", location));
@@ -553,7 +553,16 @@ public class SymbolTableCreatorVisitor implements Visitor {
             child.setTable(node.getTable());
             child.accept(this);
         }
-        System.out.println(node.getTable());
+        boolean containsMain = false;
+        for(var entry: node.getTable().m_symlist){
+            if(entry.m_name.equals("main")){
+                containsMain = true;
+                break;
+            }
+        }
+        if(!containsMain){
+            ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "no main function found", 0));
+        }
     }
 
     @Override

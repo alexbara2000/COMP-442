@@ -1,0 +1,25 @@
+function func(a: integer, b:integer) => integer
+{
+    localvar y: integer;
+    y = a + b;
+    write(y);
+    return(y);
+}
+function func2(c: integer, d:integer) => integer
+{
+    localvar z: integer;
+    z = c - d;
+    write(z);
+    return(z);
+}
+function main() => void
+{
+    localvar x: integer;
+    x = func(2, 3);
+
+    write(x + func2(2 * 2, 4) + 2);
+}
+
+// Not Done
+// 7.2.5
+// 7.2.6

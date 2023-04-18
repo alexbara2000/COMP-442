@@ -1,0 +1,54 @@
+function POLYNOMIAL::evaluate(x: float) => float
+{
+    localvar result: float;
+    result = 5;
+    return (result);
+}
+function POLYNOMIAL::evaluate(x: float, y: float) => float                  //6.11
+{
+    localvar result: float;
+    result = a;
+    result = notDeclaredMemberVariable;                                     //6.17
+    return (result);
+}
+function POLYNOMIAL::evaluate(x: float, y: float) => float                  //6.12
+{
+    localvar result: float;
+    result = 5;
+    return (result);
+}
+function POLYNOMIAL::constructor(A: float)
+{
+    localvar new_function: POLYNOMIAL;
+    new_function.a = A;
+    return (1);                                                              // 6.15
+}
+class POLYNOMIAL {
+    private attribute a: float;
+	public function evaluate: (x: float) => float;
+};
+
+function TEST::testing(x: float) => float
+{
+    localvar result: float;
+    result = a;
+    result = notDeclaredMemberVariableInherited;                             //6.18
+    return (result);
+}
+class TEST isa POLYNOMIAL {
+	public function testing: (x: float) => float;
+};
+
+function main() => void
+{
+    localvar x: float;
+    localvar counter: integer;
+    x = counter;                                                             // 6.14
+    x = notDeclaredVariable;                                                 // 6.16
+}
+
+
+// not done
+// 6.13
+// 6.19
+// 6.20

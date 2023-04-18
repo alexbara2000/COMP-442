@@ -1,0 +1,25 @@
+class LINEAR{
+  public attribute a: integer;
+  public attribute b: integer;
+  public attribute c: integer[2];
+};
+
+class LINEAR2{
+  public attribute d: LINEAR;
+  public attribute e: LINEAR;
+};
+
+function main() => void
+{
+  localvar x: integer;
+  localvar y: float;
+  localvar z: integer[5];
+  localvar w: LINEAR2;
+  localvar rnewname: LINEAR[3];
+  x = 5 + 6 + 7 - 10;
+  write(x);
+}
+
+
+// not done
+// 7.1.4

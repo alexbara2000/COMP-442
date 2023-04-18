@@ -6,8 +6,22 @@ class LINEAR{
 
 function main() => void
 {
+    localvar z: integer[2][2];
+    z[0][0] = 1;
+    z[0][1] = 2;
+    z[1][0] = 3;
+    z[1][1] = 4;
+
+    write(z[0][0] + z[0][1] + z[1][0] + z[1][1]);
+
+    localvar w: integer[10];
+
+    w[1 + 1 * 2] = 5;
+    write(w[5 - 2]);
+
     localvar x: LINEAR;
     localvar y: LINEAR[5];
+
     x.a = 5;
     x.b = 6;
     x.c = x.a + (x.b * x.b);

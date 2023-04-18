@@ -1,0 +1,45 @@
+class POLYNOMIAL {
+	public function evaluate: (x: float) => float;                          //6.1
+};
+class POLYNOMIAL {
+   public function evaluate2: (x: float) => float;                           //6.3
+   private attribute d: float;
+
+};
+function POLYNOMIAL::evaluate(x: float) => float
+{
+    localvar d: float;
+}
+class First isa POLYNOMIAL {
+    private attribute a: float;
+};
+class Second isa POLYNOMIAL {
+    private attribute a: float;                                             //6.8
+};
+function test() => void {
+
+}
+function test() => void {
+                                                                            //6.4
+}
+function test(x: float) => void {
+                                                                            //6.10
+}
+class MultiData {
+   	private attribute c: float;
+	private attribute c: float;                                             //6.5
+};
+function main() => void
+{
+  localvar counter: integer;
+  localvar counter: integer;                                                //6.6
+
+    localvar x: float;
+}
+
+
+
+// not done
+// 6.2
+// 6.7
+// 6.9

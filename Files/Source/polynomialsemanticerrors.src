@@ -1,39 +1,3 @@
-// ====== Class declarations ====== //
-class POLYNOMIAL {
-	public function evaluate: (x: float) => float;
-	public function evaluate2: (x: float) => float;                       // 6.2
-};
-class POLYNOMIAL {                                                      // 8.1 done
-	public function evaluate: (x: float) => float;
-        public function evaluate: (x: integer, y: float) => integer;                // 9.2
-};
-class LINEAR isa POLYNOMIAL {
-	private attribute a: float;
-	private attribute b: float;
-	private attribute b: integer;                                       // 8.3 done
-	
-	public constructor: (A: float, B: float);
-	public function evaluate: (x: float) => float;                      // 9.3
-};
-
-class QUADRATIC isa POLYNOMIAL {
-	private attribute a: float;                                         // 8.5 done
-	private attribute b: float;                                         // 8.5 done
-	private attribute c: float;
-	
-	public constructor: (A: float, B: float, C: float);
-	public function evaluate: (x: float) => float;                      // 9.3
-};
-
-class C isa E {
-	private attribute d: integer;
-};
-
-class E isa C {                                                         // 14.1 done
-	private attribute f: integer;
-};
-
-
 // ====== member function implementations ====== //
 function POLYNOMIAL::evaluate(x: float) => float
   {
@@ -47,8 +11,8 @@ function LINEAR::constructor(A: float, B: float)
     new_function.b = B;
     return (new_function);
   }
-  
-function LINEAR::evaluate(x: float) => float 
+
+function LINEAR::evaluate(x: float) => float
   {
     localvar result: float;
     result = 0.0;
@@ -66,7 +30,7 @@ function QUADRATIC::evaluate(x: float) => float
 
     return (result);
   }
-  
+
 function QUADRATIC::constructor(B: float, C: float)
   {
     localvar new_function: QUADRATIC ;
@@ -83,8 +47,8 @@ function QUADRATIC::build2(A: float, B: float, C: float) => QUADRATIC
     new_function.c = C;
     return (new_function);
   }
-  
-function f(i: integer) => void {}                                                    
+
+function f(i: integer) => void {}
 function f(i: integer) => void {}                                          // 8.2 done
 function f(i: integer, j: integer) => integer {}                           // 9.1 done
 
@@ -102,6 +66,42 @@ function printArray(arr: integer[], size: integer) => void
   };
 }
 
+// ====== Class declarations ====== //
+class POLYNOMIAL {
+	public function evaluate: (x: float) => float;
+	public function evaluate2: (x: float) => float;                       // 6.2 done
+};
+class POLYNOMIAL {                                                      // 8.1 done
+	public function evaluate: (x: float) => float;
+        public function evaluate: (x: integer, y: float) => integer;                // 9.2 done
+};
+class LINEAR isa POLYNOMIAL {
+	private attribute a: float;
+	private attribute b: float;
+	private attribute b: integer;                                       // 8.3 done
+	
+	public constructor: (A: float, B: float);
+	public function evaluate: (x: float) => float;                      // 9.3 not done
+};
+
+class QUADRATIC isa POLYNOMIAL {
+	private attribute a: float;                                         // 8.5 done
+	private attribute b: float;                                         // 8.5 done
+	private attribute c: float;
+	
+	public constructor: (A: float, B: float, C: float);
+	public function evaluate: (x: float) => float;                      // 9.3 not done
+};
+
+class C isa E {
+	private attribute d: integer;
+};
+
+class E isa C {                                                         // 14.1 done
+	private attribute f: integer;
+};
+
+
 // ====== main ====== //
 function main() => void
 {
@@ -114,17 +114,17 @@ function main() => void
   localvar counter: integer;                                                 // 8.4 done
   localvar i: integer[2][3];
   localvar j: integer[1][2][3];
-  x = counter;                                                             // 10.2
+  x = counter;                                                             // 10.2 done
   f1.build(2, 3.5);
   f2.build(-2.0, 1.0, 0.0);
-  c.b = 1;                                                                 // 11.2
+  c.b = 1;                                                                 // 11.2 not done
   counter = c.f();                                                         // 11.3 done
   undefined();                                                             // 11.4 done
   counter = a;                                                             // 11.1 done
   printArray(1,1,1, 1, 1);                                                 // 12.1 done
-  f(1.2,1);                                                                // 12.2	
+  f(1.2,1);                                                                // 12.2 not done
   i[2] = 1;                                                                // 13.1 done
-  f3(j);                                                                   // 13.3
+  f3(j);                                                                   // 13.3 not done
   counter.x = 1;                                                           // 15.1 done
   while(counter <= 10)
   {
@@ -133,9 +133,12 @@ function main() => void
     write(f2.evaluate(counter));
   };
 }
+function main() => void
+{
+}
 
 /*
-1.   |X| Global symbol table 
+1.   |X| Global symbol table
 2.   |X| Class symbol table
 3.1  |X| Class data member
 3.2  |X| Function's local variable
@@ -150,21 +153,21 @@ function main() => void
 8.5  |X| Shadowed inherited data member
 9.1  |X| Overloaded free function
 9.2  |X| Overloaded member function
-9.3  |X| Overridden inherited member function
-10.1 |X| Type error in expression
+9.3  |X| Overridden inherited member function -----------not done
+10.1 |X| Type error in expression -------------------- not done
 10.2 |X| Type error in assignment statement 
 10.3 |X| Type error in return statement
 11.1 |X| Undeclared local variable
-11.2 |X| Undeclared data member
+11.2 |X| Undeclared data member --------------not done
 11.3 |X| Undeclared member function
 11.4 |X| Undeclared free function
 11.5 |X| Undeclared class
 12.1 |X| function call with wrong number of parameters
-12.2 |X| function call with wrong type of parameters
+12.2 |X| function call with wrong type of parameters ------------- not done
 13.1 |X| Use of array with wrong number of dimensions
 13.2 |X| Array index is not an integer
-13.3 |X| Array parameter using wrong number of dimensions
+13.3 |X| Array parameter using wrong number of dimensions -------- not done
 14.1 |X| Circular class dependency
 15.1 |X| "." operator used on non-class type
-15.2 |X| incorrect use of "self" 
+15.2 |X| incorrect use of "self"  ---------- not done
 */

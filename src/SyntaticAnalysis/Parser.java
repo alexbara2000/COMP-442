@@ -11,19 +11,17 @@ import Common.Nodes.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 public class Parser {
     //input
     public LexicalAnalyzer input;
-    private String production = "";
-    private ArrayList<String> derivations = new ArrayList<>();
-    private Map<String, ArrayList<TokenType>> followSet = new HashMap<>();
-    private Map<String, ArrayList<TokenType>> firstSet = new HashMap<>();
-    private ArrayList<String> nullable = new ArrayList<>();
-    private ArrayList<String> endable = new ArrayList<>();
+    private final ArrayList<String> derivations = new ArrayList<>();
+    private final Map<String, ArrayList<TokenType>> followSet = new HashMap<>();
+    private final Map<String, ArrayList<TokenType>> firstSet = new HashMap<>();
+    private final ArrayList<String> nullable = new ArrayList<>();
+    private final ArrayList<String> endable = new ArrayList<>();
 
     //Stack
     Stack<String> stack= new Stack<>();
@@ -47,6 +45,7 @@ public class Parser {
         String csvSplitBy = ",";
         data = new HashMap<>();
 
+        //populating gramar table
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             int row = 0;
             while ((line = br.readLine()) != null) {
@@ -71,8 +70,9 @@ public class Parser {
         String firstSetFile = "src/Common/Grammar/firstfollowSet.csv";
         String line = "";
 
+        //populating the first and follow set
         try (BufferedReader br = new BufferedReader(new FileReader(firstSetFile))) {
-            line = br.readLine();
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] initialSplit = line.split(",");
                 String key = initialSplit[0];
@@ -144,6 +144,8 @@ public class Parser {
     }
 
     private void AddTerminals(String value) {
+
+        //some terminals are not the same name, we need to map them to the correct tokens
         try {
             value = value.toUpperCase();
             switch (value) {
@@ -171,6 +173,8 @@ public class Parser {
 
     //algorithm
     public Node parse() throws IOException {
+
+        //pushing start on the stack
         stack.push("$");//
         stack.push("START");
         derivations.add("START");
@@ -182,16 +186,18 @@ public class Parser {
 
         while(!stack.peek().equals("$") && !stack.peek().equals("eof")) {
             try {
-                while (token.getType() == TokenType.BLOCKCMT || token.getType() == TokenType.INLINECMT) {
+                //skip the comments
+                while ((token != null && token.getType() == TokenType.BLOCKCMT) || (token != null && token.getType() == TokenType.INLINECMT)) {
                     previousToken = token;
                     token = input.getNextToken();
                 }
             } catch (Exception e) {
 
             }
+            //this is only to create the derivation
             if (token == null && nullable.contains(stack.peek()) && !stack.peek().startsWith("SA")) {
                 derivations.remove(stack.peek());
-                outDerivation.append(String.join(" ", derivations) + "\n");
+                outDerivation.append(String.join(" ", derivations)).append("\n");
 
                 if (endable.contains(stack.peek())) {
                     break;
@@ -202,6 +208,7 @@ public class Parser {
 
             top = stack.peek();
 
+            //makes the ast
             if (top.startsWith("SA")) {
                 String semanticAction = stack.pop();
                 switch (top){
@@ -246,30 +253,37 @@ public class Parser {
                 }
             }
             else {
-                outDerivation.append(String.join(" ", derivations) + "\n");
+                outDerivation.append(String.join(" ", derivations)).append("\n");
+                //instead of using proper null checks I surrounded stuff with try catches....very poor on my part
                 try {
                     if (terminals.contains(getActualTop(top)) && getActualTop(top) == token.getType()) {
+                        //if it is the terminal we expect
                         stack.pop();
                         previousToken = token;
                         token = input.getNextToken();
                     } else {
+                        //otherwise its an error
                         previousToken = token;
                         token = skipError(token);
                         isValid = false;
                     }
                 } catch (Exception e) {
+                    //it would fail if terminals does not contain the top
                     try {
                         if (data.get(nonTerminals.indexOf(top) + "," + terminals.indexOf(token.getType())) != null) {
+                            //checks to see if it is a non terminal
                             String popedString = stack.pop();
                             int index = derivations.indexOf(popedString);
                             derivations.remove(popedString);
                             inverseRHSMMultiPush(data.get(nonTerminals.indexOf(top) + "," + terminals.indexOf(token.getType())), index);
                         } else {
+                            //otherwise it is an error
                             previousToken = token;
                             token = skipError(token);
                             isValid = false;
                         }
                     } catch (Exception b) {
+                        //this should never be hit except if we have SA.
                         top = stack.pop();
                     }
                 }
@@ -294,16 +308,20 @@ public class Parser {
     }
 
     private Token skipError(Token token) throws IOException {
+        //we log the token that made the error
         ErrorLogger.getInstance().add(new CompilerError(ErrorType.SyntaxError, "[Token Type: "+token.getType()+", Lexeme: "+token.getLexeme()+"].", token.getLocation() ));
         String top = stack.peek();
         Stack<String> tempStack = (Stack<String>)stack.clone();
         if(!followSet.containsKey(tempStack.peek())){
             return input.getNextToken();
         }
+        //this is to skip some nullable stack....not sure why I did it, but I know it did not work without
         while(!followSet.containsKey(tempStack.peek())){
             tempStack.pop();
         }
         top = tempStack.peek();
+
+        //this is the traditional skip errors
         if(token == null || followSet.get(top).contains(token.getType())){
             stack = tempStack;
             stack.pop();
@@ -385,6 +403,7 @@ public class Parser {
                 stack.push(productions[i]);
             }
         }
+        //this is for the derivations
         for (int i = 2; i< productions.length; i++){
             if(productions[i].equals("&epsilon")){
             }
@@ -395,6 +414,8 @@ public class Parser {
     }
 
     private Node makeFamily(Node parent){
+        //no matter what we will always make a family, to me this is easier and faster to implement
+        //we always push epsilon before we push and semantic actions
         ArrayList<Node> childrens = new ArrayList<>();
         while(astStack.peek() != null){
             childrens.add(astStack.pop());

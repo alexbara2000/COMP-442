@@ -112,6 +112,7 @@ public class CodeGenVisitor implements Visitor {
         for (Node child : node.getChildren() ) {
             //make all children use this scopes' symbol table
             child.accept(this);
+
         }
     }
 

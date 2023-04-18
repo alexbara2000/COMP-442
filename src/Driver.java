@@ -33,15 +33,13 @@ public class Driver {
             if (file.isDirectory() && !file.getName().equals("Source")) {
                 deleteDirectory(file);
             } else {
-                file.delete();
+                if(!(file.getName().equals("a.out") || file.getName().equals("lib.m")))
+                    file.delete();
             }
         }
     }
     public static void CreateFiles(String fileName) throws Exception {
         ErrorLogger.getInstance().deleteAll();
-//        LexDriver.main(new String[]{fileName});
-//        ParserDriver.main(new String[]{fileName});
-//        SemanticDriver.main(new String[]{fileName});
         CodeGenerationDriver.main(new String[]{fileName});
 
         FileWriter outErrorWriter = new FileWriter("Files/Errors/"+ fileName +".outerrors");

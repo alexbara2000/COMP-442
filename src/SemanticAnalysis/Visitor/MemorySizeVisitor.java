@@ -285,7 +285,7 @@ public class MemorySizeVisitor implements Visitor {
                 node.getEntry().m_size = size;
 
             }
-            else{
+            else if(type.equals("float")){
                 size=8;
                 int totalarray = 1;
                 if(dimsList != null && dimsList.size() != 0){
@@ -295,6 +295,27 @@ public class MemorySizeVisitor implements Visitor {
                 }
                 size = totalarray*size;
                 node.getEntry().m_size = size;
+            }
+            else{
+                try {
+                    for(var classEntry: headNode.getTable().m_symlist){
+                        if(classEntry.m_name.equals(type)){
+                            size = classEntry.m_size;
+                            int totalarray = 1;
+                            if(dimsList != null && dimsList.size() != 0){
+                                for(var dim: dimsList){
+                                    totalarray*=dim;
+                                }
+                            }
+                            size = totalarray*size;
+                            node.getEntry().m_size = size;
+                            break;
+                        }
+                    }
+                }
+                catch (Exception e){
+
+                }
             }
             node.getEntry().m_offset = offset;
             offset += size;

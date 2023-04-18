@@ -1,0 +1,8 @@
+function main() => void
+{
+}
+function main() => void                                                     //6.34
+{
+}
+
+// not done
