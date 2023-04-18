@@ -1,0 +1,63 @@
+class LINEAR{
+  public attribute a: integer;
+  public attribute b: integer;
+  public attribute c: integer;
+};
+class TEST{
+  public attribute d: integer[2];
+};
+
+function main() => void
+{
+    localvar z: integer;
+    localvar arr: integer[7];
+    arr[0] = 64;
+    arr[1] = 34;
+    arr[2] = 25;
+    arr[3] = 12;
+    arr[4] = 22;
+    arr[5] = 11;
+    arr[6] = 90;
+    //1290
+    z = arr[2 - 2] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6];
+    write(z * 5);
+
+    localvar w: integer[10];
+
+    //5
+    w[1 + 1 * 2] = 5;
+    write(w[5 - 2]);
+
+    localvar x: LINEAR;
+    localvar y: LINEAR[5];
+
+    x.a = 5;
+    x.b = 6;
+    x.c = x.a + (x.b * x.b);
+    //41
+    write(x.c);
+
+    y[0].c = 2;
+    y[1].b = 3;
+    y[2].a = y[0].c + y[1].b;
+    y[3].c = y[2].a * y[2].a;
+    y[3].a = y[3].c;
+    y[3].b = y[3].a;
+
+    //2, 5, 25
+    write(y[0].c);
+    write(y[2].a);
+    write(y[3].b);
+
+    localvar e: TEST;
+    e.d[0] = 4 - 1;
+    e.d[1] = 3;
+    write(e.d[0] * e.d[1]);
+
+}
+
+// Not Done
+// 7.4.5
+// 7.4.6
+//expressions have been done throughout. the only one not done
+// 7.5.3

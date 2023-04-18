@@ -69,6 +69,14 @@ public class ErrorLogger {
         return lexErrors.toString();
     }
 
+    public boolean isAccepted(){
+        for(var error: errors){
+            if(error.getErrorType() != ErrorType.SemanticWarning)
+                return false;
+        }
+        return true;
+    }
+
 
     public static void main(String[] args){
         ErrorLogger el = ErrorLogger.getInstance();

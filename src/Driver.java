@@ -45,5 +45,10 @@ public class Driver {
         FileWriter outErrorWriter = new FileWriter("Files/Errors/"+ fileName +".outerrors");
         outErrorWriter.write(ErrorLogger.getInstance().getErrors());
         outErrorWriter.close();
+        if(ErrorLogger.getInstance().isAccepted())
+            System.out.println(fileName+" is a valid program");
+        else
+            System.out.println(fileName+" is not a valid program");
+        System.out.println(ErrorLogger.getInstance().getErrors());
     }
 }

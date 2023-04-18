@@ -289,14 +289,6 @@ public class Parser {
                 }
             }
         }
-        if(isValid){
-            System.out.println("Input is accepted by the grammar");
-        }
-        else {
-            System.out.println("Input is not accepted by the grammar");
-        }
-
-
 
         try{
             outAST.append(astStack.peek().toString());

@@ -345,29 +345,31 @@ public class TypeCheckingVisitor implements Visitor {
         catch (Exception ignored){
         }
         ArrayList<FuncEntry> funcsWithName = new ArrayList<>();
-        if(isFirstChildId && node.getChildren().get(1).getConcept().equals("argument params")){
-            //Function call
-            funcsWithName = headNode.getTable().isFuncCallReturnTables(id);
-            if(funcsWithName.size() == 0){
-                //function not declared
-                ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Function: "+id+" has not been declared.", location));
-            }
+        try {
+            if (isFirstChildId && node.getChildren().get(1).getConcept().equals("argument params")) {
+                //Function call
+                funcsWithName = headNode.getTable().isFuncCallReturnTables(id);
+                if (funcsWithName.size() == 0) {
+                    //function not declared
+                    ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Function: " + id + " has not been declared.", location));
+                }
 
-        }
-        else{
-            if(isFirstChildId && !node.getTable().lookupNameReturnsBool(id)){
-                if(!headNode.getTable().isDataMember(id)){
-                    ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Variable: "+id+" has not been declared.", location));
+            } else {
+                if (isFirstChildId && !node.getTable().lookupNameReturnsBool(id)) {
+                    if (!headNode.getTable().isDataMember(id)) {
+                        ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Variable: " + id + " has not been declared.", location));
+                    }
+                }
+
+                if (isFirstChildId) {
+                    currentType = node.getTable().lookupName(id).m_type;
+                    if (node.getChildren().get(1).getConcept() instanceof Token)
+                        if (currentType == null || ((Token) node.getChildren().get(1).getConcept()).getType() != TokenType.ASSIGN)
+                            currentType = "";
                 }
             }
-
-            if(isFirstChildId){
-                currentType = node.getTable().lookupName(id).m_type;
-                if(node.getChildren().get(1).getConcept() instanceof Token)
-                    if(currentType == null || ((Token)node.getChildren().get(1).getConcept()).getType() != TokenType.ASSIGN)
-                        currentType = "";
-            }
         }
+        catch (Exception e){}
         numberOfDims = 0;
         for(var childs: node.getChildren()){
             if(childs.getConcept().equals("indice")){
@@ -376,7 +378,7 @@ public class TypeCheckingVisitor implements Visitor {
         }
         if(numberOfDims!=0){
             for(var entries: node.getTable().m_symlist) {
-                if (entries.m_name.equals(id) && entries.m_dims.size() != numberOfDims) {
+                if (entries.m_name.equals(id) && entries.m_dims != null && entries.m_dims.size() != numberOfDims) {
                     ErrorLogger.getInstance().add(new CompilerError(ErrorType.SemanticError, "Wrong number of dimensions used.", location));
                 }
             }
