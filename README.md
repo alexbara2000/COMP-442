@@ -4,8 +4,8 @@ This is a compiler that was created for the class Comp 442. It takes as inoput a
 
 ## How To Run
 
-To compile a file, add it to '/Files/Source/'. Then go to '/src' and run 'Driver.java'. This will produce a machine code file which can be found under 'Files/Moon'.
-To run the machine code, run the following command '/Files/Moon/a.out NAME_OF_FILE.m'.
+To compile a file, add it to `/Files/Source/`. Then go to `/src` and run `Driver.java`. This will produce a machine code file which can be found under `Files/Moon`.
+To run the machine code, run the following command `/Files/Moon/a.out NAME_OF_FILE.m`.
 
 ## Features
 
